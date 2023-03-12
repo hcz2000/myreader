@@ -1,0 +1,82 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'//greendao插件dependencies
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
+    defaultConfig {
+        applicationId "com.zhao.myreader"
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 304
+        versionName "3.0.4"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters "x86", "armeabi", "armeabi-v7a"
+            }
+        }
+        debug {
+            ndk {
+                abiFilters "x86", "armeabi", "armeabi-v7a"
+            }
+        }
+    }
+
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDir "libs/"
+    }
+
+    compileOptions {
+
+        sourceCompatibility JavaVersion.VERSION_1_8
+
+        targetCompatibility JavaVersion.VERSION_1_8
+
+    }
+
+    viewBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.lifecycle:lifecycle-runtime:2.2.0"
+    implementation 'com.android.support:appcompat-v7:29.0.0'
+    implementation 'com.android.support:support-v4:29.0.0'
+    implementation 'com.android.support:design:29.0.0'
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.8.1'
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'org.jsoup:jsoup:1.11.3'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.2'  
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
+    implementation 'me.gujun.android.taggroup:library:1.4@aar'
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+    implementation('com.journeyapps:zxing-android-embedded:4.1.0') { transitive = false }
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.zxing:core:3.3.0'
+
+
+}
+
+greendao {
+    schemaVersion 9
+    daoPackage 'com.zhao.myreader.greendao.gen'
+    targetGenDir 'src/main/java'
+}
