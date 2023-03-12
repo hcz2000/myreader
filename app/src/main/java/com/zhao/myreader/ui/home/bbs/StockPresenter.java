@@ -107,7 +107,6 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
         }
     }
 
-
     private void setThemeColor(int colorPrimary, int colorPrimaryDark) {
         mStockFragment.getContentView().setPrimaryColorsId(colorPrimary, android.R.color.white);
         if (Build.VERSION.SDK_INT >= 21) {
