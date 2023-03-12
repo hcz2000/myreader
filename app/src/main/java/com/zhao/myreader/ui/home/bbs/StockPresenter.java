@@ -139,7 +139,7 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
         if(mStockAdapter != null) {
             mStockAdapter.notifyDataSetChanged();
         }
-        //loaderManager.initLoader(0,null,this);
+        loaderManager.initLoader(0,null,this);
     }
 
     @Override
