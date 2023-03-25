@@ -1,5 +1,8 @@
 package com.zhao.myreader.ui.home.bbs;
 
+import static java.lang.Thread.sleep;
+import static java.util.concurrent.TimeUnit.*;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +25,9 @@ import com.zhao.myreader.util.VibratorUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by zhao on 2017/7/25.
@@ -35,6 +41,8 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
     private StockService mStockService;
     private MainActivity mMainActivity;
     private LoaderManager loaderManager;
+
+    //private ScheduledExecutorService scheduledService= Executors.newScheduledThreadPool(2);
 
 
     StockPresenter(StockFragment stockFragment) {
@@ -88,7 +96,7 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
 
     private void init() {
         mStocks.clear();
-        mStocks.addAll(mStockService.findAllStock());
+        mStocks.addAll(mStockService.findAllStocks());
         if (mStocks == null || mStocks.size() == 0) {
             mStockFragment.getStockView().setVisibility(View.GONE);
             mStockFragment.getNoDataView().setVisibility(View.VISIBLE);
@@ -127,11 +135,12 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
     @NonNull
     @Override
     public Loader onCreateLoader(int id, @Nullable Bundle args) {
-        return new StockLoader(mStockFragment.getContext(),mStocks);
+        return new StockLoader(mStockFragment.getContext());
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader loader, Object data) {
+        System.out.println("StockPresenter--onLoadFinished");
         List<Stock> stocks=(List<Stock>)data;
         for(Stock stock: stocks){
             System.out.println(stock.getName()+":"+stock.getPrice());
@@ -140,10 +149,13 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
             mStockAdapter.notifyDataSetChanged();
         }
         //loaderManager.initLoader(0,null,this);
+        //scheduledService.schedule(loader.forceLoad(),5, SECONDS);
+        loader.forceLoad();
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader loader) {
         loaderManager.restartLoader(0,null,this);;
     }
+
 }

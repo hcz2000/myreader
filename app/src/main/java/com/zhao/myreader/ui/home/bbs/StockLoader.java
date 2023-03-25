@@ -1,13 +1,13 @@
 package com.zhao.myreader.ui.home.bbs;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.Toast;
+
 import androidx.loader.content.AsyncTaskLoader;
-import com.zhao.myreader.callback.ResultCallback;
+
 import com.zhao.myreader.greendao.entity.Stock;
 import com.zhao.myreader.greendao.service.StockService;
-import com.zhao.myreader.source.HttpDataSource;
+import com.zhao.myreader.util.HttpUtil;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,20 +18,28 @@ import java.util.List;
 
 public class StockLoader extends AsyncTaskLoader<List<Stock>>{
     private StockService mStockService;
-    private ArrayList<Stock> mStocks = new ArrayList<>();
+    private List<Stock> mStocks = new ArrayList<>();
 
-    StockLoader(Context context,ArrayList<Stock> stocks ) {
+    StockLoader(Context context) {
         super(context);
-        mStocks=stocks;
         mStockService = new StockService();
     }
     @Override
     protected void onStartLoading(){
+        System.out.println("onStartLoading");
+        /*
+        if (mStocks.size()>0) {
+            deliverResult(mStocks);
+        }*/
+        super.onStartLoading();
         forceLoad();
     }
 
     @Override
     public List<Stock> loadInBackground() {
+        System.out.println("loadInBackground");
+        mStocks=mStockService.findAllStocks();
+
         for(Stock stock : mStocks){
             String stockCode = stock.getId();
             String url;
@@ -40,26 +48,40 @@ public class StockLoader extends AsyncTaskLoader<List<Stock>>{
             } else {
                 url = "https://xueqiu.com/s/SZ" + stockCode;
             }
-            HttpDataSource.httpGet_html(url, "utf-8", new ResultCallback() {
-                @Override
-                public void onFinish(Object content, int code) {
-                    Document doc = Jsoup.parse((String) content);
-                    Elements stockPrices = doc.getElementsByClass("stock-current");
-                    if (!stockPrices.isEmpty()) {
-                        Element stockPrice=stockPrices.first();
-                        String priceStr = stockPrice.text();
-                        Double price=Double.parseDouble(priceStr.substring(1));
-                        stock.setPrice(price);
-                        System.out.println(stock.getId()+":"+price);
-                        mStockService.updateStock(stock);
-                    }
-                }
+            String content= HttpUtil.getRequest_Sync(url);
+            Document doc = Jsoup.parse((String) content);
+            Elements stockPrices = doc.getElementsByClass("stock-current");
+            if (!stockPrices.isEmpty()) {
+                Element stockPrice=stockPrices.first();
+                String priceStr = stockPrice.text();
+                Double price=Double.parseDouble(priceStr.substring(1));
+                stock.setPrice(price);
+                System.out.println(stock.getId()+":"+price);
+                mStockService.updateStock(stock);
+            }
 
-                public void onError(Exception e) {
-                    e.printStackTrace();
-                }
-            });
         }
         return mStocks;
     }
+    @Override
+    protected void onStopLoading() {
+        System.out.println("onStopLoading");
+        cancelLoad();
+    }
+
+    @Override
+    public void deliverResult(List<Stock> data) {
+
+        System.out.println("deliverResult");
+
+        if (isStarted()) {
+            // If the Loader is in a started state, deliver the results to the
+            // client. The superclass method does this for us.
+            super.deliverResult(data);
+        }
+
+
+    }
+
+
 }

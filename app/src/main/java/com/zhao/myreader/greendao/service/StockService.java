@@ -44,7 +44,7 @@ public class StockService extends BaseService {
      * 返回所有股票
      * @return
      */
-    public ArrayList<Stock> findAllStock() {
+    public ArrayList<Stock> findAllStocks() {
         String sql = "select * from stock order by sort_code";
         return findStocks(sql, null);
     }

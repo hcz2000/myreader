@@ -160,6 +160,22 @@ public class HttpUtil {
        });
     }
 
+    public static String getRequest_Sync(final String address) {
+
+        try{
+                OkHttpClient client = getOkHttpClient();
+                Request request = new Request.Builder()
+                        .url(address)
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+        }catch(Exception e){
+                e.printStackTrace();
+        }
+        return null;
+    }
+
+
     /**
      * post请求
      * @param address
