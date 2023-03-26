@@ -98,13 +98,6 @@ public class StockDragAdapter extends DragAdapter {
 
     private void initView(int position, ViewHolder viewHolder) {
         final Stock stock = getItem(position);
-        /*
-        Glide.with(mContext)
-                .load("")
-                .error(R.mipmap.no_image)
-                .placeholder(R.mipmap.no_image)
-                .into(viewHolder.ivStockImg);
-         */
         viewHolder.tvStockName.setText(stock.getName());
         viewHolder.tvStockInfo.setText(stock.getQuantity()+"  "+stock.getCost()+"  "+stock.getPrice());
         viewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
