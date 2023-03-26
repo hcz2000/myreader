@@ -42,7 +42,7 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
     private MainActivity mMainActivity;
     private LoaderManager loaderManager;
 
-    //private ScheduledExecutorService scheduledService= Executors.newScheduledThreadPool(2);
+    private ScheduledExecutorService scheduledService= Executors.newScheduledThreadPool(1);
 
 
     StockPresenter(StockFragment stockFragment) {
@@ -91,7 +91,6 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
         });
 
         loaderManager = mStockFragment.getLoaderManager();
-        //System.out.println("StockPresenter Started");
     }
 
     private void init() {
@@ -149,8 +148,7 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
             mStockAdapter.notifyDataSetChanged();
         }
         //loaderManager.initLoader(0,null,this);
-        //scheduledService.schedule(loader.forceLoad(),5, SECONDS);
-        loader.forceLoad();
+        scheduledService.schedule(()->loader.forceLoad(),30, SECONDS);
     }
 
     @Override

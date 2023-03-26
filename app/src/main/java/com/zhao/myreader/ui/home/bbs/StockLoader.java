@@ -26,18 +26,14 @@ public class StockLoader extends AsyncTaskLoader<List<Stock>>{
     }
     @Override
     protected void onStartLoading(){
-        System.out.println("onStartLoading");
-        /*
-        if (mStocks.size()>0) {
-            deliverResult(mStocks);
-        }*/
+        //System.out.println("onStartLoading");
         super.onStartLoading();
         forceLoad();
     }
 
     @Override
     public List<Stock> loadInBackground() {
-        System.out.println("loadInBackground");
+        //System.out.println("loadInBackground");
         mStocks=mStockService.findAllStocks();
 
         for(Stock stock : mStocks){
@@ -65,22 +61,16 @@ public class StockLoader extends AsyncTaskLoader<List<Stock>>{
     }
     @Override
     protected void onStopLoading() {
-        System.out.println("onStopLoading");
+        //System.out.println("onStopLoading");
         cancelLoad();
     }
 
     @Override
     public void deliverResult(List<Stock> data) {
-
-        System.out.println("deliverResult");
-
+        //System.out.println("deliverResult");
         if (isStarted()) {
-            // If the Loader is in a started state, deliver the results to the
-            // client. The superclass method does this for us.
             super.deliverResult(data);
         }
-
-
     }
 
 

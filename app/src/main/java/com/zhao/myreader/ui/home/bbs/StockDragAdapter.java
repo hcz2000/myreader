@@ -116,7 +116,6 @@ public class StockDragAdapter extends DragAdapter {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 remove(stock);
                                 dialogInterface.dismiss();
-
                             }
                         }, new DialogInterface.OnClickListener() {
                             @Override
