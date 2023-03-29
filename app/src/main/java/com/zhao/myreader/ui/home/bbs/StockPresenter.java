@@ -1,6 +1,6 @@
 package com.zhao.myreader.ui.home.bbs;
 
-import static java.lang.Thread.sleep;
+
 import static java.util.concurrent.TimeUnit.*;
 
 import android.content.Intent;
@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 public class StockPresenter extends BasePresenter implements LoaderManager.LoaderCallbacks {
 
     private StockFragment mStockFragment;
-    private ArrayList<Stock> mStocks = new ArrayList<>();
+    private List<Stock> mStocks = new ArrayList<>();
     private StockDragAdapter mStockAdapter;
     private StockService mStockService;
     private MainActivity mMainActivity;
@@ -126,7 +126,7 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
         init();
     }
 
-    public ArrayList<Stock> getStocks(){
+    public List<Stock> getStocks(){
         return mStocks;
     }
 
@@ -142,12 +142,16 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
         System.out.println("StockPresenter--onLoadFinished");
         List<Stock> stocks=(List<Stock>)data;
         for(Stock stock: stocks){
+            for(Stock orgStock: mStocks){
+                if(stock.getId().equals(orgStock.getId())){
+                    orgStock.setPrice(stock.getPrice());
+                }
+            }
             System.out.println(stock.getName()+":"+stock.getPrice());
         }
         if(mStockAdapter != null) {
             mStockAdapter.notifyDataSetChanged();
         }
-        //loaderManager.initLoader(0,null,this);
         scheduledService.schedule(()->loader.forceLoad(),30, SECONDS);
     }
 

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import java.util.List;
 import com.bumptech.glide.Glide;
 import com.zhao.myreader.R;
 import com.zhao.myreader.common.APPCONST;
@@ -18,22 +18,19 @@ import com.zhao.myreader.greendao.entity.Stock;
 import com.zhao.myreader.greendao.service.StockService;
 import com.zhao.myreader.ui.stock.UpdateStockActivity;
 
-import java.util.ArrayList;
-
-
 /**
  * Created by zhao on 2017/5/19.
  */
 
 public class StockDragAdapter extends DragAdapter {
     private int mResourceId;
-    private ArrayList<Stock> list;
+    private List<Stock> list;
     private Context mContext;
     private boolean mEditState;
     private StockService mStockService;
 
 
-    public StockDragAdapter(Context context, int textViewResourceId, ArrayList<Stock> objects, boolean editState) {
+    public StockDragAdapter(Context context, int textViewResourceId, List<Stock> objects, boolean editState) {
         mContext = context;
         mResourceId = textViewResourceId;
         list = objects;
