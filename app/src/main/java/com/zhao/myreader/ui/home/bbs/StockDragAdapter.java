@@ -81,10 +81,10 @@ public class StockDragAdapter extends DragAdapter {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(mResourceId, null);
-            //viewHolder.ivStockImg =  convertView.findViewById(R.id.iv_stock_img);
             viewHolder.tvStockName = convertView.findViewById(R.id.tv_stock_name);
             viewHolder.ivDelete = convertView.findViewById(R.id.iv_delete);
             viewHolder.tvStockInfo = convertView.findViewById(R.id.tv_stock_info);
+            viewHolder.tvStockPrice = convertView.findViewById(R.id.tv_stock_price);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -96,7 +96,8 @@ public class StockDragAdapter extends DragAdapter {
     private void initView(int position, ViewHolder viewHolder) {
         final Stock stock = getItem(position);
         viewHolder.tvStockName.setText(stock.getName());
-        viewHolder.tvStockInfo.setText(stock.getQuantity()+"  "+stock.getCost()+"  "+stock.getPrice());
+        viewHolder.tvStockInfo.setText(String.format("%6d",stock.getQuantity())+"  "+String.format("%5.2f",stock.getCost()));
+        viewHolder.tvStockPrice.setText(String.format("%5.2f",stock.getPrice()));
         viewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,10 +145,10 @@ public class StockDragAdapter extends DragAdapter {
     }
 
     class ViewHolder {
-        //ImageView ivStockImg;
         TextView tvStockName;
         ImageView ivDelete;
         TextView tvStockInfo;
+        TextView tvStockPrice;
     }
 
 }
