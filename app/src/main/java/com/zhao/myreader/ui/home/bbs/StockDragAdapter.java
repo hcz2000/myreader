@@ -3,6 +3,7 @@ package com.zhao.myreader.ui.home.bbs;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +85,9 @@ public class StockDragAdapter extends DragAdapter {
             viewHolder.tvStockName = convertView.findViewById(R.id.tv_stock_name);
             viewHolder.ivDelete = convertView.findViewById(R.id.iv_delete);
             viewHolder.tvStockInfo = convertView.findViewById(R.id.tv_stock_info);
+            viewHolder.tvStockCost = convertView.findViewById(R.id.tv_stock_cost);
             viewHolder.tvStockPrice = convertView.findViewById(R.id.tv_stock_price);
+            viewHolder.tvStockProfit = convertView.findViewById(R.id.tv_stock_profit);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -96,8 +99,17 @@ public class StockDragAdapter extends DragAdapter {
     private void initView(int position, ViewHolder viewHolder) {
         final Stock stock = getItem(position);
         viewHolder.tvStockName.setText(stock.getName());
-        viewHolder.tvStockInfo.setText(String.format("%6d",stock.getQuantity())+"  "+String.format("%5.2f",stock.getCost()));
-        viewHolder.tvStockPrice.setText(String.format("%5.2f",stock.getPrice()));
+        viewHolder.tvStockInfo.setText(String.format("%6d",stock.getQuantity()));
+        viewHolder.tvStockCost.setText(String.format("%5.2f",stock.getCost()));
+        viewHolder.tvStockPrice.setText(String.format("%6.2f",stock.getPrice()));
+        viewHolder.tvStockProfit.setText(String.format("%12.2f",(stock.getPrice()-stock.getCost())*stock.getQuantity()));
+        if(stock.getPrice()>stock.getCost()){
+            viewHolder.tvStockPrice.setTextColor(Color.rgb(255, 0, 0));
+            viewHolder.tvStockProfit.setTextColor(Color.rgb(255, 0, 0));
+        }else{
+            viewHolder.tvStockPrice.setTextColor(Color.rgb(0, 100, 0));
+            viewHolder.tvStockProfit.setTextColor(Color.rgb(0, 100, 0));
+        }
         viewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +160,9 @@ public class StockDragAdapter extends DragAdapter {
         TextView tvStockName;
         ImageView ivDelete;
         TextView tvStockInfo;
+        TextView tvStockCost;
         TextView tvStockPrice;
+        TextView tvStockProfit;
     }
 
 }

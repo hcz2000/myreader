@@ -13,7 +13,7 @@
         android:layout_marginTop="1dp"
         android:text="stockname"
         android:textColor="@color/black"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,22 +41,38 @@
             />
             <TextView
                 android:id="@+id/tv_stock_info"
-                android:layout_width="200dp"
+                android:layout_width="60dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="1dp"
-                android:text="stockinfo"
-                android:textColor="@color/deep_blue"
-                android:textSize="14sp"
-                android:gravity="left"/>
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:gravity="right"/>
+
+            <TextView
+                android:id="@+id/tv_stock_cost"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:textColor="@color/blue"
+                android:textSize="16sp"
+                android:gravity="right"/>
 
             <TextView
                 android:id="@+id/tv_stock_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="1dp"
-                android:text="stockinfo"
                 android:textColor="@color/green"
-                android:textSize="14sp"
+                android:textSize="16sp"
+                android:gravity="right"/>
+
+            <TextView
+                android:id="@+id/tv_stock_profit"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:textColor="@color/green"
+                android:textSize="16sp"
                 android:gravity="right"/>
 
         </LinearLayout>
