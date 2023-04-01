@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.spreada.utils.chinese.ZHConverter;
 import com.zhao.myreader.R;
-import com.zhao.myreader.application.SysManager;
+import com.zhao.myreader.base.application.SysManager;
 import com.zhao.myreader.callback.ResultCallback;
 
 import com.zhao.myreader.custom.MyTextView;
@@ -37,7 +37,6 @@ import com.zhao.myreader.webapi.CommonApi;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zhao on 2017/8/17.

@@ -10,7 +10,6 @@ import android.os.Message;
 
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -23,8 +22,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
 import com.zhao.myreader.R;
-import com.zhao.myreader.application.MyApplication;
-import com.zhao.myreader.application.SysManager;
+import com.zhao.myreader.base.application.MyApplication;
+import com.zhao.myreader.base.application.SysManager;
 import com.zhao.myreader.base.BaseActivity;
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;

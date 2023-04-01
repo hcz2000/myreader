@@ -1,4 +1,4 @@
-package com.zhao.myreader.application;
+package com.zhao.myreader.base.application;
 
 import com.zhao.myreader.R;
 import com.zhao.myreader.common.APPCONST;

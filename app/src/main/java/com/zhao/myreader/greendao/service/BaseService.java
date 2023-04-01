@@ -19,7 +19,6 @@ public class BaseService {
     }
 
     public void updateEntity(Object entity){
-
         DaoSession daoSession  = GreenDaoManager.getInstance().getSession();
         daoSession.update(entity);
     }
@@ -27,7 +26,6 @@ public class BaseService {
     public void deleteEntity(Object entity){
         DaoSession daoSession  = GreenDaoManager.getInstance().getSession();
         daoSession.delete(entity);
-
     }
 
     /**

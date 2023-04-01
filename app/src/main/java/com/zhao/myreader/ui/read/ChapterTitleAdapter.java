@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.zhao.myreader.R;
-import com.zhao.myreader.application.SysManager;
+import com.zhao.myreader.base.application.SysManager;
 import com.zhao.myreader.entity.Setting;
 import com.zhao.myreader.greendao.entity.Chapter;
 

@@ -20,7 +20,7 @@ import androidx.annotation.Nullable;
 
 import com.spreada.utils.chinese.ZHConverter;
 import com.zhao.myreader.R;
-import com.zhao.myreader.application.SysManager;
+import com.zhao.myreader.base.application.SysManager;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.custom.MyTextView;
 import com.zhao.myreader.entity.Setting;

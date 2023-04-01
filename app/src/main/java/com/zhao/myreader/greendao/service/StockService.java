@@ -98,6 +98,7 @@ public class StockService extends BaseService {
     }
 
     public void updateStock( Stock stock){
+        System.out.println("Updating :"+stock.getId()+":"+stock.getPrice());
         updateEntity(stock);
      }
 

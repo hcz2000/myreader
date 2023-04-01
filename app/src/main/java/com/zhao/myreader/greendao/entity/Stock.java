@@ -25,17 +25,20 @@ public class Stock implements Serializable {
     private String name;
     private int quantity;
     private double cost;
+    private double lastPrice;
     private double price;
     private double upperThreshold;
     private double lowerThreshold;
     private int sortCode;
-    @Generated(hash = 558408070)
-    public Stock(String id, String name, int quantity, double cost, double price,
-            double upperThreshold, double lowerThreshold, int sortCode) {
+    @Generated(hash = 719534709)
+    public Stock(String id, String name, int quantity, double cost,
+            double lastPrice, double price, double upperThreshold,
+            double lowerThreshold, int sortCode) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.cost = cost;
+        this.lastPrice = lastPrice;
         this.price = price;
         this.upperThreshold = upperThreshold;
         this.lowerThreshold = lowerThreshold;
@@ -68,6 +71,12 @@ public class Stock implements Serializable {
     public void setCost(double cost) {
         this.cost = cost;
     }
+    public double getLastPrice() {
+        return this.lastPrice;
+    }
+    public void setLastPrice(double lastPrice) {
+        this.lastPrice = lastPrice;
+    }
     public double getPrice() {
         return this.price;
     }
@@ -92,4 +101,5 @@ public class Stock implements Serializable {
     public void setSortCode(int sortCode) {
         this.sortCode = sortCode;
     }
+    
 }

@@ -4,22 +4,22 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@color/white"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/tv_stock_name"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="20dp"
         android:layout_marginTop="1dp"
         android:text="stockname"
         android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,25 +45,25 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="1dp"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:gravity="right"/>
 
             <TextView
                 android:id="@+id/tv_stock_cost"
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="1dp"
-                android:textColor="@color/blue"
-                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
                 android:gravity="right"/>
 
             <TextView
                 android:id="@+id/tv_stock_price"
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="1dp"
-                android:textColor="@color/green"
-                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
                 android:gravity="right"/>
 
             <TextView
@@ -72,7 +72,7 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="1dp"
                 android:textColor="@color/green"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:gravity="right"/>
 
         </LinearLayout>
