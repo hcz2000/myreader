@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.home.bookstore;
+package com.zhao.myreader.ui.bookinfo.home.bookstore;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -7,10 +7,7 @@ import android.os.Message;
 import android.view.View;
 
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 
 
 import com.zhao.myreader.base.BasePresenter;

@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.home.bookstore;
+package com.zhao.myreader.ui.bookinfo.home.bookstore;
 
 
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhao.myreader.R;
 import com.zhao.myreader.databinding.FragmentBookStoreBinding;
 
 

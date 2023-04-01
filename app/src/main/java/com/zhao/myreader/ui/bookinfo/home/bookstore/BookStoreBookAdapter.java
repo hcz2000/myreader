@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.home.bookstore;
+package com.zhao.myreader.ui.bookinfo.home.bookstore;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
