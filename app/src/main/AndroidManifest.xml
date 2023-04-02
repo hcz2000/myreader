@@ -27,7 +27,7 @@
 
 
         <activity
-            android:name=".ui.bookinfo.home.MainActivity"
+            android:name=".ui.home.MainActivity"
             android:alwaysRetainTaskState="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

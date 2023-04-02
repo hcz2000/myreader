@@ -17,7 +17,7 @@ import com.zhao.myreader.databinding.FragmentBookStoreBinding;
  * A simple {@link Fragment} subclass.
  */
 public class BookStoreFragment extends Fragment {
-    private com.zhao.myreader.ui.bookinfo.home.bookstore.BookStorePresenter mBookStorePresenter;
+    private com.zhao.myreader.ui.home.bookstore.BookStorePresenter mBookStorePresenter;
     private FragmentBookStoreBinding binding;
 
     public BookStoreFragment() {

@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.bookinfo.home.bookstore;
+package com.zhao.myreader.ui.home.bookstore;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.bookinfo.home.bookstore;
+package com.zhao.myreader.ui.home.bookstore;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -61,14 +61,10 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
     });
 
 
-   BookStoreBookAdapter(Context context,  List<Book> datas) {
+   public BookStoreBookAdapter(Context context,  List<Book> datas) {
         mInflater = LayoutInflater.from(context);
         mDatas = datas;
-
         mContext = context;
-
-
-
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

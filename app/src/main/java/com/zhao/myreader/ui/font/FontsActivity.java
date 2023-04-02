@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.home.bookcase.font;
+package com.zhao.myreader.ui.font;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
