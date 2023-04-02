@@ -61,14 +61,10 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
     });
 
 
-   BookStoreBookAdapter(Context context,  List<Book> datas) {
+   public BookStoreBookAdapter(Context context,  List<Book> datas) {
         mInflater = LayoutInflater.from(context);
         mDatas = datas;
-
         mContext = context;
-
-
-
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,4 +1,4 @@
-package com.zhao.myreader.application;
+package com.zhao.myreader.base.application;
 
 import java.security.cert.X509Certificate;
 

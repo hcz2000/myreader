@@ -3,7 +3,7 @@ package com.zhao.myreader.util;
 import android.util.Base64;
 import android.util.Log;
 
-import com.zhao.myreader.application.MyApplication;
+import com.zhao.myreader.base.application.MyApplication;
 import com.zhao.myreader.callback.HttpCallback;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.common.URLCONST;

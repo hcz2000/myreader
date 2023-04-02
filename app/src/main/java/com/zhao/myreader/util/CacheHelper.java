@@ -2,7 +2,7 @@ package com.zhao.myreader.util;
 
 
 
-import com.zhao.myreader.application.MyApplication;
+import com.zhao.myreader.base.application.MyApplication;
 
 import java.io.File;
 import java.io.FileInputStream;

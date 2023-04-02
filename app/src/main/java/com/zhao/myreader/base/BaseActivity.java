@@ -13,7 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.zhao.myreader.application.ActivityManage;
+import com.zhao.myreader.base.application.ActivityManage;
 import com.zhao.myreader.util.SystemBarTintManager;
 
 

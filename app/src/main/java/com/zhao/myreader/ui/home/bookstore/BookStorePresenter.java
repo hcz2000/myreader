@@ -7,10 +7,7 @@ import android.os.Message;
 import android.view.View;
 
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 
 
 import com.zhao.myreader.base.BasePresenter;
@@ -20,6 +17,8 @@ import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.entity.bookstore.BookType;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.ui.bookinfo.BookInfoActivity;
+import com.zhao.myreader.ui.home.bookstore.BookStoreBookTypeAdapter;
+import com.zhao.myreader.ui.home.bookstore.BookStoreFragment;
 import com.zhao.myreader.util.TextHelper;
 import com.zhao.myreader.webapi.BookStoreApi;
 

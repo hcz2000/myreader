@@ -1,7 +1,7 @@
 package com.zhao.myreader.greendao;
 
 
-import com.zhao.myreader.application.MyApplication;
+import com.zhao.myreader.base.application.MyApplication;
 import com.zhao.myreader.greendao.gen.DaoMaster;
 import com.zhao.myreader.greendao.gen.DaoSession;
 import com.zhao.myreader.greendao.util.MySQLiteOpenHelper;

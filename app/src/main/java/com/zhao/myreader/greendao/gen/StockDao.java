@@ -28,10 +28,11 @@ public class StockDao extends AbstractDao<Stock, String> {
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Quantity = new Property(2, int.class, "quantity", false, "QUANTITY");
         public final static Property Cost = new Property(3, double.class, "cost", false, "COST");
-        public final static Property Price = new Property(4, double.class, "price", false, "PRICE");
-        public final static Property UpperThreshold = new Property(5, double.class, "upperThreshold", false, "UPPER_THRESHOLD");
-        public final static Property LowerThreshold = new Property(6, double.class, "lowerThreshold", false, "LOWER_THRESHOLD");
-        public final static Property SortCode = new Property(7, int.class, "sortCode", false, "SORT_CODE");
+        public final static Property LastPrice = new Property(4, double.class, "lastPrice", false, "LAST_PRICE");
+        public final static Property Price = new Property(5, double.class, "price", false, "PRICE");
+        public final static Property UpperThreshold = new Property(6, double.class, "upperThreshold", false, "UPPER_THRESHOLD");
+        public final static Property LowerThreshold = new Property(7, double.class, "lowerThreshold", false, "LOWER_THRESHOLD");
+        public final static Property SortCode = new Property(8, int.class, "sortCode", false, "SORT_CODE");
     }
 
 
@@ -51,10 +52,11 @@ public class StockDao extends AbstractDao<Stock, String> {
                 "\"NAME\" TEXT," + // 1: name
                 "\"QUANTITY\" INTEGER NOT NULL ," + // 2: quantity
                 "\"COST\" REAL NOT NULL ," + // 3: cost
-                "\"PRICE\" REAL NOT NULL ," + // 4: price
-                "\"UPPER_THRESHOLD\" REAL NOT NULL ," + // 5: upperThreshold
-                "\"LOWER_THRESHOLD\" REAL NOT NULL ," + // 6: lowerThreshold
-                "\"SORT_CODE\" INTEGER NOT NULL );"); // 7: sortCode
+                "\"LAST_PRICE\" REAL NOT NULL ," + // 4: lastPrice
+                "\"PRICE\" REAL NOT NULL ," + // 5: price
+                "\"UPPER_THRESHOLD\" REAL NOT NULL ," + // 6: upperThreshold
+                "\"LOWER_THRESHOLD\" REAL NOT NULL ," + // 7: lowerThreshold
+                "\"SORT_CODE\" INTEGER NOT NULL );"); // 8: sortCode
     }
 
     /** Drops the underlying database table. */
@@ -78,10 +80,11 @@ public class StockDao extends AbstractDao<Stock, String> {
         }
         stmt.bindLong(3, entity.getQuantity());
         stmt.bindDouble(4, entity.getCost());
-        stmt.bindDouble(5, entity.getPrice());
-        stmt.bindDouble(6, entity.getUpperThreshold());
-        stmt.bindDouble(7, entity.getLowerThreshold());
-        stmt.bindLong(8, entity.getSortCode());
+        stmt.bindDouble(5, entity.getLastPrice());
+        stmt.bindDouble(6, entity.getPrice());
+        stmt.bindDouble(7, entity.getUpperThreshold());
+        stmt.bindDouble(8, entity.getLowerThreshold());
+        stmt.bindLong(9, entity.getSortCode());
     }
 
     @Override
@@ -99,10 +102,11 @@ public class StockDao extends AbstractDao<Stock, String> {
         }
         stmt.bindLong(3, entity.getQuantity());
         stmt.bindDouble(4, entity.getCost());
-        stmt.bindDouble(5, entity.getPrice());
-        stmt.bindDouble(6, entity.getUpperThreshold());
-        stmt.bindDouble(7, entity.getLowerThreshold());
-        stmt.bindLong(8, entity.getSortCode());
+        stmt.bindDouble(5, entity.getLastPrice());
+        stmt.bindDouble(6, entity.getPrice());
+        stmt.bindDouble(7, entity.getUpperThreshold());
+        stmt.bindDouble(8, entity.getLowerThreshold());
+        stmt.bindLong(9, entity.getSortCode());
     }
 
     @Override
@@ -117,10 +121,11 @@ public class StockDao extends AbstractDao<Stock, String> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
             cursor.getInt(offset + 2), // quantity
             cursor.getDouble(offset + 3), // cost
-            cursor.getDouble(offset + 4), // price
-            cursor.getDouble(offset + 5), // upperThreshold
-            cursor.getDouble(offset + 6), // lowerThreshold
-            cursor.getInt(offset + 7) // sortCode
+            cursor.getDouble(offset + 4), // lastPrice
+            cursor.getDouble(offset + 5), // price
+            cursor.getDouble(offset + 6), // upperThreshold
+            cursor.getDouble(offset + 7), // lowerThreshold
+            cursor.getInt(offset + 8) // sortCode
         );
         return entity;
     }
@@ -131,10 +136,11 @@ public class StockDao extends AbstractDao<Stock, String> {
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setQuantity(cursor.getInt(offset + 2));
         entity.setCost(cursor.getDouble(offset + 3));
-        entity.setPrice(cursor.getDouble(offset + 4));
-        entity.setUpperThreshold(cursor.getDouble(offset + 5));
-        entity.setLowerThreshold(cursor.getDouble(offset + 6));
-        entity.setSortCode(cursor.getInt(offset + 7));
+        entity.setLastPrice(cursor.getDouble(offset + 4));
+        entity.setPrice(cursor.getDouble(offset + 5));
+        entity.setUpperThreshold(cursor.getDouble(offset + 6));
+        entity.setLowerThreshold(cursor.getDouble(offset + 7));
+        entity.setSortCode(cursor.getInt(offset + 8));
      }
     
     @Override

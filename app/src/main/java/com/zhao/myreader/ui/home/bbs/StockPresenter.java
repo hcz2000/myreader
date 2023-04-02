@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by zhao on 2017/7/25.
@@ -139,15 +138,18 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
 
     @Override
     public void onLoadFinished(@NonNull Loader loader, Object data) {
-        System.out.println("StockPresenter--onLoadFinished");
-        List<Stock> stocks=(List<Stock>)data;
-        for(Stock stock: stocks){
-            for(Stock orgStock: mStocks){
-                if(stock.getId().equals(orgStock.getId())){
-                    orgStock.setPrice(stock.getPrice());
+        //System.out.println("StockPresenter--onLoadFinished");
+        List<Stock> refreshedStocks=(List<Stock>)data;
+        for(Stock refreshStock: refreshedStocks){
+            System.out.println(refreshStock.getName()+":"+refreshStock.getPrice());
+            for(Stock stock: mStocks){
+                if(refreshStock.getId().equals(stock.getId())){
+                    stock.setLastPrice(stock.getPrice());
+                    stock.setPrice(refreshStock.getPrice());
+                    mStockService.updateStock(stock);
+                    //mStockService.addOrUpdateStock(stock);
                 }
             }
-            System.out.println(stock.getName()+":"+stock.getPrice());
         }
         if(mStockAdapter != null) {
             mStockAdapter.notifyDataSetChanged();

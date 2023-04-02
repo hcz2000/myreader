@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.zhao.myreader.ui.home.MainActivity">
+    tools:context="com.zhao.myreader.ui.bookinfo.home.MainActivity">
 
     <RelativeLayout
         android:id="@+id/rl_common_title"

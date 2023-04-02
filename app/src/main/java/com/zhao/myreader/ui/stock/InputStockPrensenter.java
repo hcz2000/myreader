@@ -2,7 +2,7 @@ package com.zhao.myreader.ui.stock;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-import static com.zhao.myreader.application.MyApplication.runOnUiThread;
+import static com.zhao.myreader.base.application.MyApplication.runOnUiThread;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -118,6 +118,7 @@ public class InputStockPrensenter extends BasePresenter {
                     stock.setName(name.split("\\(")[0]);
                     stock.setQuantity(quantity);
                     stock.setCost(cost);
+                    stock.setLastPrice(0.00);
                     stock.setPrice(0.00);
                     mStockService.addOrUpdateStock(stock);
                     runOnUiThread(()-> {

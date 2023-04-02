@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
-import com.bumptech.glide.Glide;
+
 import com.zhao.myreader.R;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.creator.DialogCreator;
@@ -104,11 +104,17 @@ public class StockDragAdapter extends DragAdapter {
         viewHolder.tvStockPrice.setText(String.format("%6.2f",stock.getPrice()));
         viewHolder.tvStockProfit.setText(String.format("%12.2f",(stock.getPrice()-stock.getCost())*stock.getQuantity()));
         if(stock.getPrice()>stock.getCost()){
-            viewHolder.tvStockPrice.setTextColor(Color.rgb(255, 0, 0));
             viewHolder.tvStockProfit.setTextColor(Color.rgb(255, 0, 0));
         }else{
-            viewHolder.tvStockPrice.setTextColor(Color.rgb(0, 100, 0));
             viewHolder.tvStockProfit.setTextColor(Color.rgb(0, 100, 0));
+        }
+
+        if(stock.getPrice()==stock.getLastPrice()){
+            viewHolder.tvStockPrice.setBackgroundColor(Color.rgb(0, 0, 128));
+        }else if(stock.getPrice()==stock.getLastPrice()){
+            viewHolder.tvStockPrice.setBackgroundColor(Color.rgb(128, 0, 0));
+        }else{
+            viewHolder.tvStockPrice.setBackgroundColor(Color.rgb(0, 128, 0));
         }
         viewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override

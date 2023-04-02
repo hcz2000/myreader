@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.zhao.myreader.ui.home.bbs.StockFragment">
+    tools:context="com.zhao.myreader.ui.bookinfo.home.bbs.StockFragment">
 
     <com.scwang.smartrefresh.header.MaterialHeader
         android:layout_width="match_parent"

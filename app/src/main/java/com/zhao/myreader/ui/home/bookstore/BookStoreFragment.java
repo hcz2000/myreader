@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhao.myreader.R;
 import com.zhao.myreader.databinding.FragmentBookStoreBinding;
 
 
@@ -18,7 +17,7 @@ import com.zhao.myreader.databinding.FragmentBookStoreBinding;
  * A simple {@link Fragment} subclass.
  */
 public class BookStoreFragment extends Fragment {
-    private BookStorePresenter mBookStorePresenter;
+    private com.zhao.myreader.ui.home.bookstore.BookStorePresenter mBookStorePresenter;
     private FragmentBookStoreBinding binding;
 
     public BookStoreFragment() {

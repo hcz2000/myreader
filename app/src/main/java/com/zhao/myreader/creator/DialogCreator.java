@@ -19,15 +19,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.zhao.myreader.R;
-import com.zhao.myreader.application.MyApplication;
-import com.zhao.myreader.application.SysManager;
+import com.zhao.myreader.base.application.MyApplication;
+import com.zhao.myreader.base.application.SysManager;
 import com.zhao.myreader.entity.Setting;
 import com.zhao.myreader.enums.Language;
 import com.zhao.myreader.enums.ReadStyle;
 import com.zhao.myreader.util.BrightUtil;
 import com.zhao.myreader.util.StringHelper;
-
-import butterknife.BindView;
 
 /**
  * Created by zhao on 2017/1/11.
