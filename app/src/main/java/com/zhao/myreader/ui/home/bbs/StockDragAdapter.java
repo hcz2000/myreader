@@ -111,7 +111,7 @@ public class StockDragAdapter extends DragAdapter {
 
         if(stock.getPrice()==stock.getLastPrice()){
             viewHolder.tvStockPrice.setBackgroundColor(Color.rgb(0, 0, 128));
-        }else if(stock.getPrice()==stock.getLastPrice()){
+        }else if(stock.getPrice()>stock.getLastPrice()){
             viewHolder.tvStockPrice.setBackgroundColor(Color.rgb(128, 0, 0));
         }else{
             viewHolder.tvStockPrice.setBackgroundColor(Color.rgb(0, 128, 0));
