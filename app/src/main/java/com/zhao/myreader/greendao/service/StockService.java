@@ -27,10 +27,11 @@ public class StockService extends BaseService {
                     stock.setName(cursor.getString(1));
                     stock.setQuantity(cursor.getInt(2));
                     stock.setCost(cursor.getDouble(3));
-                    stock.setPrice(cursor.getDouble(4));
-                    stock.setUpperThreshold(cursor.getDouble(5));
-                    stock.setLowerThreshold(cursor.getDouble(6));
-                    stock.setSortCode(cursor.getInt(7));
+                    stock.setLastPrice(cursor.getDouble(4));
+                    stock.setPrice(cursor.getDouble(5));
+                    stock.setUpperThreshold(cursor.getDouble(6));
+                    stock.setLowerThreshold(cursor.getDouble(7));
+                    stock.setSortCode(cursor.getInt(8));
                     stocks.add(stock);
                 }
             }
@@ -75,10 +76,11 @@ public class StockService extends BaseService {
             result.setName(cursor.getString(1));
             result.setQuantity(cursor.getInt(2));
             result.setCost(cursor.getDouble(3));
-            result.setPrice(cursor.getDouble(4));
-            result.setUpperThreshold(cursor.getDouble(5));
-            result.setLowerThreshold(cursor.getDouble(6));
-            result.setSortCode(cursor.getInt(7));
+            result.setLastPrice(cursor.getDouble(4));
+            result.setPrice(cursor.getDouble(5));
+            result.setUpperThreshold(cursor.getDouble(6));
+            result.setLowerThreshold(cursor.getDouble(7));
+            result.setSortCode(cursor.getInt(8));
         }
         return result;
     }
@@ -98,7 +100,6 @@ public class StockService extends BaseService {
     }
 
     public void updateStock( Stock stock){
-        System.out.println("Updating :"+stock.getId()+":"+stock.getPrice());
         updateEntity(stock);
      }
 

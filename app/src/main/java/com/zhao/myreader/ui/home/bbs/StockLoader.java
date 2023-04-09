@@ -52,7 +52,7 @@ public class StockLoader extends AsyncTaskLoader<List<Stock>>{
                 String priceStr = stockPrice.text();
                 Double price=Double.parseDouble(priceStr.substring(1));
                 stock.setPrice(price);
-                System.out.println(stock.getId()+":"+price);
+                //System.out.println(stock.getId()+":"+price);
                 mStockService.updateStock(stock);
             }
 

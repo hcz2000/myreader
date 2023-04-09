@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.zhao.myreader.creator.DialogCreator;
 import com.zhao.myreader.custom.DragAdapter;
 import com.zhao.myreader.greendao.entity.Stock;
 import com.zhao.myreader.greendao.service.StockService;
+import com.zhao.myreader.ui.home.BrowserActivity;
 import com.zhao.myreader.ui.stock.UpdateStockActivity;
 
 /**
@@ -109,6 +111,7 @@ public class StockDragAdapter extends DragAdapter {
             viewHolder.tvStockProfit.setTextColor(Color.rgb(0, 100, 0));
         }
 
+        System.out.println("Price/Lastprice:"+stock.getPrice()+"-"+stock.getLastPrice());
         if(stock.getPrice()==stock.getLastPrice()){
             viewHolder.tvStockPrice.setBackgroundColor(Color.rgb(0, 0, 128));
         }else if(stock.getPrice()>stock.getLastPrice()){
@@ -139,8 +142,12 @@ public class StockDragAdapter extends DragAdapter {
         if (mEditState) {
             viewHolder.ivDelete.setVisibility(View.VISIBLE);
             viewHolder.tvStockName.setOnClickListener(null);
+            viewHolder.tvStockPrice.setVisibility(View.GONE);
+            viewHolder.tvStockProfit.setVisibility(View.GONE);
         } else {
             viewHolder.ivDelete.setVisibility(View.GONE);
+            viewHolder.tvStockPrice.setVisibility(View.VISIBLE);
+            viewHolder.tvStockProfit.setVisibility(View.VISIBLE);
             viewHolder.tvStockName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -148,6 +155,20 @@ public class StockDragAdapter extends DragAdapter {
                     intent.putExtra(APPCONST.STOCK, stock);
                     mContext.startActivity(intent);
                 }
+            });
+
+            viewHolder.tvStockPrice.setOnClickListener( view -> {
+                String url;
+                String stockCode=stock.getId();
+                if (stockCode.startsWith("6")) {
+                    url = "https://xueqiu.com/s/SH" + stockCode;
+                } else {
+                    url = "https://xueqiu.com/s/SZ" + stockCode;
+                }
+                //Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                Intent it=new Intent(mContext, BrowserActivity.class);
+                it.putExtra("URL",url);
+                mContext.startActivity(it);
             });
         }
 
