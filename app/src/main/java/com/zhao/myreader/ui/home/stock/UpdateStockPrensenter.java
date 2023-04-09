@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.stock;
+package com.zhao.myreader.ui.home.stock;
 
 import android.view.View;
 import android.widget.Toast;
@@ -34,6 +34,7 @@ public class UpdateStockPrensenter extends BasePresenter {
         mUpdateStockActivity.getEtStockUpperThreshold().setText(String.valueOf(mStock.getUpperThreshold()));
         mUpdateStockActivity.getEtStockLowerThreshold().setText(String.valueOf(mStock.getLowerThreshold()));
         mUpdateStockActivity.getTvInsert().setOnClickListener(view -> update());
+        mUpdateStockActivity.getTvLabel1().setVisibility(View.GONE);
         mUpdateStockActivity.getEtStockCode().setVisibility(View.GONE);
         mUpdateStockActivity.getPbLoading().setVisibility(View.GONE);
         mUpdateStockActivity.getTvSuccess().setVisibility(View.GONE);

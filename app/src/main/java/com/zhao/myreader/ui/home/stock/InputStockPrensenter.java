@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.stock;
+package com.zhao.myreader.ui.home.stock;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -79,6 +79,7 @@ public class InputStockPrensenter extends BasePresenter {
             mInputStockActivity.getEtStockCost().setText("");
             mInputStockActivity.getEtStockUpperThreshold().setText("0.00");
             mInputStockActivity.getEtStockLowerThreshold().setText("0.00");
+            mInputStockActivity.getLlStock().setVisibility(View.VISIBLE);
             mInputStockActivity.getTvSuccess().setVisibility(View.GONE);
             mInputStockActivity.getTvInsert().setVisibility(View.VISIBLE);
         });
@@ -124,6 +125,7 @@ public class InputStockPrensenter extends BasePresenter {
                     runOnUiThread(()-> {
                           Toast.makeText(mInputStockActivity.getApplicationContext(), name+" 成功添加",Toast.LENGTH_LONG).show();
                           mInputStockActivity.getPbLoading().setVisibility(View.GONE);
+                          mInputStockActivity.getLlStock().setVisibility(View.GONE);
                           mInputStockActivity.getTvSuccess().setVisibility(View.VISIBLE);
                           mInputStockActivity.getTvInsert().setVisibility(View.GONE);
                     });

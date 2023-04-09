@@ -1,10 +1,9 @@
-package com.zhao.myreader.ui.home.bbs;
+package com.zhao.myreader.ui.home.stock;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import com.zhao.myreader.custom.DragAdapter;
 import com.zhao.myreader.greendao.entity.Stock;
 import com.zhao.myreader.greendao.service.StockService;
 import com.zhao.myreader.ui.home.BrowserActivity;
-import com.zhao.myreader.ui.stock.UpdateStockActivity;
 
 /**
  * Created by zhao on 2017/5/19.

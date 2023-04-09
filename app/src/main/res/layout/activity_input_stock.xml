@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/sys_bg2"
     android:fitsSystemWindows="true"
-    tools:context=".ui.stock.InputStockActivity">
+    tools:context=".ui.home.stock.InputStockActivity">
 
 
     <LinearLayout
@@ -17,9 +17,21 @@
         <include
             android:id="@+id/title"
             layout="@layout/title_base">
-       </include>
+        </include>
+
+        <TextView
+            android:id="@+id/tv_success"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_weight="8"
+            android:gravity="center"
+            android:text="继续添加"
+            android:background="@drawable/search_btn_backcolor"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         <LinearLayout
+            android:id="@+id/ll_stock"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:gravity="center"
@@ -124,18 +136,6 @@
                 android:text="确定"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tv_success"
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_weight="8"
-                android:gravity="center"
-                android:text="继续添加"
-                android:background="@drawable/search_btn_backcolor"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
 
         </LinearLayout>
 

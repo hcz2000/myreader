@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.stock;
+package com.zhao.myreader.ui.home.stock;
 
 
 import android.os.Bundle;
@@ -12,9 +12,9 @@ import com.zhao.myreader.base.BaseActivity;
 import com.zhao.myreader.databinding.ActivityInputStockBinding;
 
 
-public class InputStockActivity extends BaseActivity {
+public class UpdateStockActivity extends BaseActivity {
 
-    private InputStockPrensenter mInputStockPrensenter;
+    private UpdateStockPrensenter mUpdateStockPrensenter;
     private ActivityInputStockBinding binding;
 
     @Override
@@ -23,15 +23,13 @@ public class InputStockActivity extends BaseActivity {
         binding = ActivityInputStockBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setStatusBar(R.color.sys_line);
-        mInputStockPrensenter = new InputStockPrensenter(this);
-        mInputStockPrensenter.enable();
+        mUpdateStockPrensenter = new UpdateStockPrensenter(this);
+        mUpdateStockPrensenter.enable();
     }
 
     @Override
     public void onBackPressed() {
-       if (!mInputStockPrensenter.onBackPressed()){
-           super.onBackPressed();
-       }
+        super.onBackPressed();
     }
 
     public LinearLayout getLlTitleBack() {
@@ -41,6 +39,8 @@ public class InputStockActivity extends BaseActivity {
     public TextView getTvTitleText() {
         return binding.title.tvTitleText;
     }
+
+    public TextView getTvLabel1() { return binding.label1;}
 
     public EditText getEtStockCode() {
         return binding.etStockCode;

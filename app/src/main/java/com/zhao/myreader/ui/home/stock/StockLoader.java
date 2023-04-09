@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.home.bbs;
+package com.zhao.myreader.ui.home.stock;
 
 import android.content.Context;
 

@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.zhao.myreader.base.BasePresenter;
-import com.zhao.myreader.ui.home.bbs.StockFragment;
+import com.zhao.myreader.ui.home.stock.StockFragment;
 import com.zhao.myreader.ui.home.bookcase.BookcaseFragment;
 import com.zhao.myreader.ui.home.bookstore.BookStoreFragment;
 import com.zhao.myreader.ui.search.SearchBookActivity;
