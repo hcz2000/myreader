@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.read;
+package com.zhao.myreader.ui.reader;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,22 +6,24 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 
+
 import android.view.LayoutInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.spreada.utils.chinese.ZHConverter;
 import com.zhao.myreader.R;
 import com.zhao.myreader.base.application.SysManager;
 import com.zhao.myreader.callback.ResultCallback;
+
 import com.zhao.myreader.custom.MyTextView;
 import com.zhao.myreader.entity.Setting;
 import com.zhao.myreader.enums.Font;
@@ -37,31 +39,25 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 /**
- * （已废弃）
- * Created by zhao on 2017/7/26.
+ * Created by zhao on 2017/8/17.
  */
 
-public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
+public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.ViewHolder> {
 
-    private int mResourceId;
+    private LayoutInflater mInflater;
+    private ArrayList<Chapter> mDatas;
+    private OnClickItemListener mOnClickItemListener;
+    private View.OnTouchListener mOnTouchListener;
 
-    private ListView mListView;
     private ChapterService mChapterService;
     private BookService mBookService;
     private Setting mSetting;
     private Book mBook;
     private Typeface mTypeFace;
     private TextView curTextView;
-
-    public ChapterContentAdapter(Context context, int resourceId, ArrayList<Chapter> datas, Book book) {
-        super(context, resourceId, datas);
-        mResourceId = resourceId;
-        mChapterService = new ChapterService();
-        mBookService = new BookService();
-        mSetting = SysManager.getSetting();
-        mBook = book;
-        initFont();
-    }
+    private int mResourceId;
+    private Context mContext;
+    private RecyclerView rvContent;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -77,62 +73,94 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
     };
 
 
-    @Override
-    public void notifyDataSetChanged() {
+    ReadContentAdapter(Context context, int resourceId, ArrayList<Chapter> datas, Book book) {
+        mInflater = LayoutInflater.from(context);
+        mDatas = datas;
+        mResourceId = resourceId;
+        mChapterService = new ChapterService();
+        mBookService = new BookService();
         mSetting = SysManager.getSetting();
+        mBook = book;
+        mContext = context;
         initFont();
-        super.notifyDataSetChanged();
     }
 
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder viewHolder = null;
-        if (convertView == null) {
-            viewHolder = new ViewHolder();
-            convertView = LayoutInflater.from(getContext()).inflate(mResourceId, null);
-            viewHolder.tvTitle = (MyTextView) convertView.findViewById(R.id.tv_title);
-            viewHolder.tvContent = (MyTextView) convertView.findViewById(R.id.tv_content);
-            viewHolder.tvErrorTips = (TextView) convertView.findViewById(R.id.tv_loading_error_tips);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        ViewHolder(View arg0) {
+            super(arg0);
         }
-        mListView = (ListView) parent;
-        initView(position, viewHolder, convertView);
-        return convertView;
+
+        MyTextView tvTitle;
+        MyTextView tvContent;
+        TextView tvErrorTips;
     }
 
 
-    private void initView(final int postion, final ViewHolder viewHolder, View view) {
+
+    @Override
+    public int getItemCount() {
+        return mDatas.size();
+    }
+
+    public Chapter getItem(int position) {
+        return mDatas.get(position);
+    }
+
+    /**
+     * 创建ViewHolder
+     */
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        if (rvContent == null) rvContent = (RecyclerView) viewGroup;
+        View view = mInflater.inflate(mResourceId, viewGroup, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        viewHolder.tvTitle = view.findViewById(R.id.tv_title);
+        viewHolder.tvContent = view.findViewById(R.id.tv_content);
+        viewHolder.tvErrorTips = view.findViewById(R.id.tv_loading_error_tips);
+        return viewHolder;
+    }
+
+
+
+    /**
+     * 设置值
+     */
+    @Override
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
+        initView(i, viewHolder);
+
+
+        if (mOnTouchListener != null){
+            viewHolder.itemView.setOnTouchListener(mOnTouchListener);
+        }
+
+        viewHolder.itemView.setOnClickListener(v -> {
+            if (mOnClickItemListener != null) {
+                mOnClickItemListener.onClick(viewHolder.itemView, i);
+            }
+        });
+
+    }
+
+    private void initView(final int postion, final ViewHolder viewHolder) {
         final Chapter chapter = getItem(postion);
+
         viewHolder.tvContent.setTypeface(mTypeFace);
         viewHolder.tvTitle.setTypeface(mTypeFace);
         viewHolder.tvErrorTips.setVisibility(View.GONE);
-
-       /* hiddenSoftInput(viewHolder.tvContent);
-        hiddenSoftInput(viewHolder.tvTitle);*/
-
         viewHolder.tvTitle.setText("【" + getLanguageContext(chapter.getTitle()) + "】");
-
-
         if (mSetting.isDayStyle()) {
-            viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(mSetting.getReadWordColor()));
-            viewHolder.tvContent.setTextColor(getContext().getResources().getColor(mSetting.getReadWordColor()));
+            viewHolder.tvTitle.setTextColor(mContext.getResources().getColor(mSetting.getReadWordColor()));
+            viewHolder.tvContent.setTextColor(mContext.getResources().getColor(mSetting.getReadWordColor()));
         } else {
-            viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(R.color.sys_night_word));
-            viewHolder.tvContent.setTextColor(getContext().getResources().getColor(R.color.sys_night_word));
+            viewHolder.tvTitle.setTextColor(mContext.getResources().getColor(R.color.sys_night_word));
+            viewHolder.tvContent.setTextColor(mContext.getResources().getColor(R.color.sys_night_word));
         }
-
 
         viewHolder.tvTitle.setTextSize(mSetting.getReadWordSize() + 2);
         viewHolder.tvContent.setTextSize(mSetting.getReadWordSize());
-        viewHolder.tvErrorTips.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getChapterContent(chapter, viewHolder);
-            }
-        });
+        viewHolder.tvErrorTips.setOnClickListener(view -> getChapterContent(chapter, viewHolder));
         if (StringHelper.isEmpty(chapter.getContent())) {
             getChapterContent(chapter, viewHolder);
         } else {
@@ -141,12 +169,20 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
 
 
         curTextView = viewHolder.tvContent;
+
         preLoading(postion);
 
         lastLoading(postion);
 
-        saveHistory(postion);
+    }
 
+
+
+
+    public void notifyDataSetChangedBySetting() {
+        mSetting = SysManager.getSetting();
+        initFont();
+        super.notifyDataSetChanged();
     }
 
     public TextView getCurTextView() {
@@ -160,7 +196,6 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         return content;
 
     }
-
 
     /**
      * 加载章节内容
@@ -220,7 +255,7 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
      * 预加载下一章
      */
     private void preLoading(int position) {
-        if (position + 1 < getCount()) {
+        if (position + 1 < getItemCount()) {
             Chapter chapter = getItem(position + 1);
             if (StringHelper.isEmpty(chapter.getContent())) {
                 getChapterContent(chapter, null);
@@ -249,16 +284,16 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         }
     }
 
-    public void initFont() {
+    private void initFont() {
         if (mSetting.getFont() == Font.默认字体) {
             mTypeFace = null;
         } else {
-            mTypeFace = Typeface.createFromAsset(getContext().getAssets(), mSetting.getFont().path);
+            mTypeFace = Typeface.createFromAsset(mContext.getAssets(), mSetting.getFont().path);
         }
     }
 
     private void hiddenSoftInput(EditText editText){
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         try {
             Class<EditText> cls = EditText.class;
@@ -270,12 +305,17 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         }
     }
 
-
-    class ViewHolder {
-
-        MyTextView tvTitle;
-        MyTextView tvContent;
-        TextView tvErrorTips;
+    void setmOnClickItemListener(OnClickItemListener mOnClickItemListener) {
+        this.mOnClickItemListener = mOnClickItemListener;
     }
+
+    void setmOnTouchListener(View.OnTouchListener mOnTouchListener) {
+        this.mOnTouchListener = mOnTouchListener;
+    }
+
+    public interface OnClickItemListener {
+        void onClick(View view, int positon);
+    }
+
 
 }

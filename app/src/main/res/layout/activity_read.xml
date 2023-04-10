@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/dl_read_activity"
-    tools:context="com.zhao.myreader.ui.read.ReadActivity">
+    tools:context="com.zhao.myreader.ui.reader.ReadActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -19,7 +17,7 @@ import com.zhao.myreader.creator.DialogCreator;
 import com.zhao.myreader.custom.DragAdapter;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.service.BookService;
-import com.zhao.myreader.ui.read.ReadActivity;
+import com.zhao.myreader.ui.reader.ReadActivity;
 import com.zhao.myreader.util.StringHelper;
 
 import java.util.ArrayList;

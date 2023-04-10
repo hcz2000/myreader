@@ -11,7 +11,7 @@ import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.enums.BookSource;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.service.BookService;
-import com.zhao.myreader.ui.read.ReadActivity;
+import com.zhao.myreader.ui.reader.ReadActivity;
 import com.zhao.myreader.util.StringHelper;
 import com.zhao.myreader.util.TextHelper;
 import com.zhao.myreader.webapi.BookStoreApi;
