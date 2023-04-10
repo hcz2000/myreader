@@ -17,7 +17,6 @@ import com.zhao.myreader.R;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.util.StringHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

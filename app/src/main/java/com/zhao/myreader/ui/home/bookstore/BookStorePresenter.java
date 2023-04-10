@@ -17,8 +17,6 @@ import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.entity.bookstore.BookType;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.ui.bookinfo.BookInfoActivity;
-import com.zhao.myreader.ui.home.bookstore.BookStoreBookTypeAdapter;
-import com.zhao.myreader.ui.home.bookstore.BookStoreFragment;
 import com.zhao.myreader.util.TextHelper;
 import com.zhao.myreader.webapi.BookStoreApi;
 

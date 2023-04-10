@@ -1,24 +1,16 @@
 package com.zhao.myreader.ui.home.bookstore;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.zhao.myreader.R;
 
 import com.zhao.myreader.callback.ResultCallback;

@@ -6,17 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
 import com.zhao.myreader.R;
-import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.SearchHistory;
-import com.zhao.myreader.util.StringHelper;
 
 import java.util.ArrayList;
 
