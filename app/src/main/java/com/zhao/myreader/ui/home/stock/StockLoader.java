@@ -1,18 +1,14 @@
 package com.zhao.myreader.ui.home.stock;
 
 import android.content.Context;
-
 import androidx.loader.content.AsyncTaskLoader;
-
 import com.zhao.myreader.greendao.entity.Stock;
 import com.zhao.myreader.greendao.service.StockService;
 import com.zhao.myreader.util.HttpUtil;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +68,4 @@ public class StockLoader extends AsyncTaskLoader<List<Stock>>{
             super.deliverResult(data);
         }
     }
-
-
 }

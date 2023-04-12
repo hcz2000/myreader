@@ -50,19 +50,12 @@ public class BookStorePresenter extends BasePresenter {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-
                     initTypeList();
-
                     break;
-
                 case 2:
-
                     initBookList();
-
                     break;
-
-
-            }
+           }
         }
     };
 
@@ -77,16 +70,11 @@ public class BookStorePresenter extends BasePresenter {
 
          //无需加载更多
          mBookStoreFragment.getSrlBookList().setEnableLoadMore(false);
-
          //小说列表下拉刷新事件
          mBookStoreFragment.getSrlBookList().setOnRefreshListener(refreshLayout -> {
-
              getBooksData();
          });
-
          getData();
-
-
     }
 
 
@@ -107,11 +95,8 @@ public class BookStorePresenter extends BasePresenter {
              @Override
              public void onError(Exception e) {
                  TextHelper.showText(e.getMessage());
-
              }
          });
-
-
     }
 
     /**
@@ -123,8 +108,7 @@ public class BookStorePresenter extends BasePresenter {
             @Override
             public void onFinish(Object o, int code) {
                 bookList= (ArrayList<Book>)o;
-
-                mHandler.sendMessage(mHandler.obtainMessage(2));
+    mHandler.sendMessage(mHandler.obtainMessage(2));
             }
 
             @Override
@@ -134,9 +118,6 @@ public class BookStorePresenter extends BasePresenter {
             }
         });
     }
-
-
-
 
 
     /**
@@ -158,11 +139,7 @@ public class BookStorePresenter extends BasePresenter {
             getBooksData();
 
         });
-
-
-
-
-    }
+   }
 
 
 

@@ -8,7 +8,7 @@ public class URLCONST {
 
     public static String nameSpace_tianlai = "https://m.23sk.net";
 
-    public static  String nameSpace_biquge = "https://m.52bqg.net/";
+    public static  String nameSpace_biquge = "https://m.52bqg.org";
 
     public static boolean isRSA = false;
 

@@ -27,7 +27,6 @@ public class BookStoreApi extends BaseApi{
             @Override
             public void onError(Exception e) {
                 callback.onError(e);
-
             }
         });
     }
@@ -71,7 +70,6 @@ public class BookStoreApi extends BaseApi{
             @Override
             public void onError(Exception e) {
                 callback.onError(e);
-
             }
         });
     }

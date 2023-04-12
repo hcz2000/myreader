@@ -104,9 +104,6 @@ public class BookcasePresenter extends BasePresenter {
             return true;
         });
 
-
-
-        //System.out.println("BookcasePresenter Started");
     }
 
     private void init() {

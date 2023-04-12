@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.zhao.myreader.R;
+import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.util.StringHelper;
 
@@ -58,7 +59,7 @@ public class SearchBookAdapter extends ArrayAdapter<Book> {
             book.setImgUrl("");
         }
         Glide.with(getContext())
-                .load(book.getImgUrl())
+                .load(URLCONST.nameSpace_tianlai+book.getImgUrl())
 //                .override(DipPxUtil.dip2px(getContext(), 80), DipPxUtil.dip2px(getContext(), 150))
                 .error(R.mipmap.no_image)
                 .placeholder(R.mipmap.no_image)

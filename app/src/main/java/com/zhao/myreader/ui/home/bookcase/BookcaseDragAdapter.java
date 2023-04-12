@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.zhao.myreader.R;
 import com.zhao.myreader.common.APPCONST;
+import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.creator.DialogCreator;
 import com.zhao.myreader.custom.DragAdapter;
 import com.zhao.myreader.greendao.entity.Book;
@@ -103,8 +104,9 @@ public class BookcaseDragAdapter extends DragAdapter {
         if (StringHelper.isEmpty(book.getImgUrl())) {
             book.setImgUrl("");
         }
+
         Glide.with(mContext)
-                .load(book.getImgUrl())
+                .load(URLCONST.nameSpace_tianlai+book.getImgUrl())
                 .error(R.mipmap.no_image)
                 .placeholder(R.mipmap.no_image)
                 .into(viewHolder.ivBookImg);

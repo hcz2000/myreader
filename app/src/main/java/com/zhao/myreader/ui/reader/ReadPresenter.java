@@ -672,7 +672,7 @@ public class ReadPresenter extends BasePresenter {
                     mChapters = (ArrayList<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
                     mBookService.updateEntity(mBook);
                 }
-                System.out.println("ReadPresenter--getData: "+mChapters.size());
+                //System.out.println("ReadPresenter--getData: "+mChapters.size());
                 updateAllOldChapterData(chapters);
                 mInvertedOrderChapters.clear();
                 mInvertedOrderChapters.addAll(mChapters);
