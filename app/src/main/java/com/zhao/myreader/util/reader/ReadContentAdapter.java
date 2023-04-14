@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.reader;
+package com.zhao.myreader.util.reader;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -48,7 +48,6 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
     private ArrayList<Chapter> mDatas;
     private OnClickItemListener mOnClickItemListener;
     private View.OnTouchListener mOnTouchListener;
-
     private ChapterService mChapterService;
     private BookService mBookService;
     private Setting mSetting;
@@ -90,7 +89,6 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
         ViewHolder(View arg0) {
             super(arg0);
         }
-
         MyTextView tvTitle;
         MyTextView tvContent;
         TextView tvErrorTips;
@@ -130,7 +128,6 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         initView(i, viewHolder);
 
-
         if (mOnTouchListener != null){
             viewHolder.itemView.setOnTouchListener(mOnTouchListener);
         }
@@ -157,7 +154,6 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
             viewHolder.tvTitle.setTextColor(mContext.getResources().getColor(R.color.sys_night_word));
             viewHolder.tvContent.setTextColor(mContext.getResources().getColor(R.color.sys_night_word));
         }
-
         viewHolder.tvTitle.setTextSize(mSetting.getReadWordSize() + 2);
         viewHolder.tvContent.setTextSize(mSetting.getReadWordSize());
         viewHolder.tvErrorTips.setOnClickListener(view -> getChapterContent(chapter, viewHolder));
@@ -166,18 +162,10 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
         } else {
             viewHolder.tvContent.setText(getLanguageContext(chapter.getContent()));
         }
-
-
         curTextView = viewHolder.tvContent;
-
         preLoading(postion);
-
         lastLoading(postion);
-
     }
-
-
-
 
     public void notifyDataSetChangedBySetting() {
         mSetting = SysManager.getSetting();
@@ -218,7 +206,6 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
                 } else {
                     viewHolder.tvContent.setText(chapter.getContent());
                 }
-
                 viewHolder.tvErrorTips.setVisibility(View.GONE);
             }
         } else {
@@ -237,19 +224,16 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
                         });
                     }
                 }
-
                 @Override
                 public void onError(Exception e) {
                     if (viewHolder != null) {
                         mHandler.sendMessage(mHandler.obtainMessage(1, viewHolder));
                     }
                 }
-
             });
         }
 
     }
-
 
     /**
      * 预加载下一章
@@ -316,6 +300,4 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
     public interface OnClickItemListener {
         void onClick(View view, int positon);
     }
-
-
 }

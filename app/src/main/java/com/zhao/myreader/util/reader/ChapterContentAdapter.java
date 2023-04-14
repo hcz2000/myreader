@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.reader;
+package com.zhao.myreader.util.reader;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -44,7 +44,6 @@ import java.util.ArrayList;
 public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
 
     private int mResourceId;
-
     private ListView mListView;
     private ChapterService mChapterService;
     private BookService mBookService;
@@ -114,8 +113,6 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         hiddenSoftInput(viewHolder.tvTitle);*/
 
         viewHolder.tvTitle.setText("【" + getLanguageContext(chapter.getTitle()) + "】");
-
-
         if (mSetting.isDayStyle()) {
             viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(mSetting.getReadWordColor()));
             viewHolder.tvContent.setTextColor(getContext().getResources().getColor(mSetting.getReadWordColor()));
@@ -123,8 +120,6 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
             viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(R.color.sys_night_word));
             viewHolder.tvContent.setTextColor(getContext().getResources().getColor(R.color.sys_night_word));
         }
-
-
         viewHolder.tvTitle.setTextSize(mSetting.getReadWordSize() + 2);
         viewHolder.tvContent.setTextSize(mSetting.getReadWordSize());
         viewHolder.tvErrorTips.setOnClickListener(new View.OnClickListener() {
@@ -139,14 +134,10 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
             viewHolder.tvContent.setText(getLanguageContext(chapter.getContent()));
         }
 
-
         curTextView = viewHolder.tvContent;
         preLoading(postion);
-
         lastLoading(postion);
-
         saveHistory(postion);
-
     }
 
     public TextView getCurTextView() {

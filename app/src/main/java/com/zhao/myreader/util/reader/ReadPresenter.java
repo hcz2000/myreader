@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.reader;
+package com.zhao.myreader.util.reader;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -921,6 +921,5 @@ public class ReadPresenter extends BasePresenter {
     public void destroy(){
         MyApplication.getApplication().shutdownThreadPool();
     }
-
 
 }

@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.reader;
+package com.zhao.myreader.util.reader;
 
 
 import android.content.Intent;
