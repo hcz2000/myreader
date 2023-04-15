@@ -52,7 +52,6 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
-
         </LinearLayout>
 
         <LinearLayout
@@ -94,9 +93,7 @@
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
-
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -139,10 +136,7 @@
                     android:text="清空历史记录"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
-
-
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -153,7 +147,6 @@
             android:fadingEdge="none"
             android:overScrollMode="never"
             android:scrollbars="none">
-
         </ListView>
 
     </LinearLayout>

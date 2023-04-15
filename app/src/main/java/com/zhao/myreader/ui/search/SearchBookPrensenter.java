@@ -36,26 +36,17 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  */
 
 public class SearchBookPrensenter extends BasePresenter {
-
     private SearchBookActivity mSearchBookActivity;
     private SearchBookAdapter mSearchBookAdapter;
     private String searchKey;//搜索关键字
     private ArrayList<Book> mBooks = new ArrayList<>();
     private ArrayList<SearchHistory> mSearchHistories = new ArrayList<>();
     private ArrayList<String> mSuggestions = new ArrayList<>();
-
     private SearchHistoryService mSearchHistoryService;
-
     private SearchHistoryAdapter mSearchHistoryAdapter;
-
-
-
     private int inputConfirm = 0;//搜索输入确认
     private int confirmTime = 1000;//搜索输入确认时间（毫秒）
-
     private static String[] suggestion = {"凡人修仙之仙界篇", "诡秘之主", "元尊" ,"天下第九","斗罗大陆4终极斗罗", "剑来",  "三寸人间"};
-
-
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
@@ -180,7 +171,6 @@ public class SearchBookPrensenter extends BasePresenter {
         mSearchBookActivity.getLlSuggestBooksView().setVisibility(View.GONE);
         mSearchBookActivity.getLlHistoryView().setVisibility(View.GONE);
         mSearchBookActivity.getPbLoading().setVisibility(View.GONE);
-
     }
 
     /**
@@ -232,7 +222,6 @@ public class SearchBookPrensenter extends BasePresenter {
             return true;
         }
     }
-
 
 }
 

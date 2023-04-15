@@ -76,7 +76,6 @@ public class SearchBookAdapter extends ArrayAdapter<Book> {
         TextView tvDesc;
         TextView tvAuthor;
         TextView tvType;
-
     }
 
 }
