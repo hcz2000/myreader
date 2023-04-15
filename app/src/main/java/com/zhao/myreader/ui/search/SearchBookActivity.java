@@ -28,7 +28,6 @@ public class SearchBookActivity extends BaseActivity {
         setStatusBar(R.color.sys_line);
         mSearchBookPrensenter = new SearchBookPrensenter(this);
         mSearchBookPrensenter.enable();
-
     }
 
     @Override

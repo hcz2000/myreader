@@ -56,7 +56,7 @@ public class ChapterLoader extends AsyncTaskLoader<Chapter>{
         final StringBuffer content=new StringBuffer();
         String page1Url = URLCONST.nameSpace_tianlai + chapter.getUrl();
         String page1Html=HttpUtil.getRequest_Sync(page1Url);
-        content.append(TianLaiReadUtil.getContentFromHtml(page1Html);
+        content.append(TianLaiReadUtil.getContentFromHtml(page1Html));
         if(content.toString().equals("")) {
             chapter.setContent("");
             return;
@@ -65,19 +65,19 @@ public class ChapterLoader extends AsyncTaskLoader<Chapter>{
         String page2Url=TianLaiReadUtil.getNextPageFromHtml(page1Html);
         if(page2Url!=null){
             String page2Html=HttpUtil.getRequest_Sync(page2Url);
-            String page2=TianLaiReadUtil.getContentFromHtml(page2Html));
+            String page2=TianLaiReadUtil.getContentFromHtml(page2Html);
             String page3Url=TianLaiReadUtil.getNextPageFromHtml(page2Html);
             if(page2.length()>2) {
                 content.append(page2.substring(2));
             }
             if(page3Url!=null){
                 String page3Html=HttpUtil.getRequest_Sync(page3Url);
-                String page3=TianLaiReadUtil.getContentFromHtml(page3Html));
+                String page3=TianLaiReadUtil.getContentFromHtml(page3Html);
                 if(page3.length()>2)
-                    content.append(page3.substring(2);
+                    content.append(page3.substring(2));
             }
         }
-        chapter.setContent(content.toString())；
+        chapter.setContent(content.toString());
         return;
     }
 }
