@@ -53,17 +53,13 @@ public class ReadActivity extends BaseActivity {
         return binding.tvBookList;
     }
 
-
-
     public SmartRefreshLayout getSrlContent() {
         return binding.srlContent;
     }
 
-
     public ProgressBar getPbLoading() {
         return binding.pbLoading;
     }
-
 
     public ListView getLvChapterList() {
         return binding.lvChapterList;

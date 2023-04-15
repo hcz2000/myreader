@@ -520,7 +520,6 @@ public class ReadPresenter extends BasePresenter {
             public void run() {
                 try {
                     Thread.sleep(5);
-                    //System.out.println("ReadPresenter--delayTurnToChapter:sendMessage");
                     mHandler.sendMessage(mHandler.obtainMessage(4, position, 0));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
