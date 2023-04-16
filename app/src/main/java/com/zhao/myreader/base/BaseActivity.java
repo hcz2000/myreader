@@ -21,19 +21,16 @@ import com.zhao.myreader.util.SystemBarTintManager;
  * Created by zhao on 2016/4/16.
  */
 public class BaseActivity extends AppCompatActivity {
-
     public static int width = 0;
     public static int height = 0;
     public static boolean home;
     public static boolean back;
     private boolean catchHomeKey = false;
-
     private InputMethodManager mInputMethodManager; //输入管理器
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //将每一个Activity都加入activity管理器
         ActivityManage.addActivity(this);
         Log.d("ActivityName: ",getLocalClassName());
@@ -44,18 +41,14 @@ public class BaseActivity extends AppCompatActivity {
             width = dm.widthPixels;
             height = dm.heightPixels;
         }
-
         mInputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
-
 
     @Override
     protected void onDestroy() {
         ActivityManage.removeActivity(this);
         super.onDestroy();
-
     }
-
 
     @Override
     protected void onPause() {
@@ -68,8 +61,6 @@ public class BaseActivity extends AppCompatActivity {
         BaseActivity.back = false;
         super.onResume();
     }
-
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -91,7 +82,6 @@ public class BaseActivity extends AppCompatActivity {
         }
         win.setAttributes(winParams);
     }
-
 
     /**
      * 设置状态栏颜色

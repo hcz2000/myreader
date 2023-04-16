@@ -40,53 +40,39 @@ public class SearchBookActivity extends BaseActivity {
     public LinearLayout getLlTitleBack() {
         return binding.title.llTitleBack;
     }
-
     public TextView getTvTitleText() {
         return binding.title.tvTitleText;
     }
-
-
-
     public EditText getEtSearchKey() {
         return binding.etSearchKey;
     }
-
     public TextView getTvSearchConform() {
         return binding.tvSearchConform;
     }
-
     public TagGroup getTgSuggestBook() {
         return binding.tgSuggestBook;
     }
-
     public LinearLayout getLlRefreshSuggestBooks() {
         return binding.llRefreshSuggestBooks;
     }
-
     public ListView getLvSearchBooksList() {
         return binding.lvSearchBooksList;
     }
-
     public LinearLayout getLlSuggestBooksView() {
         return binding.llSuggestBooksView;
     }
-
     public ProgressBar getPbLoading() {
         return binding.pbLoading;
     }
-
     public ListView getLvHistoryList() {
         return binding.lvHistoryList;
     }
-
     public LinearLayout getLlClearHistory() {
         return binding.llClearHistory;
     }
-
     public LinearLayout getLlHistoryView() {
         return binding.llHistoryView;
     }
-
     public ActivitySearchBookBinding getBinding() {
         return binding;
     }

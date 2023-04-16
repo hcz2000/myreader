@@ -78,26 +78,20 @@ public class SearchBookPrensenter extends BasePresenter {
 
         mSearchBookActivity.getTvTitleText().setText("搜索");
         mSearchBookActivity.getLlTitleBack().setOnClickListener(view -> mSearchBookActivity.finish());
-
         mSearchBookActivity.getEtSearchKey().addTextChangedListener(new TextWatcher() {
-
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void afterTextChanged(final Editable editable) {
                 searchKey = editable.toString();
                 if (StringHelper.isEmpty(searchKey)) {
                     search();
                 }
-
             }
 
         });
@@ -115,8 +109,8 @@ public class SearchBookPrensenter extends BasePresenter {
             return false;
         });
 
-
         mSearchBookActivity.getLvSearchBooksList().setOnItemClickListener((adapterView, view, i, l) -> {
+            //System.out.println("Books List clicked,starting SearchBookActivity");
             Intent intent = new Intent(mSearchBookActivity, BookInfoActivity.class);
             intent.putExtra(APPCONST.BOOK, mBooks.get(i));
             mSearchBookActivity.startActivity(intent);
@@ -143,7 +137,6 @@ public class SearchBookPrensenter extends BasePresenter {
      * 初始化建议书目
      */
     private void initSuggestionBook() {
-
         mSearchBookActivity.getTgSuggestBook().setTags(suggestion);
     }
 
@@ -179,19 +172,16 @@ public class SearchBookPrensenter extends BasePresenter {
     private void getData() {
         mBooks.clear();
         CommonApi.search(searchKey, new ResultCallback() {
-
             @Override
             public void onFinish(Object o, int code) {
                 mBooks = (ArrayList<Book>) o;
                 mHandler.sendMessage(mHandler.obtainMessage(2));
             }
-
             @Override
             public void onError(Exception e) {
                 mHandler.sendMessage(mHandler.obtainMessage(3));
             }
         });
-
     }
 
     /**
