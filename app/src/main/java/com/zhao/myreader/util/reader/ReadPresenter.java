@@ -91,28 +91,34 @@ public class ReadPresenter extends BasePresenter {
                     init();
                     break;
                 case 2://NOT USED?
+                    /*hcz
                     mReadActivity.getPbLoading().setVisibility(View.GONE);
-                    mReadActivity.getSrlContent().finishLoadMore();
+                    mReadActivity.getSrlContent().finishLoadMore();*/
                     break;
                 case 3://NOT USED?
+                    /*hcz
                     int position = msg.arg1;
                     mReadActivity.getRvContent().scrollToPosition(position);
                     if (position >= mChapters.size() - 1) {
                         turnToChapter(position);
                     }
-                    mReadActivity.getPbLoading().setVisibility(View.GONE);
+                    mReadActivity.getPbLoading().setVisibility(View.GONE);*/
                     break;
                 case 4:
-                    position = msg.arg1;
+                    int position = msg.arg1;
                     mReadActivity.getRvContent().scrollToPosition(position);
-                    //hcz
+                    /*hcz
+                    System.out.println("HistoryChapterNum/position:"+mBook.getHistoryChapterNum()+ "/"+position);
+                    */
                     if (mBook.getHistoryChapterNum() < position) {
                         turnToChapter(position);
                     }
                     mReadActivity.getPbLoading().setVisibility(View.GONE);
                     break;
                 case 5://NOT USED?
+                    /*hcz
                     saveLastChapterReadPosition(msg.arg1);
+                     */
                     break;
                 case 6:
                     int lastPosition=mBook.getLastReadPosition();
@@ -196,7 +202,6 @@ public class ReadPresenter extends BasePresenter {
 
                     @Override
                     public void onError(Exception e) {
-
                     }
                 });
             } else {
@@ -278,9 +283,12 @@ public class ReadPresenter extends BasePresenter {
         } else {
             mBook.setLastReadPosition(mBook.getLastReadPosition() + dy);
         }
-        //System.out.println("Last Read Position:"+mBook.getLastReadPosition());
+
         mBook.setHistoryChapterNum(mContentLayoutManager.findLastVisibleItemPosition());
-        //System.out.println("HistoryChapterNum:"+mBook.getHistoryChapterNum());
+        /* hcz
+        System.out.println("Last Read Position:"+mBook.getLastReadPosition());
+        System.out.println("HistoryChapterNum:"+mBook.getHistoryChapterNum());
+         */
 
         if (!StringHelper.isEmpty(mBook.getId())) {
             mBookService.updateEntity(mBook);
