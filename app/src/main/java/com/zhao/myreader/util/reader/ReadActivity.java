@@ -30,7 +30,6 @@ public class ReadActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // 隐藏android系统的状态栏
         binding = ActivityReadBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         mReadPresenter = new ReadPresenter(this);
         mReadPresenter.enable();
     }
@@ -44,35 +43,27 @@ public class ReadActivity extends BaseActivity {
     public RecyclerView getRvContent() {
         return binding.rvContent;
     }
-
     public TextView getTvChapterSort() {
         return binding.tvChapterSort;
     }
-
-    public TextView getTvBookList() {
-        return binding.tvBookList;
+    public TextView getTvCatalog() {
+        return binding.tvCatalog;
     }
-
     public SmartRefreshLayout getSrlContent() {
         return binding.srlContent;
     }
-
     public ProgressBar getPbLoading() {
         return binding.pbLoading;
     }
-
     public ListView getLvChapterList() {
         return binding.lvChapterList;
     }
-
     public DrawerLayout getDlReadActivity() {
         return binding.dlReadActivity;
     }
-
-    public LinearLayout getLlChapterListView() {
-        return binding.llChapterListView;
+    public LinearLayout getLlCatalogView() {
+        return binding.llCatalogView;
     }
-
     public ActivityReadBinding getBinding() {
         return binding;
     }

@@ -235,7 +235,7 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
 
     public void saveHistory(int position) {
         if (!StringHelper.isEmpty(mBook.getId())) {
-            mBook.setHisttoryChapterNum(position);
+            mBook.setHistoryChapterNum(position);
             mBookService.updateEntity(mBook);
         }
     }

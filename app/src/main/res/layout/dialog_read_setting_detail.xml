@@ -5,8 +5,6 @@
     android:fitsSystemWindows="true"
     android:layout_gravity="center_vertical">
 
-
-
     <LinearLayout
         android:id="@+id/ll_bottom_view"
         android:layout_width="match_parent"
@@ -16,19 +14,16 @@
         android:padding="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:gravity="center">
-
             <ImageView
                android:layout_marginLeft="5dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@mipmap/r6"/>
-
             <SeekBar
                 android:id="@+id/sb_brightness_progress"
                 android:layout_width="match_parent"
@@ -41,12 +36,10 @@
                 android:minHeight="1dp"
                 android:progressDrawable="@drawable/seekbar_bg"
                 android:thumb="@mipmap/thumb" />
-
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@mipmap/r4"/>
-
             <TextView
                 android:id="@+id/tv_system_brightness"
                 android:layout_marginLeft="20dp"
@@ -57,8 +50,6 @@
                 android:textSize="15sp"
                 android:background="@drawable/setting_btn_bg"
                 android:textColor="@drawable/setting_btn_bg_color"/>
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -76,7 +67,6 @@
                 android:layout_weight="1"
                 android:text="A-"
                 android:textColor="@color/sys_dialog_setting_word_bright"/>
-
             <TextView
                 android:id="@+id/tv_text_size"
                 android:layout_width="wrap_content"
@@ -85,7 +75,6 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:textColor="@color/sys_dialog_setting_word_bright"/>
-
             <TextView
                 android:id="@+id/tv_increase_text_size"
                 android:layout_width="match_parent"
@@ -96,7 +85,6 @@
                 android:textSize="18sp"
                 android:text="A+"
                 android:textColor="@color/sys_dialog_setting_word_bright"/>
-
             <TextView
                 android:id="@+id/tv_simplified_and_traditional"
                 android:layout_width="40dp"
@@ -118,9 +106,6 @@
                 android:textSize="15sp"
                 android:background="@drawable/setting_btn_bg"
                 android:textColor="@drawable/setting_btn_bg_color"/>
-
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -128,13 +113,10 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:gravity="center|left">
-
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
-
                 <ImageView
                     android:id="@+id/iv_common_style"
                     android:layout_width="40dp"
@@ -248,14 +230,6 @@
                 android:layout_weight="2.3"
                 android:text="自动滚屏"
                 android:textColor="@color/sys_dialog_setting_word_bright"/>
-
-
         </LinearLayout>
-
-
-
-
     </LinearLayout>
-
-
 </RelativeLayout>

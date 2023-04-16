@@ -1,11 +1,9 @@
 package com.zhao.myreader.greendao.service;
 
 import android.database.Cursor;
-import android.widget.ListView;
 
 import com.zhao.myreader.greendao.GreenDaoManager;
 import com.zhao.myreader.greendao.entity.Book;
-import com.zhao.myreader.greendao.entity.Chapter;
 import com.zhao.myreader.greendao.gen.BookDao;
 
 import java.util.ArrayList;
@@ -42,7 +40,7 @@ public class BookService extends BaseService {
                 book.setNewestChapterTitle(cursor.getString(9));
                 book.setNewestChapterUrl(cursor.getString(10));
                 book.setHistoryChapterId(cursor.getString(11));
-                book.setHisttoryChapterNum(cursor.getInt(12));
+                book.setHistoryChapterNum(cursor.getInt(12));
                 book.setSortCode(cursor.getInt(13));
                 book.setNoReadNum(cursor.getInt(14));
                 book.setChapterTotalNum(cursor.getInt(15));

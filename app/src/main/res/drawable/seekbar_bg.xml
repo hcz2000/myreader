@@ -3,18 +3,16 @@
 
     <item android:id="@android:id/background">
         <shape>
-
             <solid android:color="@color/sys_dialog_setting_word"/>
         </shape>
     </item>
     <item android:id="@android:id/secondaryProgress">
         <clip>
-            <shape>
+      ![](../drawable-xhdpi/ic_keyboard_arrow_left_black_24dp.png)![](../drawable-xxhdpi/ic_keyboard_arrow_left_black_24dp.png)![](../drawable-hdpi/ic_keyboard_arrow_left_black_24dp.png)![](../drawable-mdpi/ic_keyboard_arrow_left_black_24dp.png)![](../drawable-xxxhdpi/ic_keyboard_arrow_left_black_24dp.png)      <shape>
                 <solid android:color="@color/sys_dialog_setting_word"/>
             </shape>
         </clip>
     </item>
-
     <item android:id="@android:id/progress">
         <clip>
             <shape>

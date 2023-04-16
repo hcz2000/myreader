@@ -164,7 +164,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
         }
         curTextView = viewHolder.tvContent;
         preLoading(postion);
-        lastLoading(postion);
+        reverseLoading(postion);
     }
 
     public void notifyDataSetChangedBySetting() {
@@ -252,7 +252,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
      *
      * @param position
      */
-    private void lastLoading(int position) {
+    private void reverseLoading(int position) {
         if (position > 0) {
             Chapter chapter = getItem(position - 1);
             if (StringHelper.isEmpty(chapter.getContent())) {
@@ -263,7 +263,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
 
     public void saveHistory(int position) {
         if (!StringHelper.isEmpty(mBook.getId())) {
-            mBook.setHisttoryChapterNum(position);
+            mBook.setHistoryChapterNum(position);
             mBookService.updateEntity(mBook);
         }
     }
@@ -289,11 +289,11 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
         }
     }
 
-    void setmOnClickItemListener(OnClickItemListener mOnClickItemListener) {
+    void setClickItemListener(OnClickItemListener mOnClickItemListener) {
         this.mOnClickItemListener = mOnClickItemListener;
     }
 
-    void setmOnTouchListener(View.OnTouchListener mOnTouchListener) {
+    void setTouchListener(View.OnTouchListener mOnTouchListener) {
         this.mOnTouchListener = mOnTouchListener;
     }
 

@@ -159,10 +159,10 @@ public class Book implements Serializable {
     public void setHistoryChapterId(String historyChapterId) {
         this.historyChapterId = historyChapterId;
     }
-    public int getHisttoryChapterNum() {
+    public int getHistoryChapterNum() {
         return this.histtoryChapterNum;
     }
-    public void setHisttoryChapterNum(int histtoryChapterNum) {
+    public void setHistoryChapterNum(int histtoryChapterNum) {
         this.histtoryChapterNum = histtoryChapterNum;
     }
     public int getSortCode() {
@@ -194,6 +194,12 @@ public class Book implements Serializable {
     }
     public void setSource(String source) {
         this.source = source;
+    }
+    public int getHisttoryChapterNum() {
+        return this.histtoryChapterNum;
+    }
+    public void setHisttoryChapterNum(int histtoryChapterNum) {
+        this.histtoryChapterNum = histtoryChapterNum;
     }
 
 
