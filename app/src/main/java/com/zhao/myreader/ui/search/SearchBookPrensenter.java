@@ -22,8 +22,6 @@ import com.zhao.myreader.webapi.CommonApi;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
-
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
