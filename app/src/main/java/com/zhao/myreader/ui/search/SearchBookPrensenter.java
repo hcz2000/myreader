@@ -110,7 +110,6 @@ public class SearchBookPrensenter extends BasePresenter {
         });
 
         mSearchBookActivity.getLvSearchBooksList().setOnItemClickListener((adapterView, view, i, l) -> {
-            //System.out.println("Books List clicked,starting SearchBookActivity");
             Intent intent = new Intent(mSearchBookActivity, BookInfoActivity.class);
             intent.putExtra(APPCONST.BOOK, mBooks.get(i));
             mSearchBookActivity.startActivity(intent);
