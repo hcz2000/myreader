@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
+import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.enums.BookSource;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.service.BookService;
@@ -104,7 +105,7 @@ public class BookInfoPresenter extends  BasePresenter {
             }
         });
         Glide.with(mBookInfoActivity)
-                .load(mBook.getImgUrl())
+                .load(URLCONST.nameSpace_tianlai+mBook.getImgUrl())
                 .into(mBookInfoActivity.getIvBookImg());
     }
 
