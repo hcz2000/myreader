@@ -9,10 +9,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-
-
 import com.zhao.myreader.R;
-
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
@@ -20,10 +17,8 @@ import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.SearchHistory;
 import com.zhao.myreader.greendao.service.SearchHistoryService;
 import com.zhao.myreader.ui.bookinfo.BookInfoActivity;
-
 import com.zhao.myreader.util.StringHelper;
 import com.zhao.myreader.webapi.CommonApi;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
