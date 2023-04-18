@@ -10,9 +10,7 @@ import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.zhao.myreader.base.application.ActivityManage;
 import com.zhao.myreader.util.SystemBarTintManager;
 
@@ -36,7 +34,7 @@ public class BaseActivity extends AppCompatActivity {
         Log.d("ActivityName: ",getLocalClassName());
         DisplayMetrics dm = new DisplayMetrics();
         //获取屏幕宽高
-        if(height == 0 || height == 0){
+        if(height == 0){
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             width = dm.widthPixels;
             height = dm.heightPixels;
@@ -83,10 +81,6 @@ public class BaseActivity extends AppCompatActivity {
         win.setAttributes(winParams);
     }
 
-    /**
-     * 设置状态栏颜色
-     * @param colorId
-     */
     public void setStatusBar(int colorId){
 
         setTranslucentStatus(true);

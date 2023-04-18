@@ -15,8 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
+import android.app.LoaderManager;
+import android.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -271,7 +271,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 
             }
         });
-        loaderManager = mReadActivity.getLoaderManager();
+        loaderManager =mReadActivity.getLoaderManager();
         getData();
     }
 
@@ -921,10 +921,9 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         MyApplication.getApplication().shutdownThreadPool();
     }
 
-    @NonNull
     @Override
     public Loader onCreateLoader(int id, @Nullable Bundle args) {
-        return new ChapterLoader(mReadActivity.getBaseContext());
+        return new ChapterLoader(mReadActivity.getBaseContext(),mBook);
     }
 
     @Override
