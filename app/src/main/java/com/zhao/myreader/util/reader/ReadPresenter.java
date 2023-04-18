@@ -4,17 +4,19 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-
-
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,13 +50,14 @@ import com.zhao.myreader.webapi.CommonApi;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by zhao on 2017/7/27.
  */
 
-public class ReadPresenter extends BasePresenter {
+public class ReadPresenter extends BasePresenter implements LoaderManager.LoaderCallbacks{
 
     private ReadActivity mReadActivity;
     private Book mBook;
@@ -81,6 +84,7 @@ public class ReadPresenter extends BasePresenter {
     private Dialog mSettingDetailDialog;//详细设置视图
     private int curSortflag = 0; //0正序  1倒序
     private int cachedChapters = 0;//缓存章节数
+    private LoaderManager loaderManager;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -267,6 +271,7 @@ public class ReadPresenter extends BasePresenter {
 
             }
         });
+        loaderManager = mReadActivity.getLoaderManager();
         getData();
     }
 
@@ -422,7 +427,8 @@ public class ReadPresenter extends BasePresenter {
                             if (StringHelper.isEmpty(mBook.getId())){
                                 addBookToCaseAndDownload(tvDownloadProgress);
                             }else {
-                                getAllChapterData(tvDownloadProgress);
+                                //getAllChapterData(tvDownloadProgress);
+                                loadAllChapters(tvDownloadProgress);
                             }
                         }
                     });
@@ -439,7 +445,8 @@ public class ReadPresenter extends BasePresenter {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mBookService.addBook(mBook);
-                getAllChapterData(tvDownloadProgress);
+                //getAllChapterData(tvDownloadProgress);
+                loadAllChapters(tvDownloadProgress);
             }
         }, new DialogInterface.OnClickListener() {
             @Override
@@ -773,6 +780,11 @@ public class ReadPresenter extends BasePresenter {
     }
 
 
+    private void loadAllChapters(final TextView tvDownloadProgress) {
+        loaderManager.initLoader(Integer.parseInt(mBook.getId()), null, this);
+    }
+
+
     private void updateDownloadProgress(TextView tvDownloadProgress){
         try {
             tvDownloadProgress.setText(cachedChapters * 100 / mChapters.size() + " %");
@@ -907,6 +919,27 @@ public class ReadPresenter extends BasePresenter {
     @Override
     public void destroy(){
         MyApplication.getApplication().shutdownThreadPool();
+    }
+
+    @NonNull
+    @Override
+    public Loader onCreateLoader(int id, @Nullable Bundle args) {
+        return new ChapterLoader(mReadActivity.getBaseContext());
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader loader, Object data) {
+        Chapter chapter=(Chapter)data;
+        System.out.println("ReadPresenter--onLoadFinished:"+chapter.getTitle());
+        if(chapter!=null && chapter.getNumber()<mBook.getChapterTotalNum())
+            loader.forceLoad();
+        else
+            loaderManager.destroyLoader(loader.getId());
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader loader) {
+        loaderManager.restartLoader(loader.getId(),null,this);;
     }
 
 }
