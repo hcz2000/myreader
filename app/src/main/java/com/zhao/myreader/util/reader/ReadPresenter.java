@@ -746,6 +746,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     /**
      * 缓存所有章节
      */
+    /*
     private void getAllChapterData(final TextView tvDownloadProgress) {
         cachedChapters = 0;
         MyApplication.getApplication().newThread(new Runnable() {
@@ -778,10 +779,10 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             }
         });
     }
-
+*/
 
     private void loadAllChapters(final TextView tvDownloadProgress) {
-        loaderManager.initLoader(Integer.parseInt(mBook.getId()), null, this);
+        loaderManager.initLoader(mBook.getId().hashCode(), null, this);
     }
 
 
@@ -929,7 +930,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     @Override
     public void onLoadFinished(@NonNull Loader loader, Object data) {
         Chapter chapter=(Chapter)data;
-        System.out.println("ReadPresenter--onLoadFinished:"+chapter.getTitle());
+        mReadContentAdapter.notifyDataSetChanged();
+        System.out.println("Loaded:"+chapter.getTitle());
         if(chapter!=null && chapter.getNumber()<mBook.getChapterTotalNum()) {
             cachedChapters++;
             loader.forceLoad();

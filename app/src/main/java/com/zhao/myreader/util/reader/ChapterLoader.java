@@ -2,7 +2,6 @@ package com.zhao.myreader.util.reader;
 
 import android.content.Context;
 import android.content.AsyncTaskLoader;
-import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.Chapter;
 import com.zhao.myreader.greendao.service.ChapterService;
@@ -54,7 +53,7 @@ public class ChapterLoader extends AsyncTaskLoader<Chapter>{
 
     public void loadChapter(Chapter chapter){
         StringBuffer content=new StringBuffer();
-        String page1Url = URLCONST.nameSpace_tianlai + chapter.getUrl();
+        String page1Url = chapter.getUrl();
         String page1Html=HttpUtil.getRequest_Sync(page1Url);
         content.append(TianLaiReadUtil.getContentFromHtml(page1Html));
         if(content.toString().equals("")) {

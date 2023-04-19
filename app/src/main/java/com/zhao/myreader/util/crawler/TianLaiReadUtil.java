@@ -30,7 +30,6 @@ public class TianLaiReadUtil {
      * @return
      */
     public static String getContentFromHtml(String html) {
-
         Document doc = Jsoup.parse(html);
         Element divContent = doc.getElementById("content");
         if(divContent==null)
