@@ -931,14 +931,18 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     public void onLoadFinished(@NonNull Loader loader, Object data) {
         Chapter chapter=(Chapter)data;
         mReadContentAdapter.notifyDataSetChanged();
-        System.out.println("Loaded:"+chapter.getTitle());
         if(chapter!=null && chapter.getNumber()<mBook.getChapterTotalNum()) {
+            System.out.println("Loaded:"+chapter.getTitle());
             cachedChapters++;
-            loader.forceLoad();
+            if(loader.isStarted() ) {
+                loader.forceLoad();
+            }
             //mHandler.sendMessage(mHandler.obtainMessage(9,tvDownloadProgress));
         }else {
+            System.out.println("All chapters Loaded");
             TextHelper.showText(""+cachedChapters+"/"+mBook.getChapterTotalNum()+" cached");
-            loaderManager.destroyLoader(loader.getId());
+            //loader.stopLoading();
+            //loaderManager.destroyLoader(loader.getId());
         }
     }
 

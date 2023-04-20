@@ -32,8 +32,10 @@ public class ChapterLoader extends AsyncTaskLoader<Chapter>{
     public Chapter loadInBackground() {
         if(mCurrentChapter<mChapters.size()) {
             Chapter chapter = mChapters.get(mCurrentChapter);
-            if(chapter.getContent()==null || chapter.getContent().equals(""))
+            if(chapter.getContent()==null || chapter.getContent().equals("")) {
                 loadChapter(chapter);
+                mChapterService.updateChapter(chapter);
+            }
             mCurrentChapter++;
             return chapter;
         }else
@@ -78,4 +80,5 @@ public class ChapterLoader extends AsyncTaskLoader<Chapter>{
         }
         chapter.setContent(content.toString());
     }
+
 }
