@@ -37,6 +37,7 @@ import com.zhao.myreader.webapi.CommonApi;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhao on 2017/8/17.
@@ -45,7 +46,7 @@ import java.util.ArrayList;
 public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.ViewHolder> {
 
     private LayoutInflater mInflater;
-    private ArrayList<Chapter> mDatas;
+    private List<Chapter> mDatas;
     private OnClickItemListener mOnClickItemListener;
     private View.OnTouchListener mOnTouchListener;
     private ChapterService mChapterService;
@@ -72,7 +73,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
     };
 
 
-    ReadContentAdapter(Context context, int resourceId, ArrayList<Chapter> datas, Book book) {
+    ReadContentAdapter(Context context, int resourceId, List<Chapter> datas, Book book) {
         mInflater = LayoutInflater.from(context);
         mDatas = datas;
         mResourceId = resourceId;

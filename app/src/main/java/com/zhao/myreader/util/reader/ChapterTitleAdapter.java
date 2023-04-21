@@ -17,6 +17,7 @@ import com.zhao.myreader.entity.Setting;
 import com.zhao.myreader.greendao.entity.Chapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhao on 2017/7/26.
@@ -28,7 +29,7 @@ public class ChapterTitleAdapter extends ArrayAdapter<Chapter> {
     private Setting setting;
     private int curChapterPosition = -1;
 
-    public ChapterTitleAdapter(Context context, int resourceId, ArrayList<Chapter> datas){
+    public ChapterTitleAdapter(Context context, int resourceId, List<Chapter> datas){
         super(context,resourceId,datas);
         mResourceId = resourceId;
         setting = SysManager.getSetting();

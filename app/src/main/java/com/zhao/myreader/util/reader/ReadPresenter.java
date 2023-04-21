@@ -49,6 +49,7 @@ import com.zhao.myreader.webapi.CommonApi;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 
 import static android.app.Activity.RESULT_OK;
@@ -61,8 +62,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 
     private ReadActivity mReadActivity;
     private Book mBook;
-    private ArrayList<Chapter> mChapters = new ArrayList<>();
-    private ArrayList<Chapter> mInvertedOrderChapters = new ArrayList<>();
+    private List<Chapter> mChapters = new ArrayList<>();
+    private List<Chapter> mInvertedOrderChapters = new ArrayList<>();
     private ChapterService mChapterService;
     private BookService mBookService;
     private ReadContentAdapter mReadContentAdapter;
@@ -782,6 +783,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 */
 
     private void loadAllChapters(final TextView tvDownloadProgress) {
+        System.out.println("Loader init");
         loaderManager.initLoader(mBook.getId().hashCode(), null, this);
     }
 
@@ -924,31 +926,21 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 
     @Override
     public Loader onCreateLoader(int id, @Nullable Bundle args) {
-        return new ChapterLoader(mReadActivity.getBaseContext(),mBook);
+        return new BookLoader(mReadActivity.getBaseContext(),mBook);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader loader, Object data) {
-        Chapter chapter=(Chapter)data;
+        mChapters=(List<Chapter>)data;
         mReadContentAdapter.notifyDataSetChanged();
-        if(chapter!=null && chapter.getNumber()<mBook.getChapterTotalNum()) {
-            System.out.println("Loaded:"+chapter.getTitle());
-            cachedChapters++;
-            if(loader.isStarted() ) {
-                loader.forceLoad();
-            }
-            //mHandler.sendMessage(mHandler.obtainMessage(9,tvDownloadProgress));
-        }else {
-            System.out.println("All chapters Loaded");
-            TextHelper.showText(""+cachedChapters+"/"+mBook.getChapterTotalNum()+" cached");
-            //loader.stopLoading();
-            //loaderManager.destroyLoader(loader.getId());
-        }
+        System.out.println("All chapters Loaded");
+        TextHelper.showText(""+cachedChapters+"/"+mBook.getChapterTotalNum()+" cached");
+        loaderManager.destroyLoader(loader.getId());
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader loader) {
-        loaderManager.restartLoader(loader.getId(),null,this);;
+        //loaderManager.restartLoader(loader.getId(),null,this);;
     }
 
 }
