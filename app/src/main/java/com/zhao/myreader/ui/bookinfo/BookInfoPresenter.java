@@ -101,7 +101,6 @@ public class BookInfoPresenter extends  BasePresenter {
                 Intent intent = new Intent(mBookInfoActivity, ReadActivity.class);
                 intent.putExtra(APPCONST.BOOK,mBook);
                 mBookInfoActivity.startActivity(intent);
-
             }
         });
         Glide.with(mBookInfoActivity)

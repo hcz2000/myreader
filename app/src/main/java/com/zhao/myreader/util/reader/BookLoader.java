@@ -9,18 +9,20 @@ import com.zhao.myreader.greendao.service.ChapterService;
 import com.zhao.myreader.util.HttpUtil;
 import com.zhao.myreader.util.crawler.TianLaiReadUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
-
     private ChapterService mChapterService;
-
     private Book mBook;
+
+    private List<ProgressListener> progressListeners;
 
     BookLoader(Context context, Book book) {
         super(context);
         mBook=book;
         mChapterService = new ChapterService();
+        progressListeners=new ArrayList<ProgressListener>();
     }
 
     @Override
@@ -32,13 +34,26 @@ public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
     @Override
     public List<Chapter> loadInBackground() {
         List<Chapter> chapters=mChapterService.findBookAllChapterByBookId(mBook.getId());
+        int downloadedCount=0;
         for(Chapter chapter : chapters) {
             if(chapter.getContent()==null || chapter.getContent().equals("")) {
                 loadChapter(chapter);
                 System.out.println(chapter.getTitle());
                 mChapterService.updateChapter(chapter);
             }
+
+            if(chapter.getContent()!=null){
+                downloadedCount++;
+                if( downloadedCount%10 == 0 ){
+                    String progress=downloadedCount+"/"+chapters.size();
+                    for(ProgressListener listener:progressListeners)
+                        listener.notify(progress);
+                }
+            }
         }
+        String progress=downloadedCount+"/"+chapters.size();
+        for(ProgressListener listener:progressListeners)
+            listener.notify(progress);
         return chapters;
     }
     @Override
@@ -81,4 +96,7 @@ public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
         chapter.setContent(content.toString());
     }
 
+    public void registerProgressListener(ProgressListener listener){
+        progressListeners.add(listener);
+    }
 }

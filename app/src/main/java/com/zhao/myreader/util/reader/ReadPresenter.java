@@ -58,7 +58,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by zhao on 2017/7/27.
  */
 
-public class ReadPresenter extends BasePresenter implements LoaderManager.LoaderCallbacks{
+public class ReadPresenter extends BasePresenter implements LoaderManager.LoaderCallbacks, ProgressListener {
 
     private ReadActivity mReadActivity;
     private Book mBook;
@@ -81,11 +81,13 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     private long doubleClickInterval = 200;//双击确认时间
     private float settingOnClickValidFrom;
     private float settingOnClickValidTo;
-    private Dialog mSettingDialog;//设置视图
-    private Dialog mSettingDetailDialog;//详细设置视图
+    private Dialog mOperationDialog;//设置视图
+    private Dialog mSettingDialog;//详细设置视图
     private int curSortflag = 0; //0正序  1倒序
     private int cachedChapters = 0;//缓存章节数
     private LoaderManager loaderManager;
+    private BookLoader bookLoader;
+    private TextView downloadProgressView;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -139,10 +141,10 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     }
                     break;
                 case 8:
-                    showSettingView();
+                    showOperationView();
                     break;
                 case 9:
-                    updateDownloadProgress((TextView)msg.obj);
+                    updateDownloadProgress((String)msg.obj);
                     break;
             }
         }
@@ -349,13 +351,13 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     /**
      * 显示设置视图
      */
-    private void showSettingView() {
+    private void showOperationView() {
         autoScrollMode = false;
-        if (mSettingDialog != null) {
-            mSettingDialog.show();
+        if (mOperationDialog != null) {
+            mOperationDialog.show();
         } else {
             int progress = mContentLayoutManager.findLastVisibleItemPosition() * 100 / (mChapters.size() - 1);
-            mSettingDialog = DialogCreator.createReadSetting(mReadActivity, mSetting.isDayStyle(), progress, new View.OnClickListener() {
+            mOperationDialog = DialogCreator.createReadSetting(mReadActivity, mSetting.isDayStyle(), progress, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {//返回
                             mReadActivity.finish();
@@ -382,7 +384,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         public void onClick(View view) {//目录
                             initCatalogView();
                             mReadActivity.getDlReadActivity().openDrawer(GravityCompat.START);
-                            mSettingDialog.dismiss();
+                            mOperationDialog.dismiss();
                         }
                     }, new DialogCreator.OnClickNightAndDayListener() {
                         @Override
@@ -428,8 +430,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                             if (StringHelper.isEmpty(mBook.getId())){
                                 addBookToCaseAndDownload(tvDownloadProgress);
                             }else {
-                                //getAllChapterData(tvDownloadProgress);
-                                loadAllChapters(tvDownloadProgress);
+                                downloadBook(tvDownloadProgress);
                             }
                         }
                     });
@@ -447,7 +448,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             public void onClick(DialogInterface dialog, int which) {
                 mBookService.addBook(mBook);
                 //getAllChapterData(tvDownloadProgress);
-                loadAllChapters(tvDownloadProgress);
+                downloadBook(tvDownloadProgress);
             }
         }, new DialogInterface.OnClickListener() {
             @Override
@@ -461,11 +462,11 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      * 显示详细设置视图
      */
     private void showSettingDetailView() {
-        mSettingDialog.dismiss();
-        if (mSettingDetailDialog != null) {
-            mSettingDetailDialog.show();
+        mOperationDialog.dismiss();
+        if (mSettingDialog != null) {
+            mSettingDialog.show();
         } else {
-            mSettingDetailDialog = DialogCreator.createReadDetailSetting(mReadActivity, mSetting,
+            mSettingDialog = DialogCreator.createReadDetailSetting(mReadActivity, mSetting,
                     new DialogCreator.OnReadStyleChangeListener() {
                         @Override
                         public void onChange(ReadStyle readStyle) {
@@ -503,7 +504,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         @Override
                         public void onClick(View v) {
                             autoScroll();
-                            mSettingDetailDialog.dismiss();
+                            mSettingDialog.dismiss();
                         }
                     });
         }
@@ -744,53 +745,19 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         }
     }
 
-    /**
-     * 缓存所有章节
-     */
-    /*
-    private void getAllChapterData(final TextView tvDownloadProgress) {
-        cachedChapters = 0;
-        MyApplication.getApplication().newThread(new Runnable() {
-            @Override
-            public void run() {
-                for (final Chapter chapter : mChapters) {
-                    if (StringHelper.isEmpty(chapter.getContent())) {
-                        getChapterContent(chapter, new ResultCallback() {
-                            @Override
-                            public void onFinish(Object o, int code) {
-                                chapter.setContent((String) o);
-                                mChapterService.saveOrUpdateChapter(chapter);
-                                cachedChapters++;
-                                mHandler.sendMessage(mHandler.obtainMessage(9,tvDownloadProgress));
-                            }
-
-                            @Override
-                            public void onError(Exception e) {
-
-                            }
-                        });
-                    }else {
-                        cachedChapters++;
-                        mHandler.sendMessage(mHandler.obtainMessage(9,tvDownloadProgress));
-                    }
-                }
-                if (cachedChapters == mChapters.size()){
-                    TextHelper.showText(mReadActivity.getString(R.string.download_already_all_tips));
-                }
-            }
-        });
-    }
-*/
-
-    private void loadAllChapters(final TextView tvDownloadProgress) {
-        System.out.println("Loader init");
-        loaderManager.initLoader(mBook.getId().hashCode(), null, this);
+    private void downloadBook(final TextView tvDownloadProgress) {
+        downloadProgressView=tvDownloadProgress;
+        if(bookLoader==null){
+            bookLoader=(BookLoader)loaderManager.initLoader(mBook.getId().hashCode(), null, this);
+            bookLoader.registerProgressListener(this);
+        }else
+            loaderManager.restartLoader(bookLoader.getId(),null,this);;
     }
 
-
-    private void updateDownloadProgress(TextView tvDownloadProgress){
+    private void updateDownloadProgress(String downloadProgress){
         try {
-            tvDownloadProgress.setText(cachedChapters * 100 / mChapters.size() + " %");
+            if(downloadProgressView!=null)
+                downloadProgressView.setText(downloadProgress);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -901,7 +868,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         init();
     }
 
-
     /**
      * 自动滚动
      */
@@ -931,9 +897,9 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 
     @Override
     public void onLoadFinished(@NonNull Loader loader, Object data) {
+        System.out.println("Download completed");
         mChapters=(List<Chapter>)data;
         mReadContentAdapter.notifyDataSetChanged();
-        System.out.println("All chapters Loaded");
         TextHelper.showText(""+cachedChapters+"/"+mBook.getChapterTotalNum()+" cached");
         loaderManager.destroyLoader(loader.getId());
     }
@@ -941,6 +907,10 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     @Override
     public void onLoaderReset(@NonNull Loader loader) {
         //loaderManager.restartLoader(loader.getId(),null,this);;
+    }
+
+    public void notify(String progress){
+        mHandler.sendMessage(mHandler.obtainMessage(9,progress));
     }
 
 }
