@@ -18,7 +18,7 @@ import com.zhao.myreader.greendao.entity.SearchHistory;
 import com.zhao.myreader.greendao.service.SearchHistoryService;
 import com.zhao.myreader.ui.bookinfo.BookInfoActivity;
 import com.zhao.myreader.util.StringHelper;
-import com.zhao.myreader.webapi.CommonApi;
+import com.zhao.myreader.webapi.BookApi;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -163,7 +163,7 @@ public class SearchBookPrensenter extends BasePresenter {
      */
     private void getData() {
         mBooks.clear();
-        CommonApi.search(searchKey, new ResultCallback() {
+        BookApi.search(searchKey, new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 mBooks = (ArrayList<Book>) o;

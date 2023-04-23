@@ -19,7 +19,7 @@ import com.zhao.myreader.greendao.service.BookService;
 import com.zhao.myreader.ui.home.MainActivity;
 import com.zhao.myreader.ui.search.SearchBookActivity;
 import com.zhao.myreader.util.VibratorUtil;
-import com.zhao.myreader.webapi.CommonApi;
+import com.zhao.myreader.webapi.BookApi;
 import java.util.ArrayList;
 
 /**
@@ -143,7 +143,7 @@ public class BookcasePresenter extends BasePresenter {
 
     private void initNoReadNum() {
         for (final Book book : mBooks) {
-            CommonApi.getNewChapterCount(book, new ResultCallback() {
+            BookApi.getNewChapterCount(book, new ResultCallback() {
                 @Override
                 public void onFinish(Object obj, int code) {
                     int newTotal=(int)obj;

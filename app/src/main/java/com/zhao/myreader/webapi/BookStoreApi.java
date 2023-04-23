@@ -2,13 +2,14 @@ package com.zhao.myreader.webapi;
 
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.greendao.entity.Book;
+import com.zhao.myreader.util.HttpUtil;
 import com.zhao.myreader.util.crawler.BiQuGeReadUtil;
 
 /**
  * Created by zhao on 2017/7/24.
  */
 
-public class BookStoreApi extends BaseApi{
+public class BookStoreApi{
 
 
     /**
@@ -18,7 +19,7 @@ public class BookStoreApi extends BaseApi{
      */
     public static void getBookTypeList(String url, final ResultCallback callback){
 
-        getCommonReturnHtmlStringApi(url, null, "GBK", new ResultCallback() {
+        HttpUtil.httpGet_Async(url, null, "GBK", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 callback.onFinish(BiQuGeReadUtil.getBookTypeList((String) o),0);
@@ -39,7 +40,7 @@ public class BookStoreApi extends BaseApi{
      */
     public static void getBookRankList(String url, final ResultCallback callback){
 
-        getCommonReturnHtmlStringApi(url, null, "GBK", new ResultCallback() {
+        HttpUtil.httpGet_Async(url, null, "GBK", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 callback.onFinish(BiQuGeReadUtil.getBookRankList((String) o),0);
@@ -61,7 +62,7 @@ public class BookStoreApi extends BaseApi{
      */
     public static void getBookInfo(Book book, final ResultCallback callback){
 
-        getCommonReturnHtmlStringApi(book.getChapterUrl(), null, "GBK", new ResultCallback() {
+        HttpUtil.httpGet_Async(book.getChapterUrl(), null, "GBK", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 callback.onFinish(BiQuGeReadUtil.getBookInfo((String) o,book),0);

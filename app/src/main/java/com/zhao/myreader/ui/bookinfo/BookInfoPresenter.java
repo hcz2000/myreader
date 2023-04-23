@@ -45,16 +45,15 @@ public class BookInfoPresenter extends  BasePresenter {
 
      @Override
      public void create() {
-           mBook = (Book) mBookInfoActivity.getIntent().getSerializableExtra(APPCONST.BOOK);
+            mBook = (Book) mBookInfoActivity.getIntent().getSerializableExtra(APPCONST.BOOK);
             if (StringHelper.isEmpty(mBook.getSource()) || BookSource.tianlai.toString().equals(mBook.getSource())){
                 init();
-
             }else if(BookSource.biquge.toString().equals(mBook.getSource())){
-                getData();
+                //getData();
             }
     }
 
-
+    /*
     private void getData(){
         BookStoreApi.getBookInfo(mBook, new ResultCallback() {
             @Override
@@ -69,7 +68,7 @@ public class BookInfoPresenter extends  BasePresenter {
 
             }
         });
-    }
+    }*/
 
     private void init(){
         mBookInfoActivity.getTvTitleText().setText(mBook.getName());

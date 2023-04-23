@@ -299,4 +299,18 @@ public class HttpUtil {
         });
     }
 
+    public static void httpGet_Async(String url, Map<String, Object> params, String charsetName, final ResultCallback callback) {
+        HttpUtil.httpGet_Async(HttpUtil.makeURL(url, params), charsetName, new ResultCallback() {
+            @Override
+            public void onFinish(Object o, int code) {
+                callback.onFinish(o,code);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                callback.onError(e);
+            }
+        });
+    }
+
 }

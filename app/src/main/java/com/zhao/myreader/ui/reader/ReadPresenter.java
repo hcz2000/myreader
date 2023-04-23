@@ -43,7 +43,7 @@ import com.zhao.myreader.util.BrightUtil;
 import com.zhao.myreader.util.DateHelper;
 import com.zhao.myreader.util.StringHelper;
 import com.zhao.myreader.util.TextHelper;
-import com.zhao.myreader.webapi.CommonApi;
+import com.zhao.myreader.webapi.BookApi;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -199,7 +199,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             }
             if (StringHelper.isEmpty(mChapters.get(item).getContent())) {
                 mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
-                CommonApi.getChapterContent(mChapters.get(item).getUrl(),
+                BookApi.getChapterContent(mChapters.get(item).getUrl(),
                     (Object o, int code)-> {
                         mChapters.get(item).setContent((String) o);
                         mChapterService.saveOrUpdateChapter(mChapters.get(item));
@@ -423,7 +423,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mBookService.addBook(mBook);
-                //getAllChapterData(tvDownloadProgress);
                 downloadBook(tvDownloadProgress);
             }
         }, new DialogInterface.OnClickListener() {
@@ -636,7 +635,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      */
     private void refreshData() {
 
-        CommonApi.getBookChapters(mBook, new ResultCallback() {
+        BookApi.getBookChapters(mBook, new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 final ArrayList<Chapter> chapters = (ArrayList<Chapter>) o;
@@ -751,9 +750,9 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             }
         } else {
             if (resultCallback != null) {
-                CommonApi.getChapterContent(chapter.getUrl(), resultCallback);
+                BookApi.getChapterContent(chapter.getUrl(), resultCallback);
             } else {
-                CommonApi.getChapterContent(chapter.getUrl(), new ResultCallback() {
+                BookApi.getChapterContent(chapter.getUrl(), new ResultCallback() {
                     @Override
                     public void onFinish(final Object o, int code) {
                         chapter.setContent((String) o);

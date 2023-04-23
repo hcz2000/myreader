@@ -33,7 +33,7 @@ import com.zhao.myreader.greendao.entity.Chapter;
 import com.zhao.myreader.greendao.service.BookService;
 import com.zhao.myreader.greendao.service.ChapterService;
 import com.zhao.myreader.util.StringHelper;
-import com.zhao.myreader.webapi.CommonApi;
+import com.zhao.myreader.webapi.BookApi;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -209,7 +209,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
                 viewHolder.tvErrorTips.setVisibility(View.GONE);
             }
         } else {
-            CommonApi.getChapterContent(chapter.getUrl(), new ResultCallback() {
+            BookApi.getChapterContent(chapter.getUrl(), new ResultCallback() {
                 @Override
                 public void onFinish(final Object o, int code) {
                     chapter.setContent((String) o);
