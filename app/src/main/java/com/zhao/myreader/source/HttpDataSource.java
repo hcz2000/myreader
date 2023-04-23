@@ -23,7 +23,7 @@ public class HttpDataSource {
      */
     public static void httpGet_html(String url, final String charsetName, final ResultCallback callback){
         Log.d("HttpGet URl", url);
-        HttpUtil.sendGetRequest_okHttp(url, new HttpCallback() {
+        HttpUtil.getRequest_Async(url, new HttpCallback() {
             @Override
             public void onFinish(InputStream in) {
                 try {
@@ -64,7 +64,7 @@ public class HttpDataSource {
      */
     public static void httpPost(String url, String output, final ResultCallback callback) {
         Log.d("HttpPost:", url + "&" + output);
-        HttpUtil.sendPostRequest(url, output, new HttpCallback() {
+        HttpUtil.postRequest(url, output, new HttpCallback() {
             @Override
             public void onFinish(InputStream in) {
                 try {

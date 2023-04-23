@@ -14,7 +14,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -40,7 +39,6 @@ public class HttpUtil {
     //最好只使用一个共享的OkHttpClient 实例，将所有的网络请求都通过这个实例处理。
     //因为每个OkHttpClient 实例都有自己的连接池和线程池，重用这个实例能降低延时，减少内存消耗，而重复创建新实例则会浪费资源。
     private static OkHttpClient mClient;
-
     static final TrustManager[] trustAllCerts = new TrustManager[]{
             new X509TrustManager() {
                 @Override
@@ -64,11 +62,8 @@ public class HttpUtil {
         SSLSocketFactory ssfFactory = null;
 
         try {
-
             SSLContext sslContext = SSLContext.getInstance("SSL");
-
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-
             ssfFactory = sslContext.getSocketFactory();
         } catch (Exception e) {
         }
@@ -80,16 +75,11 @@ public class HttpUtil {
 
     private static synchronized OkHttpClient getOkHttpClient(){
         if (mClient == null){
-
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+         OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.connectTimeout(30000, TimeUnit.SECONDS);
             builder.sslSocketFactory(createSSLSocketFactory(), (X509TrustManager) trustAllCerts[0]);
-            builder.hostnameVerifier((hostname, session) ->
-                    true);
-
-
-           mClient = builder.build();
-
+            builder.hostnameVerifier((hostname, session) -> true);
+            mClient = builder.build();
         }
         return mClient;
 
@@ -141,18 +131,15 @@ public class HttpUtil {
         }).start();
     }
 
-    public static void sendGetRequest_okHttp(final String address, final HttpCallback callback) {
+    public static void getRequest_Async(final String address, final HttpCallback callback) {
        MyApplication.getApplication().newThread(() -> {
-
            try{
              OkHttpClient client = getOkHttpClient();
                Request request = new Request.Builder()
                        .url(address)
                        .build();
-
                Response response = client.newCall(request).execute();
                callback.onFinish(response.body().byteStream());
-
            }catch(Exception e){
                e.printStackTrace();
                callback.onError(e);
@@ -182,7 +169,7 @@ public class HttpUtil {
      * @param output
      * @param callback
      */
-    public static void sendPostRequest(final String address, final String output, final HttpCallback callback) {
+    public static void postRequest(final String address, final String output, final HttpCallback callback) {
         new Thread(new Runnable() {
             HttpURLConnection connection = null;
 
@@ -252,40 +239,6 @@ public class HttpUtil {
     }
 
 
-    /**
-     * 生成post输出参数串
-     * @param params
-     * @return
-     */
-    public static String makePostOutput(Map<String, Object> params) {
-        StringBuilder output = new StringBuilder();
-        Iterator<String> it = params.keySet().iterator();
-        while (true) {
-            String name = it.next();
-            Log.d("http", name + "=" + params.get(name));
-            output.append(name);
-            output.append('=');
-            try {
-                if (URLCONST.isRSA) {
-                    if (name.equals("token")) {
-                        output.append(valueOf(params.get(name)));
-                    } else {
-                        output.append(StringHelper.encode(Base64.encodeToString(RSAUtilV2.encryptByPublicKey(valueOf(params.get(name)).getBytes(), APPCONST.publicKey), Base64.DEFAULT).replace("\n", "")));
-                    }
-                } else {
-                    output.append(valueOf(params.get(name)));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if (!it.hasNext()) {
-                break;
-            }
-            output.append('&');
-        }
-        return output.toString();
-    }
-
 
 
     /**
@@ -295,15 +248,12 @@ public class HttpUtil {
         final String TAG = "trustAllHosts";
         // Create a trust manager that does not validate certificate chains
         TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-
             public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                 return new java.security.cert.X509Certificate[] {};
             }
-
             public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
                 Log.i(TAG, "checkClientTrusted");
             }
-
             public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
                 Log.i(TAG, "checkServerTrusted");
             }
@@ -318,8 +268,4 @@ public class HttpUtil {
             e.printStackTrace();
         }
     }
-
-
-
-
 }

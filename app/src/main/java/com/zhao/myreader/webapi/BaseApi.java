@@ -26,14 +26,4 @@ public class BaseApi {
         });
     }
 
-    private static void error(Exception e, final ResultCallback callback){
-      /*  if (e.toString().contains("SocketTimeoutException") || e.toString().contains("UnknownHostException")) {
-            TextHelper.showText("缃戠粶杩炴帴瓒呮椂锛岃妫�鏌ョ綉缁�");
-        }*/
-        e.printStackTrace();
-        callback.onError(e);
-    }
-
-
-
 }
