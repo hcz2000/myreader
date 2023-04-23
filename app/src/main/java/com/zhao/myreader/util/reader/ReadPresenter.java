@@ -199,19 +199,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             }
             if (StringHelper.isEmpty(mChapters.get(item).getContent())) {
                 mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
-
-                /*CommonApi.getChapterContent(mChapters.get(item).getUrl(), new ResultCallback() {
-                    @Override
-                    public void onFinish(Object o, int code) {
-                        mChapters.get(item).setContent((String) o);
-                        mChapterService.saveOrUpdateChapter(mChapters.get(item));
-                        mHandler.sendMessage(mHandler.obtainMessage(4, item, 0));
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                    }
-                });*/
                 CommonApi.getChapterContent(mChapters.get(item).getUrl(),
                     (Object o, int code)-> {
                         mChapters.get(item).setContent((String) o);
@@ -232,12 +219,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 super.onScrolled(recyclerView, dx, dy);
                 //页面初始化的时候不要执行
                 if (!isFirstInit) {
-                    MyApplication.getApplication().newThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            saveLastPosition(dy);
-                        }
-                    });
+                    MyApplication.getApplication().newThread(()->saveLastPosition(dy));
                 } else {
                     isFirstInit = false;
                 }
@@ -261,24 +243,19 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         mReadActivity.getDlReadActivity().addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-
             }
-
             @Override
             public void onDrawerOpened(View drawerView) {
                 //打开手势滑动
                 mReadActivity.getDlReadActivity().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
-
             @Override
             public void onDrawerClosed(View drawerView) {
                 //关闭手势滑动
                 mReadActivity.getDlReadActivity().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             }
-
             @Override
             public void onDrawerStateChanged(int newState) {
-
             }
         });
         loaderManager =mReadActivity.getLoaderManager();
@@ -326,17 +303,14 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     if (currentClickTime - lastClickTime < doubleClickInterval) {
                         autoScroll();
                     } else {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    Thread.sleep(doubleClickInterval);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                if (!autoScrollMode) {
-                                    mHandler.sendMessage(mHandler.obtainMessage(8));
-                                }
+                        new Thread(()-> {
+                            try {
+                                Thread.sleep(doubleClickInterval);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            if (!autoScrollMode) {
+                                mHandler.sendMessage(mHandler.obtainMessage(8));
                             }
                         }).start();
                     }
