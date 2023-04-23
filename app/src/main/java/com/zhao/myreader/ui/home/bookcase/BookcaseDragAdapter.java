@@ -18,7 +18,7 @@ import com.zhao.myreader.creator.DialogCreator;
 import com.zhao.myreader.custom.DragAdapter;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.service.BookService;
-import com.zhao.myreader.util.reader.ReadActivity;
+import com.zhao.myreader.ui.reader.ReadActivity;
 import com.zhao.myreader.util.StringHelper;
 
 import java.util.ArrayList;

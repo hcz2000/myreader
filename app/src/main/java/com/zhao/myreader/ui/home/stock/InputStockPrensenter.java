@@ -15,7 +15,7 @@ import com.zhao.myreader.greendao.entity.Stock;
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.greendao.service.StockService;
-import com.zhao.myreader.source.HttpDataSource;
+import com.zhao.myreader.util.HttpUtil;
 import com.zhao.myreader.util.StringHelper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -98,7 +98,7 @@ public class InputStockPrensenter extends BasePresenter {
         }else{
             url="https://xueqiu.com/s/SZ"+stockCode;
         }
-        HttpDataSource.httpGet_html(url, "utf-8",new ResultCallback(){
+        HttpUtil.httpGet_Async(url, "utf-8",new ResultCallback(){
             @Override
             public void onFinish(Object content, int code) {
                 Document doc = Jsoup.parse((String)content);

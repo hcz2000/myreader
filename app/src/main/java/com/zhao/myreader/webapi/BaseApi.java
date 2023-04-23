@@ -1,7 +1,6 @@
 package com.zhao.myreader.webapi;
 
 import com.zhao.myreader.callback.ResultCallback;
-import com.zhao.myreader.source.HttpDataSource;
 import com.zhao.myreader.util.HttpUtil;
 
 import java.util.Map;
@@ -13,7 +12,7 @@ import java.util.Map;
 public class BaseApi {
 
     protected static void getCommonReturnHtmlStringApi(String url, Map<String, Object> params, String charsetName, final ResultCallback callback) {
-    	HttpDataSource.httpGet_html(HttpUtil.makeURL(url, params), charsetName, new ResultCallback() {
+    	HttpUtil.httpGet_Async(HttpUtil.makeURL(url, params), charsetName, new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 callback.onFinish(o,code);

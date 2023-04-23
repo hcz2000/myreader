@@ -5,24 +5,25 @@ import android.util.Log;
 
 import com.zhao.myreader.base.application.MyApplication;
 import com.zhao.myreader.callback.HttpCallback;
+import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.common.URLCONST;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -72,138 +73,6 @@ public class HttpUtil {
     }
 
 
-
-    private static synchronized OkHttpClient getOkHttpClient(){
-        if (mClient == null){
-         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.connectTimeout(30000, TimeUnit.SECONDS);
-            builder.sslSocketFactory(createSSLSocketFactory(), (X509TrustManager) trustAllCerts[0]);
-            builder.hostnameVerifier((hostname, session) -> true);
-            mClient = builder.build();
-        }
-        return mClient;
-
-    }
-
-
-    /**
-     * get请求
-     * @param address
-     * @param callback
-     */
-    public static void sendGetRequest(final String address, final HttpCallback callback) {
-        new Thread(new Runnable() {
-            HttpURLConnection connection = null;
-
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(address);
-                    connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    connection.setRequestProperty("Content-type", "text/html");
-                    connection.setRequestProperty("Accept-Charset", "utf-8");
-                    connection.setRequestProperty("contentType", "utf-8");
-                    connection.setConnectTimeout(60 * 1000);
-                    connection.setReadTimeout(60 * 1000);
-                    connection.setDoInput(true);
-                    connection.setDoOutput(true);
-                    if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                        Log.e("Http", "网络错误异常！!!!");
-                    }
-                    InputStream in = connection.getInputStream();
-                    Log.d("Http", "connection success");
-                    if (callback != null) {
-                        callback.onFinish(in);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e("Http", e.toString());
-                    if (callback != null) {
-                        callback.onError(e);
-                    }
-                } finally {
-                    if (connection != null) {
-                        connection.disconnect();
-                    }
-                }
-            }
-        }).start();
-    }
-
-    public static void getRequest_Async(final String address, final HttpCallback callback) {
-       MyApplication.getApplication().newThread(() -> {
-           try{
-             OkHttpClient client = getOkHttpClient();
-               Request request = new Request.Builder()
-                       .url(address)
-                       .build();
-               Response response = client.newCall(request).execute();
-               callback.onFinish(response.body().byteStream());
-           }catch(Exception e){
-               e.printStackTrace();
-               callback.onError(e);
-           }
-       });
-    }
-
-    public static String getRequest_Sync(final String address) {
-
-        try{
-                OkHttpClient client = getOkHttpClient();
-                Request request = new Request.Builder()
-                        .url(address)
-                        .build();
-                Response response = client.newCall(request).execute();
-                return response.body().string();
-        }catch(Exception e){
-                e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    /**
-     * post请求
-     * @param address
-     * @param output
-     * @param callback
-     */
-    public static void postRequest(final String address, final String output, final HttpCallback callback) {
-        new Thread(new Runnable() {
-            HttpURLConnection connection = null;
-
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(address);
-                    connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("POST");
-                    connection.setConnectTimeout(60 * 1000);
-                    connection.setReadTimeout(60 * 1000);
-                    connection.setDoInput(true);
-                    connection.setDoOutput(true);
-                    if (output != null) {
-                        DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-                        out.writeBytes(output);
-                    }
-                    InputStream in = connection.getInputStream();
-                    if (callback != null) {
-                        callback.onFinish(in);
-                    }
-                } catch (Exception e) {
-                    if (callback != null) {
-                        callback.onError(e);
-                    }
-                } finally {
-                    if (connection != null) {
-                        connection.disconnect();
-                    }
-                }
-            }
-        }).start();
-    }
-
     /**
      * 生成URL
      * @param p_url
@@ -239,8 +108,6 @@ public class HttpUtil {
     }
 
 
-
-
     /**
      * Trust every server - dont check for any certificate
      */
@@ -268,4 +135,168 @@ public class HttpUtil {
             e.printStackTrace();
         }
     }
+
+
+    private static synchronized OkHttpClient getOkHttpClient(){
+        if (mClient == null){
+         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            builder.connectTimeout(30000, TimeUnit.SECONDS);
+            builder.sslSocketFactory(createSSLSocketFactory(), (X509TrustManager) trustAllCerts[0]);
+            builder.hostnameVerifier((hostname, session) -> true);
+            mClient = builder.build();
+        }
+        return mClient;
+
+    }
+
+
+    public static void httpGet_Async(final String address, final HttpCallback callback) {
+       MyApplication.getApplication().newThread(() -> {
+           try{
+             OkHttpClient client = getOkHttpClient();
+               Request request = new Request.Builder()
+                       .url(address)
+                       .build();
+               Response response = client.newCall(request).execute();
+               callback.onFinish(response.body().byteStream());
+           }catch(Exception e){
+               e.printStackTrace();
+               callback.onError(e);
+           }
+       });
+    }
+
+    public static String httpGet_Sync(final String address) {
+
+        try{
+                OkHttpClient client = getOkHttpClient();
+                Request request = new Request.Builder()
+                        .url(address)
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+        }catch(Exception e){
+                e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     * post请求
+     * @param address
+     * @param output
+     * @param callback
+     */
+    public static void httpPost_Async(final String address, final String output, final HttpCallback callback) {
+        new Thread(new Runnable() {
+            HttpURLConnection connection = null;
+
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(address);
+                    connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("POST");
+                    connection.setConnectTimeout(60 * 1000);
+                    connection.setReadTimeout(60 * 1000);
+                    connection.setDoInput(true);
+                    connection.setDoOutput(true);
+                    if (output != null) {
+                        DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+                        out.writeBytes(output);
+                    }
+                    InputStream in = connection.getInputStream();
+                    if (callback != null) {
+                        callback.onFinish(in);
+                    }
+                } catch (Exception e) {
+                    if (callback != null) {
+                        callback.onError(e);
+                    }
+                } finally {
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
+                }
+            }
+        }).start();
+    }
+
+
+
+    /**
+     * http请求 (get)
+     * @param url
+     * @param callback
+     */
+    public static void httpGet_Async(String url, final String charsetName, final ResultCallback callback){
+        Log.d("HttpGet URl", url);
+        httpGet_Async(url, new HttpCallback() {
+            @Override
+            public void onFinish(InputStream in) {
+                try {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, charsetName));
+                    StringBuilder response = new StringBuilder();
+                    String line = reader.readLine();
+                    while (line != null) {
+                        response.append(line);
+                        line = reader.readLine();
+                    }
+                    if (callback != null) {
+                        Log.d("Http", "read finish：" + response.toString());
+                        callback.onFinish(response.toString(),0);
+                    }
+                } catch (Exception e) {
+                    callback.onError(e);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                if (callback != null) {
+                    callback.onError(e);
+                }
+            }
+
+        });
+    }
+
+    /**
+     * http请求 (post)
+     * @param url
+     * @param output
+     * @param callback
+     */
+    public static void httpPost_Async(String url, String output, final ResultCallback callback) {
+        Log.d("HttpPost:", url + "&" + output);
+        httpPost_Async(url, output, new HttpCallback() {
+            @Override
+            public void onFinish(InputStream in) {
+                try {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                    StringBuilder response = new StringBuilder();
+                    String line = reader.readLine();
+                    while (line != null) {
+                        response.append(line);
+                        line = reader.readLine();
+                    }
+                    if (callback != null) {
+                        Log.d("Http", "read finish：" + response);
+                        callback.onFinish(response.toString(),0);
+                    }
+                } catch (Exception e) {
+                    callback.onError(e);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                if (callback != null) {
+                    callback.onError(e);
+                }
+            }
+        });
+    }
+
 }

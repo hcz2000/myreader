@@ -40,7 +40,7 @@ public class StockLoader extends AsyncTaskLoader<List<Stock>>{
             } else {
                 url = "https://xueqiu.com/s/SZ" + stockCode;
             }
-            String content= HttpUtil.getRequest_Sync(url);
+            String content= HttpUtil.httpGet_Sync(url);
             Document doc = Jsoup.parse((String) content);
             Elements stockPrices = doc.getElementsByClass("stock-current");
             if (!stockPrices.isEmpty()) {

@@ -1,4 +1,4 @@
-package com.zhao.myreader.util.reader;
+package com.zhao.myreader.ui.reader;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -36,7 +36,6 @@ import com.zhao.myreader.util.StringHelper;
 import com.zhao.myreader.webapi.CommonApi;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

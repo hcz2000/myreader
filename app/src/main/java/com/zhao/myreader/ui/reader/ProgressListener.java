@@ -1,4 +1,4 @@
-package com.zhao.myreader.util.reader;
+package com.zhao.myreader.ui.reader;
 
 public interface ProgressListener {
     void notify(String progress);
