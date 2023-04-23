@@ -6,5 +6,5 @@ package com.zhao.myreader.callback;
 
 public interface ResultCallback {
     void onFinish(Object o, int code);
-    void onError(Exception e);
+    default void onError(Exception e){ e.printStackTrace();};
 }

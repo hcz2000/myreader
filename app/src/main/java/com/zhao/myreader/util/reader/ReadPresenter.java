@@ -19,10 +19,8 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-
 import com.zhao.myreader.R;
 import com.zhao.myreader.base.application.MyApplication;
 import com.zhao.myreader.base.application.SysManager;
@@ -89,13 +87,15 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     private BookLoader bookLoader;
     private TextView downloadProgressView;
 
+    private String downloadProgress;
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    init();
+                    setupViews();
                     break;
                 case 2://NOT USED?
                     /*hcz
@@ -141,10 +141,10 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     }
                     break;
                 case 8:
-                    showOperationView();
+                    showBottomMenu();
                     break;
                 case 9:
-                    updateDownloadProgress((String)msg.obj);
+                    refreshDownloadProgress();
                     break;
             }
         }
@@ -184,7 +184,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
                 settingChange = true;
-                getData();
+                refreshData();
             }
         });
         mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
@@ -199,7 +199,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             }
             if (StringHelper.isEmpty(mChapters.get(item).getContent())) {
                 mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
-                CommonApi.getChapterContent(mChapters.get(item).getUrl(), new ResultCallback() {
+
+                /*CommonApi.getChapterContent(mChapters.get(item).getUrl(), new ResultCallback() {
                     @Override
                     public void onFinish(Object o, int code) {
                         mChapters.get(item).setContent((String) o);
@@ -210,7 +211,13 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     @Override
                     public void onError(Exception e) {
                     }
-                });
+                });*/
+                CommonApi.getChapterContent(mChapters.get(item).getUrl(),
+                    (Object o, int code)-> {
+                        mChapters.get(item).setContent((String) o);
+                        mChapterService.saveOrUpdateChapter(mChapters.get(item));
+                        mHandler.sendMessage(mHandler.obtainMessage(4, item, 0));
+                    });
             } else {
                 mReadActivity.getRvContent().scrollToPosition(item);
                 if (item > mBook.getHistoryChapterNum()) {
@@ -228,7 +235,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     MyApplication.getApplication().newThread(new Runnable() {
                         @Override
                         public void run() {
-                            saveLastChapterReadPosition(dy);
+                            saveLastPosition(dy);
                         }
                     });
                 } else {
@@ -241,11 +248,11 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             if (curSortflag == 0) {//当前正序
                 mReadActivity.getTvChapterSort().setText(mReadActivity.getString(R.string.positive_sort));
                 curSortflag = 1;
-                changeChapterSort();
+                changeCatalogSortMode();
             } else {//当前倒序
                 mReadActivity.getTvChapterSort().setText(mReadActivity.getString(R.string.inverted_sort));
                 curSortflag = 0;
-                changeChapterSort();
+                changeCatalogSortMode();
             }
         });
 
@@ -275,7 +282,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             }
         });
         loaderManager =mReadActivity.getLoaderManager();
-        getData();
+        refreshData();
     }
 
     /**
@@ -283,7 +290,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      *
      * @param dy
      */
-    private void saveLastChapterReadPosition(int dy) {
+    private void saveLastPosition(int dy) {
         if (mContentLayoutManager == null) return;
         if (mContentLayoutManager.findFirstVisibleItemPosition() != mContentLayoutManager.findLastVisibleItemPosition()
                 || dy == 0) {
@@ -293,11 +300,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         }
 
         mBook.setHistoryChapterNum(mContentLayoutManager.findLastVisibleItemPosition());
-        /* hcz
-        System.out.println("Last Read Position:"+mBook.getLastReadPosition());
-        System.out.println("HistoryChapterNum:"+mBook.getHistoryChapterNum());
-         */
-
         if (!StringHelper.isEmpty(mBook.getId())) {
             mBookService.updateEntity(mBook);
         }
@@ -351,7 +353,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     /**
      * 显示设置视图
      */
-    private void showOperationView() {
+    private void showBottomMenu() {
         autoScrollMode = false;
         if (mOperationDialog != null) {
             mOperationDialog.show();
@@ -382,7 +384,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     }, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {//目录
-                            initCatalogView();
+                            setupCatalogView();
                             mReadActivity.getDlReadActivity().openDrawer(GravityCompat.START);
                             mOperationDialog.dismiss();
                         }
@@ -492,7 +494,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                             }
                             SysManager.saveSetting(mSetting);
                             settingChange = true;
-                            init();
+                            setupViews();
                         }
                     }, new View.OnClickListener() {
                         @Override
@@ -558,7 +560,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 if (resultCode == RESULT_OK) {
                     mSetting.setFont((Font) data.getSerializableExtra(APPCONST.FONT));
                     settingChange = true;
-                    initContentView();
+                    setupContentView();
                 }
                 break;
         }
@@ -567,15 +569,15 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     /**
      * 初始化
      */
-    private void init() {
-        initContentView();
-        initCatalogView();
+    private void setupViews() {
+        setupContentView();
+        setupCatalogView();
     }
 
     /**
      * 初始化主内容视图
      */
-    private void initContentView() {
+    private void setupContentView() {
         if (mSetting.isDayStyle()) {
             mReadActivity.getDlReadActivity().setBackgroundResource(mSetting.getReadBgColor());
         } else {
@@ -603,22 +605,9 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     }
 
     /**
-     * 改变章节列表排序（正倒序）
-     */
-    private void changeChapterSort() {
-        //设置布局管理器
-        if (curSortflag == 0) {
-            mChapterTitleAdapter = new ChapterTitleAdapter(mReadActivity, R.layout.listview_chapter_title_item, mChapters);
-        } else {
-            mChapterTitleAdapter = new ChapterTitleAdapter(mReadActivity, R.layout.listview_chapter_title_item, mInvertedOrderChapters);
-        }
-        mReadActivity.getLvChapterList().setAdapter(mChapterTitleAdapter);
-    }
-
-    /**
      * 初始化章节目录视图
      */
-    private void initCatalogView() {
+    private void setupCatalogView() {
         if (mSetting.isDayStyle()) {
             mReadActivity.getTvCatalog().setTextColor(mReadActivity.getResources().getColor(mSetting.getReadWordColor()));
             mReadActivity.getTvChapterSort().setTextColor(mReadActivity.getResources().getColor(mSetting.getReadWordColor()));
@@ -653,10 +642,25 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         mReadActivity.getLvChapterList().setSelection(selectedPostion);
     }
 
+
+    /**
+     * 改变章节列表排序（正倒序）
+     */
+    private void changeCatalogSortMode() {
+        //设置布局管理器
+        if (curSortflag == 0) {
+            mChapterTitleAdapter = new ChapterTitleAdapter(mReadActivity, R.layout.listview_chapter_title_item, mChapters);
+        } else {
+            mChapterTitleAdapter = new ChapterTitleAdapter(mReadActivity, R.layout.listview_chapter_title_item, mInvertedOrderChapters);
+        }
+        mReadActivity.getLvChapterList().setAdapter(mChapterTitleAdapter);
+    }
+
+
     /**
      * 章节数据网络同步
      */
-    private void getData() {
+    private void refreshData() {
 
         CommonApi.getBookChapters(mBook, new ResultCallback() {
             @Override
@@ -668,8 +672,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     mChapters = (ArrayList<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
                     mBookService.updateEntity(mBook);
                 }
-                //System.out.println("ReadPresenter--getData: "+mChapters.size());
-                updateAllOldChapterData(chapters);
+                updateCatalog(chapters);
                 mInvertedOrderChapters.clear();
                 mInvertedOrderChapters.addAll(mChapters);
                 Collections.reverse(mInvertedOrderChapters);
@@ -678,9 +681,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     mReadActivity.getPbLoading().setVisibility(View.GONE);
                     settingChange = false;
                 } else {
-                    //if (mBook.getHisttoryChapterNum() < 0)
-                    //    mBook.setHisttoryChapterNum(0);
-                    //else if (mBook.getHisttoryChapterNum() >= mChapters.size())
                     if (mBook.getHistoryChapterNum() >= mChapters.size())
                         mBook.setHistoryChapterNum(mChapters.size() - 1);
                     getChapterContent(mChapters.get(mBook.getHistoryChapterNum()), new ResultCallback() {
@@ -711,7 +711,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      *
      * @param newChapters
      */
-    private void updateAllOldChapterData(ArrayList<Chapter> newChapters) {
+    private void updateCatalog(ArrayList<Chapter> newChapters) {
         java.util.List<Chapter> chaptersToInsert=new ArrayList<Chapter>();
         int maxNewChapterNo=0;
         for (int i = 0;i < newChapters.size(); i++) {
@@ -754,10 +754,10 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             loaderManager.restartLoader(bookLoader.getId(),null,this);;
     }
 
-    private void updateDownloadProgress(String downloadProgress){
+    private void refreshDownloadProgress(){
         try {
             if(downloadProgressView!=null)
-                downloadProgressView.setText(downloadProgress);
+                downloadProgressView.setText(this.downloadProgress);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -806,7 +806,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         mSetting.setDayStyle(!isCurDayStyle);
         SysManager.saveSetting(mSetting);
         settingChange = true;
-        init();
+        setupViews();
     }
 
     /**
@@ -817,7 +817,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             mSetting.setReadWordSize(mSetting.getReadWordSize() - 1);
             SysManager.saveSetting(mSetting);
             settingChange = true;
-            initContentView();
+            setupContentView();
         }
     }
 
@@ -829,7 +829,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             mSetting.setReadWordSize(mSetting.getReadWordSize() + 1);
             SysManager.saveSetting(mSetting);
             settingChange = true;
-            initContentView();
+            setupContentView();
         }
     }
 
@@ -865,7 +865,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 break;
         }
         SysManager.saveSetting(mSetting);
-        init();
+        setupViews();
     }
 
     /**
@@ -900,7 +900,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         System.out.println("Download completed");
         mChapters=(List<Chapter>)data;
         mReadContentAdapter.notifyDataSetChanged();
-        TextHelper.showText(""+cachedChapters+"/"+mBook.getChapterTotalNum()+" cached");
+        this.downloadProgressView.setText("重载");
+        TextHelper.showText(this.downloadProgress+" cached");
         loaderManager.destroyLoader(loader.getId());
     }
 
@@ -910,7 +911,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     }
 
     public void notify(String progress){
-        mHandler.sendMessage(mHandler.obtainMessage(9,progress));
+        this.downloadProgress=progress;
+        mHandler.sendMessage(mHandler.obtainMessage(9));
     }
 
 }
