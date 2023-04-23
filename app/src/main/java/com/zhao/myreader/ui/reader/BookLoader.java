@@ -11,6 +11,10 @@ import com.zhao.myreader.util.crawler.TianLaiReadUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
     private ChapterService mChapterService;
@@ -35,6 +39,24 @@ public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
     public List<Chapter> loadInBackground() {
         List<Chapter> chapters=mChapterService.findBookAllChapterByBookId(mBook.getId());
         int downloadedCount=0;
+        ExecutorService executorService= Executors.newFixedThreadPool(5);
+        for(Chapter chapter : chapters){
+            Future<Integer> result=executorService.submit(()->{
+                Integer res=loadChapter(chapter);
+                mChapterService.updateChapter(chapter);
+                return res;
+            });
+            try {
+                downloadedCount=downloadedCount+result.get();
+            } catch (Exception e) {  }
+            if( downloadedCount%10 == 0 ){
+                String progress=downloadedCount+"/"+chapters.size();
+                for(ProgressListener listener:progressListeners)
+                    listener.notify(progress);
+            }
+        }
+        executorService.shutdown();
+        /*
         for(Chapter chapter : chapters) {
             if(chapter.getContent()==null || chapter.getContent().equals("")) {
                 loadChapter(chapter);
@@ -50,7 +72,7 @@ public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
                         listener.notify(progress);
                 }
             }
-        }
+        }*/
         String progress=downloadedCount+"/"+chapters.size();
         for(ProgressListener listener:progressListeners)
             listener.notify(progress);
@@ -68,14 +90,15 @@ public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
         }
     }
 
-    private void loadChapter(Chapter chapter){
+    private Integer loadChapter(Chapter chapter){
+        System.out.println("Loading: "+chapter.getTitle());
         StringBuffer content=new StringBuffer();
         String page1Url = chapter.getUrl();
         String page1Html=HttpUtil.httpGet_Sync(page1Url);
         content.append(TianLaiReadUtil.getContentFromHtml(page1Html));
         if(content.toString().equals("")) {
             chapter.setContent("");
-            return;
+            return new Integer(0);
         }
 
         String page2Url=TianLaiReadUtil.getNextPageFromHtml(page1Html);
@@ -94,6 +117,7 @@ public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
             }
         }
         chapter.setContent(content.toString());
+        return new Integer(1);
     }
 
     public void registerProgressListener(ProgressListener listener){
