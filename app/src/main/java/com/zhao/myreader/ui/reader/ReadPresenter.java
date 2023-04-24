@@ -722,8 +722,10 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         if(bookLoader==null){
             bookLoader=(BookLoader)loaderManager.initLoader(mBook.getId().hashCode(), null, this);
             bookLoader.registerProgressListener(this);
-        }else
-            loaderManager.restartLoader(bookLoader.getId(),null,this);;
+        }else {
+            //loaderManager.restartLoader(bookLoader.getId(), null, this);
+            TextHelper.showText("BookLoader is now processing");
+        }
     }
 
     private void refreshDownloadProgress(){
@@ -859,7 +861,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 
     @Override
     public void destroy(){
-        System.out.println("Activity destroying");
         if(bookLoader!=null){
             bookLoader.stopLoading();
         }
