@@ -6,9 +6,10 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven { url "https://jitpack.io" }
-        jcenter()
-        google()
-
+        maven { url "https://maven.aliyun.com/repository/google/"}
+        maven { url "https://maven.aliyun.com/repository/jcenter/"}
+        //jcenter()
+        //google()
     }
 
     dependencies {
@@ -26,9 +27,10 @@ allprojects {
         mavenLocal()
         mavenCentral()
         maven { url "https://jitpack.io" }
-        jcenter()
-        google()
-
+        maven { url "https://maven.aliyun.com/repository/google/"}
+        maven { url "https://maven.aliyun.com/repository/jcenter/"}
+        //jcenter()
+        //google()
     }
 }
 

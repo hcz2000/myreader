@@ -86,7 +86,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     private LoaderManager loaderManager;
     private BookLoader bookLoader;
     private TextView downloadProgressView;
-
     private String downloadProgress;
 
     @SuppressLint("HandlerLeak")
@@ -860,6 +859,10 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 
     @Override
     public void destroy(){
+        System.out.println("Activity destroying");
+        if(bookLoader!=null){
+            bookLoader.stopLoading();
+        }
         MyApplication.getApplication().shutdownThreadPool();
     }
 
@@ -880,6 +883,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 
     @Override
     public void onLoaderReset(@NonNull Loader loader) {
+        System.out.println("Loder reseting");
         //loaderManager.restartLoader(loader.getId(),null,this);;
     }
 

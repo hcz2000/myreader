@@ -82,11 +82,11 @@ public class HttpUtil {
     public static String makeURL(String p_url, Map<String, Object> params) {
         if (params == null) return p_url;
         StringBuilder url = new StringBuilder(p_url);
-        Log.d("http", p_url);
+        Log.d("HttpUtil", p_url);
         if (url.indexOf("?") < 0)
             url.append('?');
         for (String name : params.keySet()) {
-            Log.d("http", name + "=" + params.get(name));
+            Log.d("HttpUtil", name + "=" + params.get(name));
             url.append('&');
             url.append(name);
             url.append('=');
@@ -231,7 +231,7 @@ public class HttpUtil {
      * @param callback
      */
     public static void httpGet_Async(String url, final String charsetName, final ResultCallback callback){
-        Log.d("HttpGet URl", url);
+        Log.d("HttpUtil", "Url: "+url);
         httpGet_Async(url, new HttpCallback() {
             @Override
             public void onFinish(InputStream in) {
@@ -244,7 +244,7 @@ public class HttpUtil {
                         line = reader.readLine();
                     }
                     if (callback != null) {
-                        Log.d("Http", "read finish：" + response.toString());
+                        Log.d("HttpUtil", "read finish：" + response.toString());
                         callback.onFinish(response.toString(),0);
                     }
                 } catch (Exception e) {
@@ -269,7 +269,7 @@ public class HttpUtil {
      * @param callback
      */
     public static void httpPost_Async(String url, String output, final ResultCallback callback) {
-        Log.d("HttpPost:", url + "&" + output);
+        Log.d("HttpUtil", url + "&" + output);
         httpPost_Async(url, output, new HttpCallback() {
             @Override
             public void onFinish(InputStream in) {
@@ -282,7 +282,7 @@ public class HttpUtil {
                         line = reader.readLine();
                     }
                     if (callback != null) {
-                        Log.d("Http", "read finish：" + response);
+                        Log.d("HttpUtil", "read finish：" + response);
                         callback.onFinish(response.toString(),0);
                     }
                 } catch (Exception e) {
