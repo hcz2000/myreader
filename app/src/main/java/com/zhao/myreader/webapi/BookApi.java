@@ -1,5 +1,7 @@
 package com.zhao.myreader.webapi;
 
+import android.util.Log;
+
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.enums.BookSource;
@@ -94,14 +96,16 @@ public class BookApi {
      }
 
 
-    public static void getChapterContent(String url, final ResultCallback callback){
+    public static void getChapterContent(Chapter chapter, final ResultCallback callback){
+		/*
         int tem = url.indexOf("\"");
         if (tem != -1){
             url = url.substring(0,tem);
         }
         if (!url.contains("http")){
             url = URLCONST.nameSpace_tianlai + url;
-        }
+        }*/
+		String url=chapter.getUrl();
 
 		HttpUtil.httpGet_Async(url, null, "utf-8", new ResultCallback() {
             @Override
@@ -150,6 +154,39 @@ public class BookApi {
             }
         });
     }
+
+	public static String getChapterContent(Chapter chapter){
+		StringBuffer content=new StringBuffer();
+		String page1Url = chapter.getUrl();
+		String page1Html=HttpUtil.httpGet_Sync(page1Url);
+		if(page1Html==null)
+			return null;
+		content.append(TianLaiReadUtil.getContentFromHtml(page1Html));
+		if(content.toString().equals("")) {
+			chapter.setContent("");
+		}
+
+		String page2Url=TianLaiReadUtil.getNextPageFromHtml(page1Html);
+		if(page2Url!=null){
+			String page2Html=HttpUtil.httpGet_Sync(page2Url);
+			if(page2Html==null)
+				return null;
+			String page2=TianLaiReadUtil.getContentFromHtml(page2Html);
+			String page3Url=TianLaiReadUtil.getNextPageFromHtml(page2Html);
+			if(page2.length()>2) {
+				content.append(page2.substring(2));
+			}
+			if(page3Url!=null){
+				String page3Html=HttpUtil.httpGet_Sync(page3Url);
+				if(page3Html==null)
+					return null;
+				String page3=TianLaiReadUtil.getContentFromHtml(page3Html);
+				if(page3.length()>2)
+					content.append(page3.substring(2));
+			}
+		}
+		return content.toString();
+	}
 
 
     public static void search(String key, final ResultCallback callback){

@@ -178,7 +178,7 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
                 viewHolder.tvErrorTips.setVisibility(View.GONE);
             }
         } else {
-            BookApi.getChapterContent(chapter.getUrl(), new ResultCallback() {
+            BookApi.getChapterContent(chapter, new ResultCallback() {
                 @Override
                 public void onFinish(final Object o, int code) {
                     chapter.setContent((String) o);

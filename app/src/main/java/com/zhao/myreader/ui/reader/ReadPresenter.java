@@ -115,7 +115,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     System.out.println("HistoryChapterNum/position:"+mBook.getHistoryChapterNum()+ "/"+position);
                     */
                     if (mBook.getHistoryChapterNum() < position) {
-                        turnToChapter(position);
+                        lingerToPosition(position);
                     }
                     mReadActivity.getPbLoading().setVisibility(View.GONE);
                     break;
@@ -196,7 +196,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             }
             if (StringHelper.isEmpty(mChapters.get(item).getContent())) {
                 mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
-                BookApi.getChapterContent(mChapters.get(item).getUrl(),
+                BookApi.getChapterContent(mChapters.get(item),
                     (Object o, int code)-> {
                         mChapters.get(item).setContent((String) o);
                         mChapterService.saveOrUpdateChapter(mChapters.get(item));
@@ -205,7 +205,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             } else {
                 mReadActivity.getRvContent().scrollToPosition(item);
                 if (item > mBook.getHistoryChapterNum()) {
-                    turnToChapter(item);
+                    lingerToPosition(item);
                 }
             }
         });
@@ -350,7 +350,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                             int curPosition = mContentLayoutManager.findLastVisibleItemPosition();
                             if (curPosition < mChapters.size() - 1) {
                                 mReadActivity.getRvContent().scrollToPosition(curPosition + 1);
-                                turnToChapter(curPosition + 1);
+                                lingerToPosition(curPosition + 1);
                             }
                         }
                     }, new View.OnClickListener() {
@@ -486,7 +486,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     /**
      * 延迟跳转章节(防止跳到章节尾部)
      */
-    private void turnToChapter(final int position) {
+    private void lingerToPosition(final int position) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -504,7 +504,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     /**
      * 延迟跳转章节位置
      */
-    private void turnToLastPosition() {
+    private void lingerToLastPosition() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -567,7 +567,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         }
         if (!settingChange) {
             mReadActivity.getRvContent().scrollToPosition(mBook.getHistoryChapterNum());
-            turnToLastPosition();
+            lingerToLastPosition();
         } else {
             settingChange = false;
         }
@@ -757,9 +757,9 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             }
         } else {
             if (resultCallback != null) {
-                BookApi.getChapterContent(chapter.getUrl(), resultCallback);
+                BookApi.getChapterContent(chapter, resultCallback);
             } else {
-                BookApi.getChapterContent(chapter.getUrl(), new ResultCallback() {
+                BookApi.getChapterContent(chapter, new ResultCallback() {
                     @Override
                     public void onFinish(final Object o, int code) {
                         chapter.setContent((String) o);
@@ -768,9 +768,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 
                     @Override
                     public void onError(Exception e) {
-
                     }
-
                 });
             }
         }

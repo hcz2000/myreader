@@ -10,6 +10,7 @@ import com.zhao.myreader.greendao.entity.Chapter;
 import com.zhao.myreader.greendao.service.ChapterService;
 import com.zhao.myreader.util.HttpUtil;
 import com.zhao.myreader.util.crawler.TianLaiReadUtil;
+import com.zhao.myreader.webapi.BookApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,38 +86,13 @@ public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
     }
 
     private void loadChapter(Chapter chapter){
-        StringBuffer content=new StringBuffer();
-        String page1Url = chapter.getUrl();
-        String page1Html=HttpUtil.httpGet_Sync(page1Url);
-        if(page1Html==null)
-            return;
-        content.append(TianLaiReadUtil.getContentFromHtml(page1Html));
-        if(content.toString().equals("")) {
-            chapter.setContent("");
+        String content= BookApi.getChapterContent(chapter);
+        if(content!=null){
+            chapter.setContent(content);
+            Log.d("BookLoader",chapter.getTitle()+" loaded");
+            System.out.println(chapter.getTitle()+" loaded");
         }
 
-        String page2Url=TianLaiReadUtil.getNextPageFromHtml(page1Html);
-        if(page2Url!=null){
-            String page2Html=HttpUtil.httpGet_Sync(page2Url);
-            if(page2Html==null)
-                return;
-            String page2=TianLaiReadUtil.getContentFromHtml(page2Html);
-            String page3Url=TianLaiReadUtil.getNextPageFromHtml(page2Html);
-            if(page2.length()>2) {
-                content.append(page2.substring(2));
-            }
-            if(page3Url!=null){
-                String page3Html=HttpUtil.httpGet_Sync(page3Url);
-                if(page3Html==null)
-                    return;
-                String page3=TianLaiReadUtil.getContentFromHtml(page3Html);
-                if(page3.length()>2)
-                    content.append(page3.substring(2));
-            }
-        }
-        chapter.setContent(content.toString());
-        Log.d("BookLoader",chapter.getTitle()+" loaded");
-        System.out.println(chapter.getTitle()+" loaded");
     }
 
     public void registerProgressListener(ProgressListener listener){
