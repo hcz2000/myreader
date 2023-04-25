@@ -633,7 +633,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      * 章节数据网络同步
      */
     private void refreshData() {
-
         BookApi.getBookChapters(mBook, new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
@@ -671,7 +670,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                                 mHandler.sendMessage(mHandler.obtainMessage(1));
                             }
                         });
-                    };
+                    }else
+                        mHandler.sendMessage(mHandler.obtainMessage(1));
                 }
             }
 
@@ -688,6 +688,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      *
      * @param newChapters
      */
+
     private void updateCatalog(List<Chapter> newChapters) {
         List<Chapter> chaptersToInsert=new ArrayList<Chapter>();
         int newChapterNo;
@@ -711,7 +712,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         if(chaptersToInsert.size()>0) {
             mChapterService.addChapters(chaptersToInsert);
             mChapters.addAll(chaptersToInsert);
-        } else if( newChapterNo<mChapters.size()) {
+        }
+        if( newChapterNo<mChapters.size()) {
             for (int i = newChapterNo; i < mChapters.size(); i++) {
                 mChapterService.deleteEntity(mChapters.get(i));
             }
