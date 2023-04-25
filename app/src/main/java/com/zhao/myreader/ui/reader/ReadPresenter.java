@@ -637,11 +637,11 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         BookApi.getBookChapters(mBook, new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
-                final ArrayList<Chapter> chapters = (ArrayList<Chapter>) o;
+                final List<Chapter> chapters = (List<Chapter>) o;
                 int newTotal=chapters.get(chapters.size()-1).getNumber()+1;
                 mBook.setChapterTotalNum(newTotal);
                 if (!StringHelper.isEmpty(mBook.getId())) {
-                    mChapters = (ArrayList<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
+                    mChapters = (List<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
                     mBookService.updateEntity(mBook);
                 }
                 updateCatalog(chapters);
@@ -655,24 +655,29 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 } else {
                     if (mBook.getHistoryChapterNum() >= mChapters.size())
                         mBook.setHistoryChapterNum(mChapters.size() - 1);
-                    getChapterContent(mChapters.get(mBook.getHistoryChapterNum()), new ResultCallback() {
-                        @Override
-                        public void onFinish(Object o, int code) {
-                            mChapters.get(mBook.getHistoryChapterNum()).setContent((String) o);
-                            mChapterService.saveOrUpdateChapter(mChapters.get(mBook.getHistoryChapterNum()));
-                            mHandler.sendMessage(mHandler.obtainMessage(1));
-                        }
-                        @Override
-                        public void onError(Exception e) {
-                            mHandler.sendMessage(mHandler.obtainMessage(1));
-                        }
-                    });
+
+                    Chapter lastChapter=mChapters.get(mBook.getHistoryChapterNum());
+
+                    if(lastChapter.getContent()==null || lastChapter.getContent().equals("")){
+                        getChapterContent(lastChapter, new ResultCallback() {
+                            @Override
+                            public void onFinish(Object o, int code) {
+                                lastChapter.setContent((String) o);
+                                mChapterService.saveOrUpdateChapter(lastChapter);
+                                mHandler.sendMessage(mHandler.obtainMessage(1));
+                            }
+                            @Override
+                            public void onError(Exception e) {
+                                mHandler.sendMessage(mHandler.obtainMessage(1));
+                            }
+                        });
+                    };
                 }
             }
 
             @Override
             public void onError(Exception e) {
-                mChapters = (ArrayList<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
+                mChapters = (List<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
                 mHandler.sendMessage(mHandler.obtainMessage(1));
             }
         });
@@ -683,8 +688,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      *
      * @param newChapters
      */
-    private void updateCatalog(ArrayList<Chapter> newChapters) {
-        java.util.List<Chapter> chaptersToInsert=new ArrayList<Chapter>();
+    private void updateCatalog(List<Chapter> newChapters) {
+        List<Chapter> chaptersToInsert=new ArrayList<Chapter>();
         int newChapterNo;
         for (newChapterNo = 0;newChapterNo < newChapters.size(); newChapterNo++) {
             Chapter newChapter = newChapters.get(newChapterNo);

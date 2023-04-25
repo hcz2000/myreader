@@ -9,8 +9,6 @@ import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.Chapter;
 import com.zhao.myreader.util.HttpUtil;
 import com.zhao.myreader.util.crawler.TianLaiReadUtil;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -48,7 +46,7 @@ public class BookApi {
         	BookApi.getBookChapters(book, new ResultCallback() {
                 @Override
                 public void onFinish(Object o, int code) {
-                    final ArrayList<Chapter> chapters = (ArrayList<Chapter>) o;
+                    final List<Chapter> chapters = (List<Chapter>) o;
                     callback.onFinish(chapters.size(),0);
                 }
 
