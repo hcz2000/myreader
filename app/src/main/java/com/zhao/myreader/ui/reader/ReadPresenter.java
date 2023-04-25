@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SeekBar;
@@ -684,11 +685,9 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      */
     private void updateCatalog(ArrayList<Chapter> newChapters) {
         java.util.List<Chapter> chaptersToInsert=new ArrayList<Chapter>();
-        int maxNewChapterNo=0;
-        for (int i = 0;i < newChapters.size(); i++) {
-            Chapter newChapter = newChapters.get(i);
-            int newChapterNo=newChapter.getNumber();
-            maxNewChapterNo=newChapterNo;
+        int newChapterNo;
+        for (newChapterNo = 0;newChapterNo < newChapters.size(); newChapterNo++) {
+            Chapter newChapter = newChapters.get(newChapterNo);
             if(newChapterNo<mChapters.size()){
                  Chapter oldChapter = mChapters.get(newChapterNo);
                  if (!oldChapter.getTitle().equals(newChapter.getTitle())) {
@@ -698,21 +697,20 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     mChapterService.updateEntity(oldChapter);
                  }
             }else{
-                newChapters.get(i).setId(StringHelper.getStringRandom(25));
-                newChapters.get(i).setBookId(mBook.getId());
-                chaptersToInsert.add(newChapters.get(i));
-                System.out.println(""+newChapters.get(i).getNumber()+"-"+newChapters.get(i).getTitle());
+                newChapter.setId(StringHelper.getStringRandom(25));
+                newChapter.setBookId(mBook.getId());
+                chaptersToInsert.add(newChapter);
+                Log.d("ReadPresent","New chapter found: "+newChapter.getNumber()+"-"+newChapter.getTitle());
             }
         }
         if(chaptersToInsert.size()>0) {
             mChapterService.addChapters(chaptersToInsert);
             mChapters.addAll(chaptersToInsert);
-        }
-        if(maxNewChapterNo>0 && maxNewChapterNo<mChapters.size()) {
-            for (int j = maxNewChapterNo; j < mChapters.size(); j++) {
-                mChapterService.deleteEntity(mChapters.get(j));
+        } else if( newChapterNo<mChapters.size()) {
+            for (int i = newChapterNo; i < mChapters.size(); i++) {
+                mChapterService.deleteEntity(mChapters.get(i));
             }
-            mChapters.subList(0,maxNewChapterNo);
+            mChapters.subList(0,newChapterNo);
         }
     }
 
