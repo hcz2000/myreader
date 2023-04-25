@@ -35,6 +35,8 @@ public class MyApplication extends Application {
     private static MyApplication application;
     private ExecutorService mFixedThreadPool;
 
+    private ExecutorService mLoaderThreadPool;
+
     static {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
@@ -43,7 +45,6 @@ public class MyApplication extends Application {
         });
         //设置全局的Footer构建器
         SmartRefreshLayout.setDefaultRefreshFooterCreator((context, layout) -> {
-
             return new ClassicsFooter(context).setDrawableSize(20);
         });
     }
@@ -55,7 +56,8 @@ public class MyApplication extends Application {
         super.onCreate();
         application = this;
         HttpUtil.trustAllHosts();//信任所有证书
-        mFixedThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());//初始化线程池
+        mFixedThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()/2+1);//初始化线程池
+        mLoaderThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()/2+1);
     }
 
     @SuppressLint("TrulyRandom")
@@ -92,19 +94,31 @@ public class MyApplication extends Application {
     public static Context getmContext() {
         return application;
     }
-   public void newThread(Runnable runnable) {
+    public void newThread(Runnable runnable) {
 
         try {
             mFixedThreadPool.execute(runnable);
         } catch (Exception e) {
             e.printStackTrace();
-            mFixedThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());//初始化线程池
+            mFixedThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()/2+1);//初始化线程池
             mFixedThreadPool.execute(runnable);
+        }
+    }
+
+    public void newLoader(Runnable runnable) {
+
+        try {
+            mLoaderThreadPool.execute(runnable);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mLoaderThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()/2+1);//初始化线程池
+            mLoaderThreadPool.execute(runnable);
         }
     }
 
     public void shutdownThreadPool(){
         mFixedThreadPool.shutdownNow();
+        mLoaderThreadPool.shutdownNow();
     }
 
 

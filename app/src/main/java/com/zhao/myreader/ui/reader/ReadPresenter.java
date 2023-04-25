@@ -87,6 +87,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     private BookLoader bookLoader;
     private TextView downloadProgressView;
     private String downloadProgress;
+    private boolean downloadInProgress=false;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -719,12 +720,19 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 
     private void downloadBook(final TextView tvDownloadProgress) {
         downloadProgressView=tvDownloadProgress;
-        if(bookLoader==null){
-            bookLoader=(BookLoader)loaderManager.initLoader(mBook.getId().hashCode(), null, this);
-            bookLoader.registerProgressListener(this);
-        }else {
-            //loaderManager.restartLoader(bookLoader.getId(), null, this);
-            TextHelper.showText("BookLoader is now processing");
+        synchronized(this){
+            if(bookLoader==null){
+                downloadInProgress=true;
+                bookLoader=(BookLoader)loaderManager.initLoader(mBook.getId().hashCode(), null, this);
+                bookLoader.registerProgressListener(this);
+            }else {
+                if(downloadInProgress){
+                    TextHelper.showText("BookLoader is now processing");
+                }else{
+                    downloadInProgress=true;
+                    loaderManager.restartLoader(bookLoader.getId(), null, this);
+                }
+            }
         }
     }
 
@@ -862,7 +870,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     @Override
     public void destroy(){
         if(bookLoader!=null){
-            bookLoader.stopLoading();
+            //bookLoader.stopLoading();
         }
         MyApplication.getApplication().shutdownThreadPool();
     }
@@ -880,6 +888,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         this.downloadProgressView.setText("重载");
         TextHelper.showText(this.downloadProgress+" cached");
         loaderManager.destroyLoader(loader.getId());
+        downloadInProgress=false;
     }
 
     @Override

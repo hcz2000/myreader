@@ -4,6 +4,7 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
 
+import com.zhao.myreader.base.application.MyApplication;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.Chapter;
 import com.zhao.myreader.greendao.service.ChapterService;
@@ -21,10 +22,6 @@ public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
     private ChapterService mChapterService;
     private Book mBook;
     private int downloadedCount;
-
-    private ExecutorService executorService;
-
-    private boolean loadingStopped;
 
     private List<ProgressListener> progressListeners;
 
@@ -46,10 +43,9 @@ public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
     public List<Chapter> loadInBackground() {
         List<Chapter> chapters=mChapterService.findBookAllChapterByBookId(mBook.getId());
         CountDownLatch latch=new CountDownLatch(chapters.size());
-        executorService= Executors.newFixedThreadPool(5);
 
         for(Chapter chapter : chapters){
-            executorService.execute(()->{
+            MyApplication.getApplication().newLoader(()->{
                 if(chapter.getContent()==null||chapter.getContent().equals("")) {
                     loadChapter(chapter);
                     mChapterService.updateChapter(chapter);
@@ -70,7 +66,6 @@ public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
         }catch(Exception e){
             Log.d("BookLoader",e.getLocalizedMessage());
         };
-        executorService.shutdown();
         String progress=downloadedCount+"/"+chapters.size();
         for(ProgressListener listener:progressListeners)
             listener.notify(progress);
@@ -79,9 +74,6 @@ public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
     }
     @Override
     protected void onStopLoading() {
-        System.out.println("onStoploading");
-        if(executorService!=null)
-            executorService.shutdownNow();
         cancelLoad();
     }
 
