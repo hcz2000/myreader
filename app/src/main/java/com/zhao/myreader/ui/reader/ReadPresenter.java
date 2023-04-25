@@ -173,10 +173,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             mBook.setSource(BookSource.tianlai.toString());
             mBookService.updateEntity(mBook);
         }
-        /*
-        settingOnClickValidFrom = BaseActivity.height / 4;
-        settingOnClickValidTo = BaseActivity.height / 4 * 3;
-         */
         settingOnClickValidFrom = BaseActivity.width / 4;
         settingOnClickValidTo = BaseActivity.width / 4 * 3;
         mReadActivity.getSrlContent().setEnableLoadMore(false);
