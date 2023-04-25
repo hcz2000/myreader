@@ -73,8 +73,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     private boolean autoScrollMode = false;//是否开启自动滑动
     private float pointX;
     private float pointY;
-    private float scrolledX;
-    private float scrolledY;
     private long lastClickTime;//上次点击时间
     private long doubleClickInterval = 200;//双击确认时间
     private float settingOnClickValidFrom;
@@ -82,7 +80,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     private Dialog mOperationDialog;//设置视图
     private Dialog mSettingDialog;//详细设置视图
     private int curSortflag = 0; //0正序  1倒序
-    private int cachedChapters = 0;//缓存章节数
     private LoaderManager loaderManager;
     private BookLoader bookLoader;
     private TextView downloadProgressView;
@@ -176,8 +173,12 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             mBook.setSource(BookSource.tianlai.toString());
             mBookService.updateEntity(mBook);
         }
+        /*
         settingOnClickValidFrom = BaseActivity.height / 4;
         settingOnClickValidTo = BaseActivity.height / 4 * 3;
+         */
+        settingOnClickValidFrom = BaseActivity.width / 4;
+        settingOnClickValidTo = BaseActivity.width / 4 * 3;
         mReadActivity.getSrlContent().setEnableLoadMore(false);
         mReadActivity.getSrlContent().setEnableRefresh(false);
         mReadActivity.getSrlContent().setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -290,6 +291,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 pointY = event.getRawY();
+                pointX = event.getRawX();
                 return false;
             }
         });
@@ -297,13 +299,13 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         mReadContentAdapter.setClickItemListener(new ReadContentAdapter.OnClickItemListener() {
             @Override
             public void onClick(View view, final int positon) {
-                if (pointY > settingOnClickValidFrom && pointY < settingOnClickValidTo) {
+                if (pointX > settingOnClickValidFrom && pointX < settingOnClickValidTo) {
                     autoScrollMode = false;
                     long currentClickTime = DateHelper.getLongDate();
                     if (currentClickTime - lastClickTime < doubleClickInterval) {
                         autoScroll();
                     } else {
-                        new Thread(()-> {
+                        new Thread(() -> {
                             try {
                                 Thread.sleep(doubleClickInterval);
                             } catch (InterruptedException e) {
@@ -315,9 +317,9 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         }).start();
                     }
                     lastClickTime = currentClickTime;
-                } else if (pointY > settingOnClickValidTo) {
+                } else if (pointX > settingOnClickValidTo) {
                     mReadActivity.getRvContent().scrollBy(0, BaseActivity.height);
-                } else if (pointY < settingOnClickValidFrom) {
+                } else if (pointX < settingOnClickValidFrom) {
                     mReadActivity.getRvContent().scrollBy(0, -BaseActivity.height);
                 }
             }
@@ -869,9 +871,9 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 
     @Override
     public void destroy(){
-        if(bookLoader!=null){
+        //if(bookLoader!=null){
             //bookLoader.stopLoading();
-        }
+        //}
         MyApplication.getApplication().shutdownThreadPool();
     }
 
