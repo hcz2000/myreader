@@ -690,34 +690,36 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      */
 
     private void updateCatalog(List<Chapter> newChapters) {
-        List<Chapter> chaptersToInsert=new ArrayList<Chapter>();
-        int newChapterNo;
-        for (newChapterNo = 0;newChapterNo < newChapters.size(); newChapterNo++) {
-            Chapter newChapter = newChapters.get(newChapterNo);
+        java.util.List<Chapter> chaptersToInsert=new ArrayList<Chapter>();
+        int maxNewChapterNo=0;
+        for (int i = 0;i < newChapters.size(); i++) {
+            Chapter newChapter = newChapters.get(i);
+            int newChapterNo=newChapter.getNumber();
+            maxNewChapterNo=newChapterNo;
             if(newChapterNo<mChapters.size()){
-                 Chapter oldChapter = mChapters.get(newChapterNo);
-                 if (!oldChapter.getTitle().equals(newChapter.getTitle())) {
+                Chapter oldChapter = mChapters.get(newChapterNo);
+                if (!oldChapter.getTitle().equals(newChapter.getTitle())) {
                     oldChapter.setTitle(newChapter.getTitle());
                     oldChapter.setUrl(newChapter.getUrl());
                     oldChapter.setContent(null);
                     mChapterService.updateEntity(oldChapter);
-                 }
+                }
             }else{
-                newChapter.setId(StringHelper.getStringRandom(25));
-                newChapter.setBookId(mBook.getId());
-                chaptersToInsert.add(newChapter);
-                Log.d("ReadPresent","New chapter found: "+newChapter.getNumber()+"-"+newChapter.getTitle());
+                newChapters.get(i).setId(StringHelper.getStringRandom(25));
+                newChapters.get(i).setBookId(mBook.getId());
+                chaptersToInsert.add(newChapters.get(i));
+                Log.d("ReadPresenter","New chapter found:"+newChapters.get(i).getNumber()+"-"+newChapters.get(i).getTitle());
             }
         }
         if(chaptersToInsert.size()>0) {
             mChapterService.addChapters(chaptersToInsert);
             mChapters.addAll(chaptersToInsert);
         }
-        if( newChapterNo<mChapters.size()) {
-            for (int i = newChapterNo; i < mChapters.size(); i++) {
-                mChapterService.deleteEntity(mChapters.get(i));
+        if(maxNewChapterNo>0 && maxNewChapterNo<mChapters.size()) {
+            for (int j = maxNewChapterNo; j < mChapters.size(); j++) {
+                mChapterService.deleteEntity(mChapters.get(j));
             }
-            mChapters.subList(0,newChapterNo);
+            mChapters.subList(0,maxNewChapterNo);
         }
     }
 
