@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 /**
- * Created by zhao on 2017/5/15.
+ * Created by zhan on 2017/5/15.
  */
 
 public abstract class DragAdapter extends BaseAdapter {

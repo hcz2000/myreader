@@ -11,7 +11,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 
 /**
- * Created by zhao on 2017/8/19.
+ * Created by zhan on 2017/8/19.
  */
 
 public class MyTextView extends /*AppCompatEditText*/ AppCompatTextView {

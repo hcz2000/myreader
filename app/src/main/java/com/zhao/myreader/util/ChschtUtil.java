@@ -3,7 +3,7 @@ package com.zhao.myreader.util;
 import java.io.UnsupportedEncodingException;
 
 /**
- * Created by zhao on 2017/8/4.
+ * Created by zhan on 2017/8/4.
  */
 
 public class ChschtUtil {

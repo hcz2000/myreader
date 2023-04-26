@@ -6,7 +6,7 @@ import android.content.Intent;
 import java.io.File;
 
 /**
- * Created by zhao on 2017/1/23.
+ * Created by zhan on 2017/1/23.
  */
 
 public class OpenFileHelper {

@@ -12,7 +12,7 @@ import com.zhao.myreader.greendao.gen.StockDao;
 import org.greenrobot.greendao.database.Database;
 
 /**
- * Created by zhao on 2017/3/15.
+ * Created by zhan on 2017/3/15.
  */
 
 public class MySQLiteOpenHelper extends DaoMaster.OpenHelper {

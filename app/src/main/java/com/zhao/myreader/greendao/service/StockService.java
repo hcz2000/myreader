@@ -11,7 +11,7 @@ import java.util.List;
 
 
 /**
- * Created by zhao on 2017/8/3.
+ * Created by zhan on 2017/8/3.
  */
 
 public class StockService extends BaseService {

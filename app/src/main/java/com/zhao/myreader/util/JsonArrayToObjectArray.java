@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 /**
- * Created by zhao on 2017/4/7.
+ * Created by zhan on 2017/4/7.
  */
 
 public class JsonArrayToObjectArray {

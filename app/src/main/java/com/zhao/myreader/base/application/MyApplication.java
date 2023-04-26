@@ -26,7 +26,7 @@ import javax.net.ssl.X509TrustManager;
 
 
 /**
- * Created by zhao on 2016/10/20.
+ * Created by zhan on 2016/10/20.
  */
 
 public class MyApplication extends Application {

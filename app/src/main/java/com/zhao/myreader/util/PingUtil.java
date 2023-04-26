@@ -5,7 +5,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 /**
- * Created by zhao on 2017/3/7.
+ * Created by zhan on 2017/3/7.
  */
 
 public class PingUtil {

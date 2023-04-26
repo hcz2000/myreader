@@ -6,7 +6,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 
 /**
- * Created by zhao on 2017/8/16.
+ * Created by zhan on 2017/8/16.
  */
 
 public class ReadTextView extends AppCompatTextView {

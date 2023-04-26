@@ -16,7 +16,7 @@ import com.zhao.myreader.util.SystemBarTintManager;
 
 
 /**
- * Created by zhao on 2016/4/16.
+ * Created by zhan on 2016/4/16.
  */
 public class BaseActivity extends AppCompatActivity {
     public static int width = 0;

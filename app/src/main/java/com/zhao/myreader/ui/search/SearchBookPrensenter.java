@@ -25,7 +25,7 @@ import java.util.Collections;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
- * Created by zhao on 2017/7/26.
+ * Created by zhan on 2017/7/26.
  */
 
 public class SearchBookPrensenter extends BasePresenter {

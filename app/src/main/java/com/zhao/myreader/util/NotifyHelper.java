@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by zhao on 2016/9/5.
+ * Created by zhan on 2016/9/5.
  */
 public class NotifyHelper {
 

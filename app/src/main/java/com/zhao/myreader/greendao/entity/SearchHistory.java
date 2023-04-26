@@ -11,7 +11,7 @@ import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * 搜索记录
- * Created by zhao on 2017/8/3.
+ * Created by zhan on 2017/8/3.
  */
 
 @Entity

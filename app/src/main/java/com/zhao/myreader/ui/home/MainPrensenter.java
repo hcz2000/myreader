@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import static androidx.fragment.app.FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 
 /**
- * Created by zhao on 2017/7/25.
+ * Created by zhan on 2017/7/25.
  */
 
 public class MainPrensenter extends BasePresenter {

@@ -21,7 +21,7 @@ import com.zhao.myreader.util.StringHelper;
 import java.util.List;
 
 /**
- * Created by zhao on 2017/7/26.
+ * Created by zhan on 2017/7/26.
  */
 
 public class SearchBookAdapter extends ArrayAdapter<Book> {

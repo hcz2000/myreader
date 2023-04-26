@@ -28,7 +28,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 /**
- * Created by zhao on 2017/7/25.
+ * Created by zhan on 2017/7/25.
  */
 
 public class StockPresenter extends BasePresenter implements LoaderManager.LoaderCallbacks {

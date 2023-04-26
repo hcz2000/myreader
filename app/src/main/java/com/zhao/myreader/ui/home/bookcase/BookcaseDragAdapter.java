@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 
 /**
- * Created by zhao on 2017/5/19.
+ * Created by zhan on 2017/5/19.
  */
 
 public class BookcaseDragAdapter extends DragAdapter {

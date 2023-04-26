@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat;
 
 
 /**
- * Created by zhao on 2017/3/2.
+ * Created by zhan on 2017/3/2.
  */
 
 public class PermissionHelper {

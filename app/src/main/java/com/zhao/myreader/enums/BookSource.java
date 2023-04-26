@@ -2,7 +2,7 @@ package com.zhao.myreader.enums;
 
 /**
  * 小说源
- * Created by zhao on 2020/04/13.
+ * Created by zhan on 2020/04/13.
  */
 
 public enum BookSource {

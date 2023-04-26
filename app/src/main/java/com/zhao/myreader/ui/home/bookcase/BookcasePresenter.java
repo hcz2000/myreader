@@ -23,7 +23,7 @@ import com.zhao.myreader.webapi.BookApi;
 import java.util.ArrayList;
 
 /**
- * Created by zhao on 2017/7/25.
+ * Created by zhan on 2017/7/25.
  */
 
 public class BookcasePresenter extends BasePresenter {

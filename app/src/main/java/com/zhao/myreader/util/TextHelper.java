@@ -6,7 +6,7 @@ import com.zhao.myreader.base.application.MyApplication;
 
 
 /**
- * Created by zhao on 2016/10/26.
+ * Created by zhan on 2016/10/26.
  */
 
 public class TextHelper {

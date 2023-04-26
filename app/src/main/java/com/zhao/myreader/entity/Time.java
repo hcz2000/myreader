@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by zhao on 2016/12/7.
+ * Created by zhan on 2016/12/7.
  */
 
 public class Time implements Parcelable{

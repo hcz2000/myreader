@@ -6,7 +6,7 @@ import com.zhao.myreader.util.HttpUtil;
 import com.zhao.myreader.util.crawler.BiQuGeReadUtil;
 
 /**
- * Created by zhao on 2017/7/24.
+ * Created by zhan on 2017/7/24.
  */
 
 public class BookStoreApi{

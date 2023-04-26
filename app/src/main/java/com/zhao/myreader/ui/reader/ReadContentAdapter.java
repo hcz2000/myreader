@@ -39,7 +39,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * Created by zhao on 2017/8/17.
+ * Created by zhan on 2017/8/17.
  */
 
 public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.ViewHolder> {

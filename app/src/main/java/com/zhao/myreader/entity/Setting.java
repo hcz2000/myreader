@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * 用户设置
- * Created by zhao on 2017/7/28.
+ * Created by zhan on 2017/7/28.
  */
 
 public class Setting implements Serializable {

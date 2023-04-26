@@ -19,7 +19,7 @@ import com.zhao.myreader.webapi.BookStoreApi;
 
 
 /**
- * Created by zhao on 2017/7/27.
+ * Created by zhan on 2017/7/27.
  */
 
 public class BookInfoPresenter extends  BasePresenter {

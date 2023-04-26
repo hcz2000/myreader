@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.util.DisplayMetrics;
 
 /**
- * Created by zhao on 2017/3/10.
+ * Created by zhan on 2017/3/10.
  */
 
 public class ScreenHelper {

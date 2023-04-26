@@ -6,7 +6,7 @@ import android.provider.Settings;
 import android.view.WindowManager;
 
 /**
- * Created by zhao on 2017/8/4.
+ * Created by zhan on 2017/8/4.
  */
 
 public class BrightUtil {

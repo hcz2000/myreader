@@ -20,7 +20,7 @@ import com.zhao.myreader.greendao.service.StockService;
 import com.zhao.myreader.ui.home.BrowserActivity;
 
 /**
- * Created by zhao on 2017/5/19.
+ * Created by zhan on 2017/5/19.
  */
 
 public class StockDragAdapter extends DragAdapter {

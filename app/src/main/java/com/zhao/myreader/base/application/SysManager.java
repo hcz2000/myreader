@@ -10,7 +10,7 @@ import com.zhao.myreader.util.CacheHelper;
 
 
 /**
- * Created by zhao on 2016/11/2.
+ * Created by zhan on 2016/11/2.
  */
 
 public class SysManager {

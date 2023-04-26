@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * 软键盘弹出/关闭监听
- * Created by zhao on 2017/7/12.
+ * Created by zhan on 2017/7/12.
  */
 
 public class SoftKeyBroadManager  implements ViewTreeObserver.OnGlobalLayoutListener{

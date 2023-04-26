@@ -7,7 +7,7 @@ import com.zhao.myreader.greendao.gen.DaoSession;
 import com.zhao.myreader.greendao.util.MySQLiteOpenHelper;
 
 /**
- * Created by zhao on 2017/3/15.
+ * Created by zhan on 2017/3/15.
  */
 
 public class GreenDaoManager {

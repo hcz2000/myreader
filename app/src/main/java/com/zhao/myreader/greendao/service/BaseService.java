@@ -8,7 +8,7 @@ import com.zhao.myreader.greendao.gen.DaoSession;
 
 
 /**
- * Created by zhao on 2017/7/24.
+ * Created by zhan on 2017/7/24.
  */
 
 public class BaseService {

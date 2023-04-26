@@ -9,7 +9,7 @@ import com.zhao.myreader.greendao.entity.Stock;
 import com.zhao.myreader.greendao.service.StockService;
 
 /**
- * Created by zhao on 2017/7/26.
+ * Created by zhan on 2017/7/26.
  */
 
 public class UpdateStockPrensenter extends BasePresenter {

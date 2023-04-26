@@ -23,7 +23,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
- * Created by zhao on 2017/7/26.
+ * Created by zhan on 2017/7/26.
  */
 
 public class InputStockPrensenter extends BasePresenter {

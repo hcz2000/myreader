@@ -5,7 +5,7 @@ import android.app.Activity;
 import java.util.ArrayList;
 
 /**
- * Created by zhao on 2016/4/16.
+ * Created by zhan on 2016/4/16.
  */
 public class ActivityManage {
 

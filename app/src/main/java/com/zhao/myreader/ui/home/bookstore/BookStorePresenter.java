@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhao on 2017/7/25.
+ * Created by zhan on 2017/7/25.
  */
 
 public class BookStorePresenter extends BasePresenter {

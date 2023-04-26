@@ -44,7 +44,6 @@ public class BookLoader extends AsyncTaskLoader<List<Chapter>>{
     public List<Chapter> loadInBackground() {
         List<Chapter> chapters=mChapterService.findBookAllChapterByBookId(mBook.getId());
         CountDownLatch latch=new CountDownLatch(chapters.size());
-
         for(Chapter chapter : chapters){
             MyApplication.getApplication().newLoader(()->{
                 if(chapter.getContent()==null||chapter.getContent().equals("")) {

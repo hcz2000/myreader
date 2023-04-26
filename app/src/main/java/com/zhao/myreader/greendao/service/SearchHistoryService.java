@@ -15,7 +15,7 @@ import java.util.UUID;
 
 
 /**
- * Created by zhao on 2017/8/3.
+ * Created by zhan on 2017/8/3.
  */
 
 public class SearchHistoryService extends BaseService {

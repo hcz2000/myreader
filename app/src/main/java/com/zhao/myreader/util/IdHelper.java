@@ -1,7 +1,7 @@
 package com.zhao.myreader.util;
 
 /**
- * Created by zhao on 2016/12/9.
+ * Created by zhan on 2016/12/9.
  */
 
 public class IdHelper {

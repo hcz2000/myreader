@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by zhao on 2017/3/15.
+ * Created by zhan on 2017/3/15.
  */
 
 public class GreenDaoUpgrade {

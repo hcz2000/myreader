@@ -28,7 +28,7 @@ import com.zhao.myreader.util.BrightUtil;
 import com.zhao.myreader.util.StringHelper;
 
 /**
- * Created by zhao on 2017/1/11.
+ * Created by zhan on 2017/1/11.
  */
 
 public class DialogCreator {

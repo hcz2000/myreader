@@ -6,7 +6,7 @@ import com.zhao.myreader.util.CalendarHelper;
 import java.io.Serializable;
 
 /**
- * Created by zhao on 2016/11/24.
+ * Created by zhan on 2016/11/24.
  */
 
 public class Date implements Serializable {

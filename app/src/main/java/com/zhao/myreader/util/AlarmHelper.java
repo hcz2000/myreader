@@ -14,7 +14,7 @@ import static android.content.Context.ALARM_SERVICE;
 import static android.content.Intent.FLAG_INCLUDE_STOPPED_PACKAGES;
 
 /**
- * Created by zhao on 2016/12/9.
+ * Created by zhan on 2016/12/9.
  */
 
 public class AlarmHelper {

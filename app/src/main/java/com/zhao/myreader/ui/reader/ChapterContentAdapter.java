@@ -38,7 +38,7 @@ import java.util.ArrayList;
 
 /**
  * （已废弃）
- * Created by zhao on 2017/7/26.
+ * Created by zhan on 2017/7/26.
  */
 
 public class ChapterContentAdapter extends ArrayAdapter<Chapter> {

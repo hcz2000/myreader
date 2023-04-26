@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 /**
  * 书
- * Created by zhao on 2017/7/24.
+ * Created by zhan on 2017/7/24.
  */
 
 @Entity

@@ -1,7 +1,7 @@
 package com.zhao.myreader.common;
 
 /**
- * Created by zhao on 2016/10/27.
+ * Created by zhan on 2016/10/27.
  */
 
 public class ErrorCode {

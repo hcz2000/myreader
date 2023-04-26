@@ -5,7 +5,7 @@ import android.app.Service;
 import android.os.Vibrator;
 
 /**
- * Created by zhao on 2017/8/29.
+ * Created by zhan on 2017/8/29.
  */
 
 public class VibratorUtil {

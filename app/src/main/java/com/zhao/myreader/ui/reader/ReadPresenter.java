@@ -54,7 +54,7 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * Created by zhao on 2017/7/27.
+ * Created by zhan on 2017/7/27.
  */
 
 public class ReadPresenter extends BasePresenter implements LoaderManager.LoaderCallbacks, ProgressListener {
@@ -690,7 +690,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      */
 
     private void updateCatalog(List<Chapter> newChapters) {
-        java.util.List<Chapter> chaptersToInsert=new ArrayList<Chapter>();
+        List<Chapter> chaptersToInsert=new ArrayList<Chapter>();
         int maxNewChapterNo=0;
         for (int i = 0;i < newChapters.size(); i++) {
             Chapter newChapter = newChapters.get(i);
@@ -715,11 +715,11 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             mChapterService.addChapters(chaptersToInsert);
             mChapters.addAll(chaptersToInsert);
         }
-        if(maxNewChapterNo>0 && maxNewChapterNo<mChapters.size()) {
-            for (int j = maxNewChapterNo; j < mChapters.size(); j++) {
+        if(maxNewChapterNo>0 && maxNewChapterNo+1<mChapters.size()) {
+            for (int j = maxNewChapterNo+1; j < mChapters.size(); j++) {
                 mChapterService.deleteEntity(mChapters.get(j));
             }
-            mChapters.subList(0,maxNewChapterNo);
+            mChapters=mChapters.subList(0,maxNewChapterNo+1);
         }
     }
 

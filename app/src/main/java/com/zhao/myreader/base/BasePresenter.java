@@ -9,7 +9,7 @@ import androidx.lifecycle.OnLifecycleEvent;
 import static androidx.lifecycle.Lifecycle.State.STARTED;
 
 /**
- * Created by zhao on 2016/10/19.
+ * Created by zhan on 2016/10/19.
  */
 
 public abstract class BasePresenter implements LifecycleObserver {

@@ -1,7 +1,7 @@
 package com.zhao.myreader.util;
 
 /**
- * Created by zhao on 2016/11/24.
+ * Created by zhan on 2016/11/24.
  */
 
 import java.text.ParseException;

@@ -3,7 +3,7 @@ package com.zhao.myreader.util;
 import android.content.Context;
 
 /**
- * Created by zhao on 2016/11/9.
+ * Created by zhan on 2016/11/9.
  */
 
 public class DipPxUtil {
