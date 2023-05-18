@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.font;
+package com.zhan.myreader.ui.font;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -6,9 +6,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.zhao.myreader.R;
-import com.zhao.myreader.base.BaseActivity;
-import com.zhao.myreader.databinding.ActivityFontsBinding;
+import com.zhan.myreader.R;
+import com.zhan.myreader.base.BaseActivity;
+import com.zhan.myreader.databinding.ActivityFontsBinding;
 
 
 public class FontsActivity extends BaseActivity {

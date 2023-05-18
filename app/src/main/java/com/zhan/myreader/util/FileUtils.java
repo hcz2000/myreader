@@ -1,4 +1,4 @@
-package com.zhao.myreader.util;
+package com.zhan.myreader.util;
 
 import android.content.ContentUris;
 import android.content.Context;

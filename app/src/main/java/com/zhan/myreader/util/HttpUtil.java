@@ -1,13 +1,13 @@
-package com.zhao.myreader.util;
+package com.zhan.myreader.util;
 
 import android.util.Base64;
 import android.util.Log;
 
-import com.zhao.myreader.base.application.MyApplication;
-import com.zhao.myreader.callback.HttpCallback;
-import com.zhao.myreader.callback.ResultCallback;
-import com.zhao.myreader.common.APPCONST;
-import com.zhao.myreader.common.URLCONST;
+import com.zhan.myreader.base.application.MyApplication;
+import com.zhan.myreader.callback.HttpCallback;
+import com.zhan.myreader.callback.ResultCallback;
+import com.zhan.myreader.common.APPCONST;
+import com.zhan.myreader.common.URLCONST;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

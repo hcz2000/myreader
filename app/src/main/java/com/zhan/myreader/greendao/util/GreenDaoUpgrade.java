@@ -1,10 +1,10 @@
-package com.zhao.myreader.greendao.util;
+package com.zhan.myreader.greendao.util;
 
 import android.database.Cursor;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.zhao.myreader.greendao.gen.DaoMaster;
+import com.zhan.myreader.greendao.gen.DaoMaster;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.database.Database;

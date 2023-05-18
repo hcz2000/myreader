@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.zhao.myreader.ui.bookinfo.home.bookcase.BookcaseFragment">
+    tools:context="com.zhan.myreader.ui.bookinfo.home.bookcase.BookcaseFragment">
 
     <com.scwang.smartrefresh.header.MaterialHeader
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
 
         </LinearLayout>
 
-        <com.zhao.myreader.custom.DragSortGridView
+        <com.zhan.myreader.custom.DragSortGridView
             android:id="@+id/book_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             android:numColumns="auto_fit"
             android:scrollbars="none"
             android:verticalSpacing="10dp">
-        </com.zhao.myreader.custom.DragSortGridView>
+        </com.zhan.myreader.custom.DragSortGridView>
 
 
     </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.font;
+package com.zhan.myreader.ui.font;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,11 +15,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.zhao.myreader.R;
-import com.zhao.myreader.base.application.SysManager;
-import com.zhao.myreader.common.APPCONST;
-import com.zhao.myreader.entity.Setting;
-import com.zhao.myreader.enums.Font;
+import com.zhan.myreader.R;
+import com.zhan.myreader.base.application.SysManager;
+import com.zhan.myreader.common.APPCONST;
+import com.zhan.myreader.entity.Setting;
+import com.zhan.myreader.enums.Font;
 
 
 import java.util.ArrayList;

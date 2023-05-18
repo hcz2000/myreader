@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.zhao.myreader.ui.bookinfo.home.bbs.StockFragment">
+    tools:context="com.zhan.myreader.ui.bookinfo.home.bbs.StockFragment">
 
     <com.scwang.smartrefresh.header.MaterialHeader
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
 
         </LinearLayout>
 
-        <com.zhao.myreader.custom.DragSortListView
+        <com.zhan.myreader.custom.DragSortListView
             android:id="@+id/stock_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             android:listSelector="@android:color/transparent"
             android:scrollbars="none"
             android:verticalSpacing="10dp">
-        </com.zhao.myreader.custom.DragSortListView>
+        </com.zhan.myreader.custom.DragSortListView>
 
   </RelativeLayout>
 

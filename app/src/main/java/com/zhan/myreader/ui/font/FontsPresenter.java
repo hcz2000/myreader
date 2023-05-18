@@ -1,12 +1,12 @@
-package com.zhao.myreader.ui.font;
+package com.zhan.myreader.ui.font;
 
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 
-import com.zhao.myreader.R;
-import com.zhao.myreader.base.BasePresenter;
-import com.zhao.myreader.enums.Font;
+import com.zhan.myreader.R;
+import com.zhan.myreader.base.BasePresenter;
+import com.zhan.myreader.enums.Font;
 
 import java.util.ArrayList;
 
