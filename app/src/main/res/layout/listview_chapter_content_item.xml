@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.zhao.myreader.custom.MyTextView
+        <com.zhan.myreader.custom.MyTextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <com.zhao.myreader.custom.MyTextView
+        <com.zhan.myreader.custom.MyTextView
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

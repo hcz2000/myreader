@@ -1,4 +1,4 @@
-package com.zhao.myreader.util;
+package com.zhan.myreader.util;
 
 /**
  * Created by zhan on 2016/12/9.

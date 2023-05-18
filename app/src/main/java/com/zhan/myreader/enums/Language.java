@@ -1,4 +1,4 @@
-package com.zhao.myreader.enums;
+package com.zhan.myreader.enums;
 
 /**
  * Created by zhan on 2016/11/3.

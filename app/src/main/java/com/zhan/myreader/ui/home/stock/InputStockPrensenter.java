@@ -1,8 +1,8 @@
-package com.zhao.myreader.ui.home.stock;
+package com.zhan.myreader.ui.home.stock;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-import static com.zhao.myreader.base.application.MyApplication.runOnUiThread;
+import static com.zhan.myreader.base.application.MyApplication.runOnUiThread;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.zhao.myreader.greendao.entity.Stock;
-import com.zhao.myreader.base.BasePresenter;
-import com.zhao.myreader.callback.ResultCallback;
-import com.zhao.myreader.greendao.service.StockService;
-import com.zhao.myreader.util.HttpUtil;
-import com.zhao.myreader.util.StringHelper;
+import com.zhan.myreader.greendao.entity.Stock;
+import com.zhan.myreader.base.BasePresenter;
+import com.zhan.myreader.callback.ResultCallback;
+import com.zhan.myreader.greendao.service.StockService;
+import com.zhan.myreader.util.HttpUtil;
+import com.zhan.myreader.util.StringHelper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
