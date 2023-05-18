@@ -1,11 +1,11 @@
-package com.zhao.myreader.util.crawler;
+package com.zhan.myreader.util.crawler;
 
 import android.text.Html;
 
-import com.zhao.myreader.entity.bookstore.BookType;
-import com.zhao.myreader.enums.BookSource;
-import com.zhao.myreader.greendao.entity.Book;
-import com.zhao.myreader.util.StringHelper;
+import com.zhan.myreader.entity.bookstore.BookType;
+import com.zhan.myreader.enums.BookSource;
+import com.zhan.myreader.greendao.entity.Book;
+import com.zhan.myreader.util.StringHelper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

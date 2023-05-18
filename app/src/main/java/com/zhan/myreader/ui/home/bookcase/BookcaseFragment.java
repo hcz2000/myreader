@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.home.bookcase;
+package com.zhan.myreader.ui.home.bookcase;
 
 
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhao.myreader.custom.DragSortGridView;
-import com.zhao.myreader.databinding.FragmentBookcaseBinding;
+import com.zhan.myreader.custom.DragSortGridView;
+import com.zhan.myreader.databinding.FragmentBookcaseBinding;
 
 
 /**

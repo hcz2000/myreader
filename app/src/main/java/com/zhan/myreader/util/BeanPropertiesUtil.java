@@ -1,4 +1,4 @@
-package com.zhao.myreader.util;
+package com.zhan.myreader.util;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;

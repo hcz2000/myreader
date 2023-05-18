@@ -1,4 +1,4 @@
-package com.zhao.myreader.greendao.entity;
+package com.zhan.myreader.greendao.entity;
 
 
 

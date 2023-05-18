@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.home.bookcase;
+package com.zhan.myreader.ui.home.bookcase;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,15 +11,15 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
-import com.zhao.myreader.R;
-import com.zhao.myreader.common.APPCONST;
-import com.zhao.myreader.common.URLCONST;
-import com.zhao.myreader.creator.DialogCreator;
-import com.zhao.myreader.custom.DragAdapter;
-import com.zhao.myreader.greendao.entity.Book;
-import com.zhao.myreader.greendao.service.BookService;
-import com.zhao.myreader.ui.reader.ReadActivity;
-import com.zhao.myreader.util.StringHelper;
+import com.zhan.myreader.R;
+import com.zhan.myreader.common.APPCONST;
+import com.zhan.myreader.common.URLCONST;
+import com.zhan.myreader.creator.DialogCreator;
+import com.zhan.myreader.custom.DragAdapter;
+import com.zhan.myreader.greendao.entity.Book;
+import com.zhan.myreader.greendao.service.BookService;
+import com.zhan.myreader.ui.reader.ReadActivity;
+import com.zhan.myreader.util.StringHelper;
 
 import java.util.ArrayList;
 
