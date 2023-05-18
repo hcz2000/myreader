@@ -1,4 +1,4 @@
-package com.zhao.myreader.entity;
+package com.zhan.myreader.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -68,7 +68,7 @@ public class Time implements Parcelable{
         second = 0;
     }
 
-    public void init(com.zhao.myreader.entity.Date date){
+    public void init(com.zhan.myreader.entity.Date date){
         Date date1 = new Date();
         year = date.getYear();
         month = date.getMonth();

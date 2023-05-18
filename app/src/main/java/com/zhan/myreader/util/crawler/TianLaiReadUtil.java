@@ -1,10 +1,10 @@
-package com.zhao.myreader.util.crawler;
+package com.zhan.myreader.util.crawler;
 
-import com.zhao.myreader.common.URLCONST;
-import com.zhao.myreader.enums.BookSource;
-import com.zhao.myreader.greendao.entity.Book;
-import com.zhao.myreader.greendao.entity.Chapter;
-import com.zhao.myreader.util.StringHelper;
+import com.zhan.myreader.common.URLCONST;
+import com.zhan.myreader.enums.BookSource;
+import com.zhan.myreader.greendao.entity.Book;
+import com.zhan.myreader.greendao.entity.Chapter;
+import com.zhan.myreader.util.StringHelper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.home.stock;
+package com.zhan.myreader.ui.home.stock;
 
 
 import android.os.Bundle;
@@ -7,9 +7,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.zhao.myreader.R;
-import com.zhao.myreader.base.BaseActivity;
-import com.zhao.myreader.databinding.ActivityInputStockBinding;
+import com.zhan.myreader.R;
+import com.zhan.myreader.base.BaseActivity;
+import com.zhan.myreader.databinding.ActivityInputStockBinding;
 
 
 public class UpdateStockActivity extends BaseActivity {

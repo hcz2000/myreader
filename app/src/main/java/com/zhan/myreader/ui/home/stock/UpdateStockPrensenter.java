@@ -1,12 +1,12 @@
-package com.zhao.myreader.ui.home.stock;
+package com.zhan.myreader.ui.home.stock;
 
 import android.view.View;
 import android.widget.Toast;
 
-import com.zhao.myreader.base.BasePresenter;
-import com.zhao.myreader.common.APPCONST;
-import com.zhao.myreader.greendao.entity.Stock;
-import com.zhao.myreader.greendao.service.StockService;
+import com.zhan.myreader.base.BasePresenter;
+import com.zhan.myreader.common.APPCONST;
+import com.zhan.myreader.greendao.entity.Stock;
+import com.zhan.myreader.greendao.service.StockService;
 
 /**
  * Created by zhan on 2017/7/26.

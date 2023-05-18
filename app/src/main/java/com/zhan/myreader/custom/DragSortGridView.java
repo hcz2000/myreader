@@ -1,4 +1,4 @@
-package com.zhao.myreader.custom;
+package com.zhan.myreader.custom;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -22,7 +22,7 @@ import android.widget.GridView;
 import android.widget.ScrollView;
 
 
-import com.zhao.myreader.R;
+import com.zhan.myreader.R;
 
 import java.util.ArrayList;
 import java.util.List;

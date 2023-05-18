@@ -1,12 +1,12 @@
-package com.zhao.myreader.base.application;
+package com.zhan.myreader.base.application;
 
-import com.zhao.myreader.R;
-import com.zhao.myreader.common.APPCONST;
-import com.zhao.myreader.entity.Setting;
-import com.zhao.myreader.enums.Font;
-import com.zhao.myreader.enums.Language;
-import com.zhao.myreader.enums.ReadStyle;
-import com.zhao.myreader.util.CacheHelper;
+import com.zhan.myreader.R;
+import com.zhan.myreader.common.APPCONST;
+import com.zhan.myreader.entity.Setting;
+import com.zhan.myreader.enums.Font;
+import com.zhan.myreader.enums.Language;
+import com.zhan.myreader.enums.ReadStyle;
+import com.zhan.myreader.util.CacheHelper;
 
 
 /**

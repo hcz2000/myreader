@@ -1,8 +1,8 @@
-package com.zhao.myreader.util;
+package com.zhan.myreader.util;
 
 import android.widget.Toast;
 
-import com.zhao.myreader.base.application.MyApplication;
+import com.zhan.myreader.base.application.MyApplication;
 
 
 /**

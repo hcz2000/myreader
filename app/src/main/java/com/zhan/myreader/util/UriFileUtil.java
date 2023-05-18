@@ -1,4 +1,4 @@
-package com.zhao.myreader.util;
+package com.zhan.myreader.util;
 
 
 import android.content.ContentResolver;
@@ -14,7 +14,7 @@ import android.provider.MediaStore;
 
 import androidx.core.content.FileProvider;
 
-import com.zhao.myreader.R;
+import com.zhan.myreader.R;
 
 import java.io.File;
 
