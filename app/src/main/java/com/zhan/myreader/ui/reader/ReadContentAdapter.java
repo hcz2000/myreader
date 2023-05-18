@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.reader;
+package com.zhan.myreader.ui.reader;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,20 +20,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.spreada.utils.chinese.ZHConverter;
-import com.zhao.myreader.R;
-import com.zhao.myreader.base.application.SysManager;
-import com.zhao.myreader.callback.ResultCallback;
+import com.zhan.myreader.R;
+import com.zhan.myreader.base.application.SysManager;
+import com.zhan.myreader.callback.ResultCallback;
 
-import com.zhao.myreader.custom.MyTextView;
-import com.zhao.myreader.entity.Setting;
-import com.zhao.myreader.enums.Font;
-import com.zhao.myreader.enums.Language;
-import com.zhao.myreader.greendao.entity.Book;
-import com.zhao.myreader.greendao.entity.Chapter;
-import com.zhao.myreader.greendao.service.BookService;
-import com.zhao.myreader.greendao.service.ChapterService;
-import com.zhao.myreader.util.StringHelper;
-import com.zhao.myreader.webapi.BookApi;
+import com.zhan.myreader.custom.MyTextView;
+import com.zhan.myreader.entity.Setting;
+import com.zhan.myreader.enums.Font;
+import com.zhan.myreader.enums.Language;
+import com.zhan.myreader.greendao.entity.Book;
+import com.zhan.myreader.greendao.entity.Chapter;
+import com.zhan.myreader.greendao.service.BookService;
+import com.zhan.myreader.greendao.service.ChapterService;
+import com.zhan.myreader.util.StringHelper;
+import com.zhan.myreader.webapi.BookApi;
 
 import java.lang.reflect.Method;
 import java.util.List;

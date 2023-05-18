@@ -1,4 +1,4 @@
-package com.zhao.myreader.util;
+package com.zhan.myreader.util;
 
 
 import android.graphics.Bitmap;
@@ -10,7 +10,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import com.zhao.myreader.base.application.MyApplication;
+import com.zhan.myreader.base.application.MyApplication;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

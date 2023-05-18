@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.reader;
+package com.zhan.myreader.ui.reader;
 
 
 import android.content.Intent;
@@ -15,8 +15,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhao.myreader.base.BaseActivity;
-import com.zhao.myreader.databinding.ActivityReadBinding;
+import com.zhan.myreader.base.BaseActivity;
+import com.zhan.myreader.databinding.ActivityReadBinding;
 
 public class ReadActivity extends BaseActivity {
 
