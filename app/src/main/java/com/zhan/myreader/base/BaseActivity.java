@@ -1,4 +1,4 @@
-package com.zhao.myreader.base;
+package com.zhan.myreader.base;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -11,8 +11,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import androidx.appcompat.app.AppCompatActivity;
-import com.zhao.myreader.base.application.ActivityManage;
-import com.zhao.myreader.util.SystemBarTintManager;
+import com.zhan.myreader.base.application.ActivityManage;
+import com.zhan.myreader.util.SystemBarTintManager;
 
 
 /**

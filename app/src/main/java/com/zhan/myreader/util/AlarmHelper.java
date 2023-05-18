@@ -1,4 +1,4 @@
-package com.zhao.myreader.util;
+package com.zhan.myreader.util;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import com.zhao.myreader.common.APPCONST;
+import com.zhan.myreader.common.APPCONST;
 
 import java.util.Date;
 

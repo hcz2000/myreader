@@ -1,8 +1,8 @@
-package com.zhao.myreader.common;
+package com.zhan.myreader.common;
 
 import android.os.Environment;
 
-import com.zhao.myreader.R;
+import com.zhan.myreader.R;
 
 
 /**

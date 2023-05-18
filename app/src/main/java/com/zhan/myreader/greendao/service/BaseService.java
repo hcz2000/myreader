@@ -1,10 +1,10 @@
-package com.zhao.myreader.greendao.service;
+package com.zhan.myreader.greendao.service;
 
 import android.database.Cursor;
 
-import com.zhao.myreader.greendao.GreenDaoManager;
-import com.zhao.myreader.greendao.gen.DaoMaster;
-import com.zhao.myreader.greendao.gen.DaoSession;
+import com.zhan.myreader.greendao.GreenDaoManager;
+import com.zhan.myreader.greendao.gen.DaoMaster;
+import com.zhan.myreader.greendao.gen.DaoSession;
 
 
 /**
