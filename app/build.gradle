@@ -5,7 +5,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion '29.0.3'
     defaultConfig {
-        applicationId "com.zhao.myreader"
+        applicationId "com.zhan.myreader"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 304
@@ -77,6 +77,6 @@ dependencies {
 
 greendao {
     schemaVersion 9
-    daoPackage 'com.zhao.myreader.greendao.gen'
+    daoPackage 'com.zhan.myreader.greendao.gen'
     targetGenDir 'src/main/java'
 }
