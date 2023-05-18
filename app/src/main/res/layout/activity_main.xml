@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.zhao.myreader.ui.bookinfo.home.MainActivity">
+    tools:context="com.zhan.myreader.ui.bookinfo.home.MainActivity">
 
     <RelativeLayout
         android:id="@+id/rl_common_title"
@@ -15,7 +15,7 @@
         android:background="@color/white"
         >
 
-        <com.zhao.myreader.custom.CircleImageView
+        <com.zhan.myreader.custom.CircleImageView
             android:id="@+id/civ_avatar"
             android:layout_width="30dp"
             android:layout_height="30dp"

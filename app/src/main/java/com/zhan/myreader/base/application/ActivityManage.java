@@ -1,4 +1,4 @@
-package com.zhao.myreader.base.application;
+package com.zhan.myreader.base.application;
 
 import android.app.Activity;
 

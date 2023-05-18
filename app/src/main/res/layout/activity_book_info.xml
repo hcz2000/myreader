@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:fitsSystemWindows="true"
-    tools:context="com.zhao.myreader.ui.bookinfo.BookInfoActivity">
+    tools:context="com.zhan.myreader.ui.bookinfo.BookInfoActivity">
 
     <include
         android:id="@+id/title"
