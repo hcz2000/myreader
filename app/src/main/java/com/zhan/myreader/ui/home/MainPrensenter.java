@@ -1,15 +1,15 @@
-package com.zhao.myreader.ui.home;
+package com.zhan.myreader.ui.home;
 
 import android.content.Intent;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.zhao.myreader.base.BasePresenter;
-import com.zhao.myreader.ui.home.stock.StockFragment;
-import com.zhao.myreader.ui.home.bookcase.BookcaseFragment;
-import com.zhao.myreader.ui.home.bookstore.BookStoreFragment;
-import com.zhao.myreader.ui.search.SearchBookActivity;
+import com.zhan.myreader.base.BasePresenter;
+import com.zhan.myreader.ui.home.stock.StockFragment;
+import com.zhan.myreader.ui.home.bookcase.BookcaseFragment;
+import com.zhan.myreader.ui.home.bookstore.BookStoreFragment;
+import com.zhan.myreader.ui.search.SearchBookActivity;
 
 import java.util.ArrayList;
 

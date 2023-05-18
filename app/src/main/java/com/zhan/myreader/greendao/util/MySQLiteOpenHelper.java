@@ -1,13 +1,13 @@
-package com.zhao.myreader.greendao.util;
+package com.zhan.myreader.greendao.util;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.zhao.myreader.greendao.gen.BookDao;
-import com.zhao.myreader.greendao.gen.ChapterDao;
-import com.zhao.myreader.greendao.gen.DaoMaster;
-import com.zhao.myreader.greendao.gen.SearchHistoryDao;
-import com.zhao.myreader.greendao.gen.StockDao;
+import com.zhan.myreader.greendao.gen.BookDao;
+import com.zhan.myreader.greendao.gen.ChapterDao;
+import com.zhan.myreader.greendao.gen.DaoMaster;
+import com.zhan.myreader.greendao.gen.SearchHistoryDao;
+import com.zhan.myreader.greendao.gen.StockDao;
 
 import org.greenrobot.greendao.database.Database;
 

@@ -1,4 +1,4 @@
-package com.zhao.myreader.util;
+package com.zhan.myreader.util;
 
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -9,7 +9,7 @@ import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.zhao.myreader.base.BaseActivity;
+import com.zhan.myreader.base.BaseActivity;
 
 import java.lang.reflect.Field;
 

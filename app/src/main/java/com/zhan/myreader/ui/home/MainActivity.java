@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.home;
+package com.zhan.myreader.ui.home;
 
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -14,14 +14,14 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.zhao.myreader.R;
+import com.zhan.myreader.R;
 
 
-import com.zhao.myreader.common.APPCONST;
-import com.zhao.myreader.custom.CircleImageView;
-import com.zhao.myreader.databinding.ActivityMainBinding;
-import com.zhao.myreader.util.SystemBarTintManager;
-import com.zhao.myreader.util.TextHelper;
+import com.zhan.myreader.common.APPCONST;
+import com.zhan.myreader.custom.CircleImageView;
+import com.zhan.myreader.databinding.ActivityMainBinding;
+import com.zhan.myreader.util.SystemBarTintManager;
+import com.zhan.myreader.util.TextHelper;
 
 
 

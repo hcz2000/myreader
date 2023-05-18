@@ -1,4 +1,4 @@
-package com.zhao.myreader.base.application;
+package com.zhan.myreader.base.application;
 
 
 import android.annotation.SuppressLint;
@@ -9,8 +9,8 @@ import android.os.Handler;
 import com.scwang.smartrefresh.header.WaveSwipeHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.zhao.myreader.R;
-import com.zhao.myreader.util.HttpUtil;
+import com.zhan.myreader.R;
+import com.zhan.myreader.util.HttpUtil;
 
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;

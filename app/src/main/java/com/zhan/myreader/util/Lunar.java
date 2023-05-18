@@ -1,4 +1,4 @@
-package com.zhao.myreader.util;
+package com.zhan.myreader.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
