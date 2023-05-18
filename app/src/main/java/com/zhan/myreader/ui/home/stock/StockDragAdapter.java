@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.home.stock;
+package com.zhan.myreader.ui.home.stock;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,13 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 
-import com.zhao.myreader.R;
-import com.zhao.myreader.common.APPCONST;
-import com.zhao.myreader.creator.DialogCreator;
-import com.zhao.myreader.custom.DragAdapter;
-import com.zhao.myreader.greendao.entity.Stock;
-import com.zhao.myreader.greendao.service.StockService;
-import com.zhao.myreader.ui.home.BrowserActivity;
+import com.zhan.myreader.R;
+import com.zhan.myreader.common.APPCONST;
+import com.zhan.myreader.creator.DialogCreator;
+import com.zhan.myreader.custom.DragAdapter;
+import com.zhan.myreader.greendao.entity.Stock;
+import com.zhan.myreader.greendao.service.StockService;
+import com.zhan.myreader.ui.home.BrowserActivity;
 
 /**
  * Created by zhan on 2017/5/19.

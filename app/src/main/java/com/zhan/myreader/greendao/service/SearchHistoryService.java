@@ -1,13 +1,13 @@
-package com.zhao.myreader.greendao.service;
+package com.zhan.myreader.greendao.service;
 
 import android.database.Cursor;
 
-import com.zhao.myreader.greendao.GreenDaoManager;
+import com.zhan.myreader.greendao.GreenDaoManager;
 
-import com.zhao.myreader.greendao.entity.SearchHistory;
-import com.zhao.myreader.greendao.gen.SearchHistoryDao;
-import com.zhao.myreader.util.DateHelper;
-import com.zhao.myreader.util.StringHelper;
+import com.zhan.myreader.greendao.entity.SearchHistory;
+import com.zhan.myreader.greendao.gen.SearchHistoryDao;
+import com.zhan.myreader.util.DateHelper;
+import com.zhan.myreader.util.StringHelper;
 
 import java.util.ArrayList;
 import java.util.Date;

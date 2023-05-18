@@ -1,10 +1,10 @@
-package com.zhao.myreader.ui.home.stock;
+package com.zhan.myreader.ui.home.stock;
 
 import android.content.Context;
 import androidx.loader.content.AsyncTaskLoader;
-import com.zhao.myreader.greendao.entity.Stock;
-import com.zhao.myreader.greendao.service.StockService;
-import com.zhao.myreader.util.HttpUtil;
+import com.zhan.myreader.greendao.entity.Stock;
+import com.zhan.myreader.greendao.service.StockService;
+import com.zhan.myreader.util.HttpUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

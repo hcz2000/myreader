@@ -1,4 +1,4 @@
-package com.zhao.myreader.util;
+package com.zhan.myreader.util;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.View;

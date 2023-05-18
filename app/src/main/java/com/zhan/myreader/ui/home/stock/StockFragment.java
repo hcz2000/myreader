@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.home.stock;
+package com.zhan.myreader.ui.home.stock;
 
 
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhao.myreader.custom.DragSortListView;
-import com.zhao.myreader.databinding.FragmentStockBinding;
+import com.zhan.myreader.custom.DragSortListView;
+import com.zhan.myreader.databinding.FragmentStockBinding;
 
 /**
  * A simple {@link Fragment} subclass.

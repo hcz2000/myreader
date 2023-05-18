@@ -1,8 +1,8 @@
-package com.zhao.myreader.entity;
+package com.zhan.myreader.entity;
 
-import com.zhao.myreader.enums.Font;
-import com.zhao.myreader.enums.Language;
-import com.zhao.myreader.enums.ReadStyle;
+import com.zhan.myreader.enums.Font;
+import com.zhan.myreader.enums.Language;
+import com.zhan.myreader.enums.ReadStyle;
 
 import java.io.Serializable;
 

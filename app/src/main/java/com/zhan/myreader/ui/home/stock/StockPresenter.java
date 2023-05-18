@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.home.stock;
+package com.zhan.myreader.ui.home.stock;
 
 
 import static java.util.concurrent.TimeUnit.*;
@@ -14,13 +14,13 @@ import androidx.core.content.ContextCompat;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 
-import com.zhao.myreader.R;
-import com.zhao.myreader.base.BasePresenter;
-import com.zhao.myreader.custom.DragSortGridView;
-import com.zhao.myreader.greendao.entity.Stock;
-import com.zhao.myreader.greendao.service.StockService;
-import com.zhao.myreader.ui.home.MainActivity;
-import com.zhao.myreader.util.VibratorUtil;
+import com.zhan.myreader.R;
+import com.zhan.myreader.base.BasePresenter;
+import com.zhan.myreader.custom.DragSortGridView;
+import com.zhan.myreader.greendao.entity.Stock;
+import com.zhan.myreader.greendao.service.StockService;
+import com.zhan.myreader.ui.home.MainActivity;
+import com.zhan.myreader.util.VibratorUtil;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,10 @@
-package com.zhao.myreader.greendao.service;
+package com.zhan.myreader.greendao.service;
 
 import android.database.Cursor;
 
-import com.zhao.myreader.greendao.GreenDaoManager;
-import com.zhao.myreader.greendao.entity.Stock;
-import com.zhao.myreader.greendao.gen.StockDao;
+import com.zhan.myreader.greendao.GreenDaoManager;
+import com.zhan.myreader.greendao.entity.Stock;
+import com.zhan.myreader.greendao.gen.StockDao;
 
 import java.util.ArrayList;
 import java.util.List;
