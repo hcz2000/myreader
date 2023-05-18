@@ -1,4 +1,4 @@
-package com.zhao.myreader;
+package com.zhan.myreader;
 
 import org.junit.Test;
 
