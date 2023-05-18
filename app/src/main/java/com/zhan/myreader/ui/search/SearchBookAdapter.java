@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.search;
+package com.zhan.myreader.ui.search;
 
 import android.content.Context;
 
@@ -13,10 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
-import com.zhao.myreader.R;
-import com.zhao.myreader.common.URLCONST;
-import com.zhao.myreader.greendao.entity.Book;
-import com.zhao.myreader.util.StringHelper;
+import com.zhan.myreader.R;
+import com.zhan.myreader.common.URLCONST;
+import com.zhan.myreader.greendao.entity.Book;
+import com.zhan.myreader.util.StringHelper;
 
 import java.util.List;
 

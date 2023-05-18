@@ -1,4 +1,4 @@
-package com.zhao.myreader.greendao.entity;
+package com.zhan.myreader.greendao.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

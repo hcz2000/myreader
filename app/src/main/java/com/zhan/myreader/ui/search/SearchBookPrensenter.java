@@ -1,4 +1,4 @@
-package com.zhao.myreader.ui.search;
+package com.zhan.myreader.ui.search;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,16 +9,16 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import com.zhao.myreader.R;
-import com.zhao.myreader.base.BasePresenter;
-import com.zhao.myreader.callback.ResultCallback;
-import com.zhao.myreader.common.APPCONST;
-import com.zhao.myreader.greendao.entity.Book;
-import com.zhao.myreader.greendao.entity.SearchHistory;
-import com.zhao.myreader.greendao.service.SearchHistoryService;
-import com.zhao.myreader.ui.bookinfo.BookInfoActivity;
-import com.zhao.myreader.util.StringHelper;
-import com.zhao.myreader.webapi.BookApi;
+import com.zhan.myreader.R;
+import com.zhan.myreader.base.BasePresenter;
+import com.zhan.myreader.callback.ResultCallback;
+import com.zhan.myreader.common.APPCONST;
+import com.zhan.myreader.greendao.entity.Book;
+import com.zhan.myreader.greendao.entity.SearchHistory;
+import com.zhan.myreader.greendao.service.SearchHistoryService;
+import com.zhan.myreader.ui.bookinfo.BookInfoActivity;
+import com.zhan.myreader.util.StringHelper;
+import com.zhan.myreader.webapi.BookApi;
 import java.util.ArrayList;
 import java.util.Collections;
 

@@ -1,4 +1,4 @@
-package com.zhao.myreader.util;
+package com.zhan.myreader.util;
 
 import android.app.Activity;
 import android.util.DisplayMetrics;
