@@ -4,7 +4,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.provider.DocumentsContract;
@@ -69,7 +68,7 @@ public class FileUtils {
 		try {
 			ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 			byte[] buffer = new byte[512];
-			int length = -1;
+			int length ;
 			while ((length = inStream.read(buffer)) != -1) {
 				outStream.write(buffer, 0, length);
 			}
@@ -101,7 +100,7 @@ public class FileUtils {
 	 */
 	public static boolean writeFile(byte[] buffer, String folder,
 			String fileName) {
-		boolean writeSucc = false;
+		boolean writeSuccess = false;
 
 		File fileDir = new File(folder);
 		if (!fileDir.exists()) {
@@ -113,7 +112,7 @@ public class FileUtils {
 		try {
 			out = new FileOutputStream(file);
 			out.write(buffer);
-			writeSucc = true;
+			writeSuccess = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -124,16 +123,16 @@ public class FileUtils {
 			}
 		}
 
-		return writeSucc;
+		return writeSuccess;
 	}
 
 	public static boolean writeFile(byte[] buffer, File file) {
-		boolean writeSucc = false;
+		boolean writeSuccess = false;
 		FileOutputStream out = null;
 		try {
 			out = new FileOutputStream(file);
 			out.write(buffer);
-			writeSucc = true;
+			writeSuccess = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -144,7 +143,7 @@ public class FileUtils {
 			}
 		}
 
-		return writeSucc;
+		return writeSuccess;
 	}
 
 	/**
@@ -386,7 +385,7 @@ public class FileUtils {
 	public static boolean checkSaveLocationExists() {
 		String sDCardStatus = Environment.getExternalStorageState();
 		boolean status;
-        status = sDCardStatus.equals(Environment.MEDIA_MOUNTED);
+		status = sDCardStatus.equals(Environment.MEDIA_MOUNTED);
 		return status;
 	}
 
@@ -406,13 +405,13 @@ public class FileUtils {
 			File newPath = new File(path.toString() + fileName);
 			checker.checkDelete(newPath.toString());
 			if (newPath.isDirectory()) {
-				String[] listfile = newPath.list();
+				String[] fileArray = newPath.list();
 				// delete all files within the specified directory and then
 				// delete the directory
 				try {
-					for (int i = 0; i < listfile.length; i++) {
+					for (int i = 0; i < fileArray.length; i++) {
 						File deletedFile = new File(newPath.toString() + "/"
-								+ listfile[i].toString());
+								+ fileArray[i].toString());
 						deletedFile.delete();
 					}
 					newPath.delete();
@@ -580,7 +579,7 @@ public class FileUtils {
 			return photoPath;
 		}
 
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, uri)) {
+		if(DocumentsContract.isDocumentUri(context, uri)) {
 			String docId = DocumentsContract.getDocumentId(uri);
 			if(isExternalStorageDocument(uri)) {
 				String[] split = docId.split(":");
@@ -687,7 +686,7 @@ public class FileUtils {
 	{
 		BufferedOutputStream bos = null;
 		FileOutputStream fos = null;
-		File file = null;
+		File file ;
 		try
 		{
 			File dir = new File(filePath);

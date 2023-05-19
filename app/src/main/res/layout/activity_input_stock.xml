@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/sys_bg2"
     android:fitsSystemWindows="true"
     tools:context=".ui.home.stock.InputStockActivity">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,10 +20,10 @@
         <TextView
             android:id="@+id/tv_success"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="0dp"
             android:layout_weight="8"
             android:gravity="center"
-            android:text="继续添加"
+            android:text="@string/input_continue"
             android:background="@drawable/search_btn_backcolor"
             android:textColor="@color/white"
             android:textSize="18sp" />
@@ -45,7 +43,7 @@
                 android:id="@+id/label1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="股票代码:"/>
+                android:text="@string/stock_code"/>
 
             <EditText
                 android:id="@+id/et_stock_code"
@@ -55,14 +53,15 @@
                 android:inputType="text"
                 android:imeOptions="actionSearch"
                 android:background="@drawable/search_et_backcolor"
-                android:hint="输入股票代码"
-                android:paddingLeft="10dp" />
+                android:hint="@string/stock_code"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"/>
 
             <TextView
                 android:id="@+id/label2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="股票数量:"/>
+                android:text="@string/stock_quantity"/>
 
             <EditText
                 android:id="@+id/et_stock_quantity"
@@ -72,14 +71,15 @@
                 android:inputType="text"
                 android:imeOptions="actionSearch"
                 android:background="@drawable/search_et_backcolor"
-                android:hint="输入股票数量"
-                android:paddingLeft="10dp" />
+                android:hint="@string/stock_quantity"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"/>
 
             <TextView
                 android:id="@+id/label3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="买入均价:"/>
+                android:text="@string/stock_cost"/>
 
             <EditText
                 android:id="@+id/et_stock_cost"
@@ -89,42 +89,45 @@
                 android:inputType="text"
                 android:imeOptions="actionSearch"
                 android:background="@drawable/search_et_backcolor"
-                android:hint="输入买入均价"
-                android:paddingLeft="10dp" />
+                android:hint="@string/stock_cost"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"/>
 
             <TextView
                 android:id="@+id/label4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="阀值上限:"/>
+                android:text="@string/stock_upper_threshold"/>
 
             <EditText
-                android:id="@+id/et_stock_upper_thredshold"
+                android:id="@+id/et_stock_upper_threshold"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_weight="2"
                 android:inputType="text"
                 android:imeOptions="actionSearch"
                 android:background="@drawable/search_et_backcolor"
-                android:text="999.99"
-                android:paddingLeft="10dp" />
+                android:text="@string/stock_default_upper_threshold"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"/>
 
             <TextView
                 android:id="@+id/label5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="阀值下限:"/>
+                android:text="@string/stock_lower_threshold"/>
 
             <EditText
-                android:id="@+id/et_stock_lower_thredshold"
+                android:id="@+id/et_stock_lower_threshold"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_weight="2"
                 android:inputType="text"
                 android:imeOptions="actionSearch"
                 android:background="@drawable/search_et_backcolor"
-                android:text="0.00"
-                android:paddingLeft="10dp" />
+                android:text="@string/stock_default_lower_threshold"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"/>
 
             <TextView
                 android:id="@+id/tv_insert"
@@ -133,7 +136,7 @@
                 android:layout_weight="8"
                 android:background="@drawable/search_btn_backcolor"
                 android:gravity="center"
-                android:text="确定"
+                android:text="@string/input_ok"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 

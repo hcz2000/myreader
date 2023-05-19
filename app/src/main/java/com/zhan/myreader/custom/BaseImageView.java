@@ -12,15 +12,12 @@ import android.graphics.drawable.Drawable;
 
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.ImageView;
-
+import androidx.appcompat.widget.AppCompatImageView;
 import java.lang.ref.WeakReference;
 
-public abstract class BaseImageView extends ImageView {
+public abstract class BaseImageView extends AppCompatImageView {
     private static final String TAG = BaseImageView.class.getSimpleName();
-
     protected Context mContext;
-
     private static final Xfermode sXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
 //    private BitmapShader mBitmapShader;
     private Bitmap mMaskBitmap;
@@ -71,9 +68,8 @@ public abstract class BaseImageView extends ImageView {
                         Canvas bitmapCanvas = new Canvas(bitmap);
                         drawable.setBounds(0, 0, getWidth(), getHeight());
                         drawable.draw(bitmapCanvas);
-
                         // If mask is already set, skip and use cached mask.
-						if (mMaskBitmap == null || mMaskBitmap.isRecycled()) {
+                        if (mMaskBitmap == null || mMaskBitmap.isRecycled()) {
                             mMaskBitmap = getBitmap();
 						}
 
@@ -81,12 +77,9 @@ public abstract class BaseImageView extends ImageView {
                         mPaint.reset();
                         mPaint.setFilterBitmap(false);
                         mPaint.setXfermode(sXfermode);
-//                        mBitmapShader = new BitmapShader(mMaskBitmap,
-//                                Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-//                        mPaint.setShader(mBitmapShader);
                         bitmapCanvas.drawBitmap(mMaskBitmap, 0.0f, 0.0f, mPaint);
 
-                        mWeakBitmap = new WeakReference<Bitmap>(bitmap);
+                        mWeakBitmap = new WeakReference<>(bitmap);
                     }
                 }
 
@@ -95,12 +88,10 @@ public abstract class BaseImageView extends ImageView {
                     mPaint.setXfermode(null);
 //                    mPaint.setShader(null);
                     canvas.drawBitmap(bitmap, 0.0f, 0.0f, mPaint);
-                    return;
                 }
             } catch (Exception e) {
                 System.gc();
-
-                Log.e(TAG, String.format("Failed to draw, Id :: %s. Error occurred :: %s", getId(), e.toString()));
+                Log.e(TAG, String.format("Failed to draw, Id :: %s. Error occurred :: %s", getId(), e));
             } finally {
                 canvas.restoreToCount(i);
             }

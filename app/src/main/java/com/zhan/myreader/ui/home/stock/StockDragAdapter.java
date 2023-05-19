@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
+import java.util.Locale;
 
 import com.zhan.myreader.R;
 import com.zhan.myreader.common.APPCONST;
@@ -99,10 +100,10 @@ public class StockDragAdapter extends DragAdapter {
     private void initView(int position, ViewHolder viewHolder) {
         final Stock stock = getItem(position);
         viewHolder.tvStockName.setText(stock.getName());
-        viewHolder.tvStockInfo.setText(String.format("%6d",stock.getQuantity()));
-        viewHolder.tvStockCost.setText(String.format("%5.2f",stock.getCost()));
-        viewHolder.tvStockPrice.setText(String.format("%6.2f",stock.getPrice()));
-        viewHolder.tvStockProfit.setText(String.format("%12.2f",(stock.getPrice()-stock.getCost())*stock.getQuantity()));
+        viewHolder.tvStockInfo.setText(String.format(Locale.US,"%6d",stock.getQuantity()));
+        viewHolder.tvStockCost.setText(String.format(Locale.US,"%5.2f",stock.getCost()));
+        viewHolder.tvStockPrice.setText(String.format(Locale.US,"%6.2f",stock.getPrice()));
+        viewHolder.tvStockProfit.setText(String.format(Locale.US,"%12.2f",(stock.getPrice()-stock.getCost())*stock.getQuantity()));
         if(stock.getPrice()>stock.getCost()){
             viewHolder.tvStockProfit.setTextColor(Color.rgb(255, 0, 0));
         }else{
@@ -181,7 +182,7 @@ public class StockDragAdapter extends DragAdapter {
         return mEditState;
     }
 
-    class ViewHolder {
+    static class ViewHolder {
         TextView tvStockName;
         ImageView ivDelete;
         TextView tvStockInfo;

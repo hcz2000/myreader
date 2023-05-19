@@ -61,8 +61,9 @@ public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBook
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder,final int position) {
-        initView(position, holder);
-        if (position == selectPos){
+        int adapterPosition=position;
+        initView(adapterPosition, holder);
+        if (adapterPosition == selectPos){
             holder.itemView.setBackgroundResource(R.color.white);
         }else{
             holder.itemView.setBackgroundResource(R.color.sys_book_type_bg);
@@ -72,15 +73,11 @@ public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBook
 
             holder.itemView.setOnClickListener(view -> {
 
-                onItemClickListener.onClick(position,view);
-                selectPos = position;
+                onItemClickListener.onClick(adapterPosition,view);
+                selectPos = adapterPosition;
                 notifyDataSetChanged();
-
             });
-
         }
-
-
     }
 
     @Override

@@ -12,6 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,8 +27,8 @@ public class TianLaiReadUtil {
     /**
      * 从html中获取章节正文
      *
-     * @param html
-     * @return
+     * @param html html content
+     * @return String
      */
     public static String getContentFromHtml(String html) {
         Document doc = Jsoup.parse(html);
@@ -36,13 +37,10 @@ public class TianLaiReadUtil {
             divContent = doc.getElementById("nr1");
 
         if (divContent != null) {
-            //String content = Html.fromHtml(divContent.html()).toString();
-        	//String content = divContent.toString();
         	String content = divContent.text();
             if(content.matches("^.+\\.23sk\\.[a-zA-Z]{3}努力更新ing.+$"))
         		return "";
-        	content=content.replaceAll("(?i)m\\.23sk\\.c[o|0]m","");
-        	content=content.replaceAll("天籁小说网","");
+            content=content.replaceAll("天籁小说网","");
             content=content.replace(" ","\n");
             return content;
         } else {
@@ -53,8 +51,8 @@ public class TianLaiReadUtil {
     /**
      * 从html中获取章节下页URL
      *
-     * @param html
-     * @return
+     * @param html html content
+     * @return URL String
      */
     public static String getNextPageFromHtml(String html) {
 
@@ -74,8 +72,8 @@ public class TianLaiReadUtil {
     /**
      * 从html中获取最新章节
      *
-     * @param html
-     * @return
+     * @param html html content
+     * @return max chapter no
      */
     public static int getMaxChapterNoFromHtml(String html,Book book) {
     	int maxChapterNo=book.getChapterTotalNum();
@@ -83,7 +81,7 @@ public class TianLaiReadUtil {
         if(BookSource.tianlai.toString().equals(book.getSource())){
             Element div = doc.getElementsByClass("listpage").first();
             Element span = div.getElementsByClass("middle").first();
-            Element select=span.getElementsByTag("select").first();
+            //Element select=span.getElementsByTag("select").first();
             Element option=span.getElementsByTag("option").last();
             if(option!=null) {
             	String chapterDesc = option.text();
@@ -100,10 +98,10 @@ public class TianLaiReadUtil {
     /**
      * 从html中获取章节列表
      *
-     * @param html
-     * @return
+     * @param html html content
+     * @return chapter list
      */
-    public static ArrayList<Chapter> getChaptersFromHtml(String html,Book book) {
+    public static List<Chapter> getChaptersFromHtml(String html, Book book) {
         ArrayList<Chapter> chapters = new ArrayList<>();
         Document doc = Jsoup.parse(html);
         if(BookSource.biquge.toString().equals(book.getSource())){
@@ -170,8 +168,8 @@ public class TianLaiReadUtil {
     /**
      * 从搜索html中得到书列表
      *
-     * @param html
-     * @return
+     * @param html html content
+     * @return book catalog
      */
     public static ArrayList<Book> getBooksFromSearchHtml(String html) {
         ArrayList<Book> books = new ArrayList<>();

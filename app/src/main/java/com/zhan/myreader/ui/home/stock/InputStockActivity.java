@@ -56,9 +56,9 @@ public class InputStockActivity extends BaseActivity {
         return binding.etStockCost;
     }
 
-    public EditText getEtStockUpperThreshold() { return binding.etStockUpperThredshold; }
+    public EditText getEtStockUpperThreshold() { return binding.etStockUpperThreshold; }
 
-    public EditText getEtStockLowerThreshold() { return binding.etStockLowerThredshold; }
+    public EditText getEtStockLowerThreshold() { return binding.etStockLowerThreshold;}
 
     public TextView getTvSuccess() {
         return binding.tvSuccess;

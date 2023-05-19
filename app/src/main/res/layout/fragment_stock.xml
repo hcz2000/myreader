@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.zhan.myreader.ui.bookinfo.home.bbs.StockFragment">
+    tools:context="com.zhan.myreader.ui.home.stock.StockFragment">
 
     <com.scwang.smartrefresh.header.MaterialHeader
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="当前无任何记录，点击添加"
+                android:text="@string/stock_add"
                 android:textSize="16sp" />
 
         </LinearLayout>

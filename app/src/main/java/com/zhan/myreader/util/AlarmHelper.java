@@ -19,8 +19,8 @@ import static android.content.Intent.FLAG_INCLUDE_STOPPED_PACKAGES;
 
 public class AlarmHelper {
 
-    private static String alarmActicon = "com.zhao.kl.gxdw";
-    private static String AntiHijackingActicon = "com.zhao.kl.gxdw.AntiHijacking";
+    private static String alarmActicon = "com.zhan.kl.gxdw";
+    private static String AntiHijackingActicon = "com.zhan.kl.gxdw.AntiHijacking";
 
     public static void addOneShotAlarm(Context context, long time, String msg, int id){
         Date date = new Date();

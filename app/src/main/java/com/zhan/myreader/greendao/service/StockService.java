@@ -16,7 +16,7 @@ import java.util.List;
 
 public class StockService extends BaseService {
 
-    private ArrayList<Stock> findStocks(String sql, String[] selectionArgs) {
+    private List<Stock> findStocks(String sql, String[] selectionArgs) {
         ArrayList<Stock> stocks = new ArrayList<>();
         try {
             Cursor cursor = selectBySql(sql, selectionArgs);
@@ -43,9 +43,9 @@ public class StockService extends BaseService {
 
     /**
      * 返回所有股票
-     * @return
+     * @return 股票列表
      */
-    public ArrayList<Stock> findAllStocks() {
+    public List<Stock> findAllStocks() {
         String sql = "select * from stock order by sort_code";
         return findStocks(sql, null);
     }
@@ -58,7 +58,7 @@ public class StockService extends BaseService {
 
     /**
      * 删除记录
-     * @param stockId
+     * @param stockId stock id
      */
     public void deleteStockByID(String stockId){
         StockDao stockDao = GreenDaoManager.getInstance().getSession().getStockDao();
@@ -66,10 +66,10 @@ public class StockService extends BaseService {
     }
 
 
-    public Stock findStockByID(String stockid){
+    public Stock findStockByID(String stockId){
         Stock result = null;
         String sql = "select * from stock where id = ?";
-        Cursor cursor = selectBySql(sql,new String[]{stockid});
+        Cursor cursor = selectBySql(sql,new String[]{stockId});
         if (cursor !=null && cursor.moveToNext()){
             result = new Stock();
             result.setId(cursor.getString(0));
@@ -88,7 +88,7 @@ public class StockService extends BaseService {
 
     /**
      * 添加或更新记录
-     * @param stock
+     * @param stock stock record
      */
     public void addOrUpdateStock(Stock stock){
         Stock stockInDB = findStockByID(stock.getId());

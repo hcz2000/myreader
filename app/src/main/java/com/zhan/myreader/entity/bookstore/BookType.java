@@ -1,7 +1,7 @@
 package com.zhan.myreader.entity.bookstore;
 
 /**
- * @author zhao
+ * @author zhan
  * @description: 书城小说分类
  * @date :2020/4/13 11:46
  */

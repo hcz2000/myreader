@@ -1,7 +1,5 @@
 package com.zhan.myreader.webapi;
 
-import android.util.Log;
-
 import com.zhan.myreader.callback.ResultCallback;
 import com.zhan.myreader.common.URLCONST;
 import com.zhan.myreader.enums.BookSource;
@@ -10,7 +8,6 @@ import com.zhan.myreader.greendao.entity.Chapter;
 import com.zhan.myreader.util.HttpUtil;
 import com.zhan.myreader.util.crawler.TianLaiReadUtil;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +20,6 @@ public class BookApi {
     public static void getNewChapterCount(Book book, final ResultCallback callback){
         String[] urls=book.getChapterUrl().split("\\|");
         String indexUrl=urls[0];
-        final int startPos;
-        if(urls.length>1)
-            startPos=Integer.parseInt(urls[1]);
-        else
-            startPos=0;
 
         if(BookSource.tianlai.toString().equals(book.getSource())) {
         	HttpUtil.httpGet_Async(indexUrl, null, "GBK", new ResultCallback() {
@@ -60,49 +52,39 @@ public class BookApi {
     }
     
     public static void getBookChapters(Book book, final ResultCallback callback){
-    	 String[] urls=book.getChapterUrl().split("\\|");
-   		 String indexUrl=urls[0];
-   		 final int startPos;
-   		 if(urls.length>1)
-   			 startPos=Integer.parseInt(urls[1]);
-   		 else
-   			 startPos=0;
-
-		HttpUtil.httpGet_Async(indexUrl, null, "utf-8", new ResultCallback() {
-   	            @Override
-   	            public void onFinish(Object html, int code) {
-   	            	List<Chapter> list=TianLaiReadUtil.getChaptersFromHtml((String) html,book);
-   	            	if(startPos>0) {
-   	            		for(Iterator<Chapter> itr=list.iterator();itr.hasNext();) {
-   	   	            		Chapter chapter=itr.next();
-   	   	            		chapter.setNumber(chapter.getNumber()+startPos);
-   	   	            	}
-   	            	}
-   	                callback.onFinish(list,0);
-   	                if(!indexUrl.equals(book.getChapterUrl().split("\\|")[0])) {
-   	                	String newChapterUrl=book.getChapterUrl().split("\\|")[0]+"|"+(startPos+list.size());
-   	                	book.setChapterUrl(newChapterUrl);
-   	                	getBookChapters(book,callback);
-   	                }
+    	String[] urls=book.getChapterUrl().split("\\|");
+   		String indexUrl=urls[0];
+   		final int startPos;
+		if(urls.length>1)
+   			startPos=Integer.parseInt(urls[1]);
+   		else
+   			startPos=0;
+		HttpUtil.httpGet_Async(indexUrl, null, "utf-8",	new ResultCallback() {
+			@Override
+			public void onFinish(Object html, int code) {
+				List<Chapter> list=TianLaiReadUtil.getChaptersFromHtml((String) html,book);
+   	            if(startPos>0) {
+					for(Chapter chapter: list) {
+						chapter.setNumber(chapter.getNumber()+startPos);
+					}
    	            }
-
-   	            @Override
-   	            public void onError(Exception e) {
-   	                callback.onError(e);
+   	            callback.onFinish(list,0);
+   	            if(!indexUrl.equals(book.getChapterUrl().split("\\|")[0])) {
+   	            	String newChapterUrl=book.getChapterUrl().split("\\|")[0]+"|"+(startPos+list.size());
+   	            	book.setChapterUrl(newChapterUrl);
+   	            	getBookChapters(book,callback);
    	            }
-   	        });
+			}
+
+			@Override
+			public void onError(Exception e) {
+   	            callback.onError(e);
+   	        }
+		});
      }
 
 
     public static void getChapterContent(Chapter chapter, final ResultCallback callback){
-		/*
-        int tem = url.indexOf("\"");
-        if (tem != -1){
-            url = url.substring(0,tem);
-        }
-        if (!url.contains("http")){
-            url = URLCONST.nameSpace_tianlai + url;
-        }*/
 		String url=chapter.getUrl();
 
 		HttpUtil.httpGet_Async(url, null, "utf-8", new ResultCallback() {
@@ -154,7 +136,7 @@ public class BookApi {
     }
 
 	public static String getChapterContent(Chapter chapter){
-		StringBuffer content=new StringBuffer();
+		StringBuilder content=new StringBuilder();
 		String page1Url = chapter.getUrl();
 		String page1Html=HttpUtil.httpGet_Sync(page1Url);
 		if(page1Html==null)
@@ -189,7 +171,7 @@ public class BookApi {
 
     public static void search(String key, final ResultCallback callback){
     	Map<String,Object> params = new HashMap<>();
-        params.put("keyword", key);
+		params.put("keyword", key);
 		HttpUtil.httpGet_Async(URLCONST.method_buxiu_search, params, "utf-8", new ResultCallback() {
             @Override
             public void onFinish(Object html, int code) {

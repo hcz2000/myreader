@@ -44,8 +44,5 @@
         android:layout_height="1px"
         android:src="@color/sys_line"/>
 
-
-
-
 </LinearLayout>
 

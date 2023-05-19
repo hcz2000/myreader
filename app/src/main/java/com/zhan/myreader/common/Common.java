@@ -1,7 +1,7 @@
 package com.zhan.myreader.common;
 
 /**
- * Created by Administrator on 2017/1/9.
+ * Created by zhan on 2017/1/9.
  */
 
 public interface Common {

@@ -52,8 +52,7 @@ public class CyptoUtils {
 	 * @throws Exception
 	 */
 	public static byte[] encode(String key, byte[] data) {
-		if(data == null)
-			return null;
+		if(data == null) return null;
 		try{
 			DESKeySpec dks = new DESKeySpec(key.getBytes());
 			SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
@@ -80,9 +79,8 @@ public class CyptoUtils {
      * @throws Exception 异常
      */
     public static String decode(String key, String data) {
-    	if(data == null)
-    		return null;
-        try {
+    	if(data == null) return null;
+		try {
 	    	DESKeySpec dks = new DESKeySpec(key.getBytes());
 	    	SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
             //key的长度不能够小于8位字节
