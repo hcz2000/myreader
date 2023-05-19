@@ -110,7 +110,7 @@ public class InputStockPrensenter extends BasePresenter {
                     double cost=Double.parseDouble(costStr);
                     String upperThresholdStr=mInputStockActivity.getEtStockUpperThreshold().getText().toString();
                     double upperThreshold=Double.parseDouble(upperThresholdStr);
-                    String lowerThresholdStr=mInputStockActivity.getEtStockUpperThreshold().getText().toString();
+                    String lowerThresholdStr=mInputStockActivity.getEtStockLowerThreshold().getText().toString();
                     double lowerThreshold=Double.parseDouble(lowerThresholdStr);
                     Element stockName=stockNames.first();
                     String name=stockName.text();
@@ -121,6 +121,8 @@ public class InputStockPrensenter extends BasePresenter {
                     stock.setCost(cost);
                     stock.setLastPrice(0.00);
                     stock.setPrice(0.00);
+                    stock.setUpperThreshold(upperThreshold);
+                    stock.setLowerThreshold(lowerThreshold);
                     mStockService.addOrUpdateStock(stock);
                     runOnUiThread(()-> {
                           Toast.makeText(mInputStockActivity.getApplicationContext(), name+" 成功添加",Toast.LENGTH_LONG).show();

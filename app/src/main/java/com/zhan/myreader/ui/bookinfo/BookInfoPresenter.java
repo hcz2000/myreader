@@ -6,16 +6,14 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.zhan.myreader.base.BasePresenter;
-import com.zhan.myreader.callback.ResultCallback;
 import com.zhan.myreader.common.APPCONST;
 import com.zhan.myreader.common.URLCONST;
 import com.zhan.myreader.enums.BookSource;
 import com.zhan.myreader.greendao.entity.Book;
 import com.zhan.myreader.greendao.service.BookService;
-import com.zhan.myreader.ui.reader.ReadActivity;
+import com.zhan.myreader.ui.home.reader.ReadActivity;
 import com.zhan.myreader.util.StringHelper;
 import com.zhan.myreader.util.TextHelper;
-import com.zhan.myreader.webapi.BookStoreApi;
 
 
 /**

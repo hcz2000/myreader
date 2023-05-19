@@ -1,4 +1,4 @@
-package com.zhan.myreader.ui.reader;
+package com.zhan.myreader.ui.home.reader;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
@@ -8,15 +8,11 @@ import com.zhan.myreader.base.application.MyApplication;
 import com.zhan.myreader.greendao.entity.Book;
 import com.zhan.myreader.greendao.entity.Chapter;
 import com.zhan.myreader.greendao.service.ChapterService;
-import com.zhan.myreader.util.HttpUtil;
-import com.zhan.myreader.util.crawler.TianLaiReadUtil;
 import com.zhan.myreader.webapi.BookApi;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class BookLoader extends AsyncTaskLoader<List<Chapter>>{

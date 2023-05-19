@@ -23,7 +23,7 @@ public class MainPrensenter extends BasePresenter {
 
     private MainActivity mMainActivity;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
-    private String[] tabTitle = {"社区","书架","书城"};
+    private String[] tabTitle = {"金融","书架","新闻"};
 
     public MainPrensenter(MainActivity mainActivity){
         super(mainActivity,mainActivity.getLifecycle());

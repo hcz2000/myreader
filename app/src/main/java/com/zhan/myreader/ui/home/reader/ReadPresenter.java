@@ -1,4 +1,4 @@
-package com.zhan.myreader.ui.reader;
+package com.zhan.myreader.ui.home.reader;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;

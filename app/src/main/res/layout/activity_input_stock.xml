@@ -53,7 +53,7 @@
                 android:inputType="text"
                 android:imeOptions="actionSearch"
                 android:background="@drawable/search_et_backcolor"
-                android:hint="@string/stock_code"
+                android:hint="@string/stock_code_tip"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"/>
 
@@ -71,7 +71,7 @@
                 android:inputType="text"
                 android:imeOptions="actionSearch"
                 android:background="@drawable/search_et_backcolor"
-                android:hint="@string/stock_quantity"
+                android:hint="@string/stock_quantity_tip"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"/>
 
@@ -89,7 +89,7 @@
                 android:inputType="text"
                 android:imeOptions="actionSearch"
                 android:background="@drawable/search_et_backcolor"
-                android:hint="@string/stock_cost"
+                android:hint="@string/stock_cost_tip"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"/>
 
@@ -150,6 +150,5 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone" />
-
 
 </RelativeLayout>
