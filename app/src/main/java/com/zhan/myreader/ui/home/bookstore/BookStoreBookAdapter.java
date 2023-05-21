@@ -25,20 +25,15 @@ import java.util.List;
 
 
 public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdapter.ViewHolder> {
-
-    private LayoutInflater mInflater;
-    private List<Book> mDatas;
-
-    private Context mContext;
+    private final LayoutInflater mInflater;
+    private final List<Book> mDatas;
+    private final Context mContext;
     private RecyclerView rvContent;
-
-
     private OnItemClickListener onItemClickListener;
-
     private boolean isScrolling;
 
 
-    private Handler mHandle = new Handler(message -> {
+    private final Handler mHandle = new Handler(message -> {
 
         switch (message.what){
             case  1:
@@ -84,13 +79,7 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         initView(position, holder);
         if (onItemClickListener != null){
-
-            holder.itemView.setOnClickListener(view -> {
-
-                onItemClickListener.onClick(position,view);
-
-            });
-
+            holder.itemView.setOnClickListener(view -> onItemClickListener.onClick(position,view));
         }
     }
 
@@ -122,7 +111,6 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
                @Override
                public void onError(Exception e) {
 
-
                }
            });
        }else{
@@ -137,9 +125,7 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
         Book book = mDatas.get(position);
 
         if (holder.binding.ivBookImg.getTag() != null && (int)holder.binding.ivBookImg.getTag() != position){
-
             Glide.with(mContext).clear(holder.binding.ivBookImg);
-
         }
 
         //图片
@@ -149,14 +135,9 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
                 .placeholder(R.mipmap.no_image)
                 .into(holder.binding.ivBookImg);
 
-
         holder.binding.ivBookImg.setTag(position);
-
-
         //简介
         holder.binding.tvBookDesc.setText(book.getDesc());
-
-
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -164,9 +145,7 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
     }
 
     public interface OnItemClickListener{
-
         void onClick(int pos,View view);
-
     }
 
     public boolean isScrolling() {

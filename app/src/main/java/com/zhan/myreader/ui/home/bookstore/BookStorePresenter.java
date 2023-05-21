@@ -29,23 +29,15 @@ import java.util.List;
 
 public class BookStorePresenter extends BasePresenter {
 
-    private BookStoreFragment mBookStoreFragment;
-
+    final private BookStoreFragment mBookStoreFragment;
     private LinearLayoutManager mLinearLayoutManager;
-    private BookStoreBookTypeAdapter mBookStoreBookTypeAdapter;
     private List<BookType> mBookTypes;
-
-
-    private BookStoreBookAdapter mBookStoreBookAdapter;
     private List<Book> bookList;
-
     private BookType curType;
 
 
-
-
     @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -67,21 +59,18 @@ public class BookStorePresenter extends BasePresenter {
 
 
     public void init() {
-
          //无需加载更多
          mBookStoreFragment.getSrlBookList().setEnableLoadMore(false);
          //小说列表下拉刷新事件
-         mBookStoreFragment.getSrlBookList().setOnRefreshListener(refreshLayout -> {
-             getBooksData();
-         });
-         getData();
+         mBookStoreFragment.getSrlBookList().setOnRefreshListener(refreshLayout->getBookList());
+         getBookTypes();
     }
 
 
     /**
      * 获取页面数据
      */
-    private void getData(){
+    private void getBookTypes(){
         mBookStoreFragment.getBinding().pbLoading.setVisibility(View.VISIBLE);
          BookStoreApi.getBookTypeList(URLCONST.nameSpace_biquge, new ResultCallback() {
              @Override
@@ -89,7 +78,7 @@ public class BookStorePresenter extends BasePresenter {
                  mBookTypes = (ArrayList<BookType>)o;
                  curType = mBookTypes.get(0);
                  mHandler.sendMessage(mHandler.obtainMessage(1));
-                 getBooksData();
+                 getBookList();
              }
 
              @Override
@@ -102,19 +91,18 @@ public class BookStorePresenter extends BasePresenter {
     /**
      * 获取小数列表数据
      */
-    private void getBooksData(){
+    private void getBookList(){
 
         BookStoreApi.getBookRankList(URLCONST.nameSpace_biquge+curType.getUrl(), new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 bookList= (ArrayList<Book>)o;
-    mHandler.sendMessage(mHandler.obtainMessage(2));
+                mHandler.sendMessage(mHandler.obtainMessage(2));
             }
 
             @Override
             public void onError(Exception e) {
                 TextHelper.showText(e.getMessage());
-
             }
         });
     }
@@ -129,15 +117,14 @@ public class BookStorePresenter extends BasePresenter {
         mLinearLayoutManager = new LinearLayoutManager(mBookStoreFragment.getActivity());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBookStoreFragment.getRvTypeList().setLayoutManager(mLinearLayoutManager);
-        mBookStoreBookTypeAdapter = new BookStoreBookTypeAdapter(mBookStoreFragment.getActivity(), mBookTypes);
+        BookStoreBookTypeAdapter mBookStoreBookTypeAdapter = new BookStoreBookTypeAdapter(mBookStoreFragment.getActivity(), mBookTypes);
         mBookStoreFragment.getRvTypeList().setAdapter(mBookStoreBookTypeAdapter);
 
         //点击事件
         mBookStoreBookTypeAdapter.setOnItemClickListener((pos, view) -> {
             curType = mBookTypes.get(pos);
             mBookStoreFragment.getBinding().pbLoading.setVisibility(View.VISIBLE);
-            getBooksData();
-
+            getBookList();
         });
    }
 
@@ -152,26 +139,19 @@ public class BookStorePresenter extends BasePresenter {
         mLinearLayoutManager = new LinearLayoutManager(mBookStoreFragment.getActivity());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBookStoreFragment.getRvBookList().setLayoutManager(mLinearLayoutManager);
-        mBookStoreBookAdapter = new BookStoreBookAdapter(mBookStoreFragment.getActivity(),bookList);
+        BookStoreBookAdapter mBookStoreBookAdapter = new BookStoreBookAdapter(mBookStoreFragment.getActivity(),bookList);
         mBookStoreFragment.getRvBookList().setAdapter(mBookStoreBookAdapter);
 
         //点击事件
         mBookStoreBookAdapter.setOnItemClickListener((pos, view) -> {
-
             Intent intent = new Intent(mBookStoreFragment.getActivity(), BookInfoActivity.class);
             intent.putExtra(APPCONST.BOOK, bookList.get(pos));
-            mBookStoreFragment.getActivity().startActivity(intent);
-
-
+            //mBookStoreFragment.getActivity().startActivity(intent);
+            mBookStoreFragment.startActivity(intent);
         });
 
         //刷新动作完成
         mBookStoreFragment.getSrlBookList().finishRefresh();
-
-
-
-
-
     }
 
 

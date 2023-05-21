@@ -28,15 +28,15 @@ import java.util.ArrayList;
 
 public class BookcasePresenter extends BasePresenter {
 
-    private BookcaseFragment mBookcaseFragment;
-    private ArrayList<Book> mBooks = new ArrayList<>();//书目数组
+    private final BookcaseFragment mBookcaseFragment;
+    private final ArrayList<Book> mBooks = new ArrayList<>();//书目数组
     private BookcaseDragAdapter mBookcaseAdapter;
-    private BookService mBookService;
+    private final BookService mBookService;
     private MainActivity mMainActivity;
 //    private ChapterService mChapterService;
 
     @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -63,20 +63,11 @@ public class BookcasePresenter extends BasePresenter {
         mBookcaseFragment.getContentView().setEnableRefresh(false);
         mBookcaseFragment.getContentView().setEnableHeaderTranslationContent(false);
         mBookcaseFragment.getContentView().setEnableLoadMore(false);
-        mBookcaseFragment.getContentView().setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                initNoReadNum();
-            }
-        });
+        mBookcaseFragment.getContentView().setOnRefreshListener((refreshLayout)->initNoReadNum());
 
-
-        mBookcaseFragment.getNoDataView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mBookcaseFragment.getContext(), SearchBookActivity.class);
-                mBookcaseFragment.startActivity(intent);
-            }
+        mBookcaseFragment.getNoDataView().setOnClickListener(view->{
+            Intent intent = new Intent(mBookcaseFragment.getContext(), SearchBookActivity.class);
+            mBookcaseFragment.startActivity(intent);
         });
 
         mBookcaseFragment.getBookView().setOnItemLongClickListener((parent, view, position, id) -> {
@@ -103,7 +94,10 @@ public class BookcasePresenter extends BasePresenter {
             }
             return true;
         });
-
+        /*
+        mBookcaseFragment.getContentView().setOnRefreshListener(refreshLayout -> {
+            System.out.println("Refresh");
+        });*/
     }
 
     private void init() {
@@ -169,9 +163,7 @@ public class BookcasePresenter extends BasePresenter {
     private void setThemeColor(int colorPrimary, int colorPrimaryDark) {
 //        mToolbar.setBackgroundResource(colorPrimary);
         mBookcaseFragment.getContentView().setPrimaryColorsId(colorPrimary, android.R.color.white);
-        if (Build.VERSION.SDK_INT >= 21) {
-            mBookcaseFragment.getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(mBookcaseFragment.getContext(), colorPrimaryDark));
-        }
+        mBookcaseFragment.getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(mBookcaseFragment.getContext(), colorPrimaryDark));
     }
 
     @Override

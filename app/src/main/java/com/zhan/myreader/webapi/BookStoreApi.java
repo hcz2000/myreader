@@ -13,9 +13,9 @@ public class BookStoreApi{
 
 
     /**
-     * 鑾峰彇涔﹀煄灏忚鍒嗙被鍒楄〃
-     * @param url
-     * @param callback
+     * Get Type List
+     * @param url page url
+     * @param callback callback handler
      */
     public static void getBookTypeList(String url, final ResultCallback callback){
 
@@ -34,9 +34,9 @@ public class BookStoreApi{
 
 
     /**
-     * 鑾峰彇鏌愪竴鍒嗙被灏忚鎺掕姒滃垪琛�
-     * @param url
-     * @param callback
+     * Get ranked list of specific type
+     * @param url page url
+     * @param callback callback handler
      */
     public static void getBookRankList(String url, final ResultCallback callback){
 
@@ -56,9 +56,9 @@ public class BookStoreApi{
 
 
     /**
-     * 鑾峰彇灏忚璇︾粏淇℃伅
-     * @param book
-     * @param callback
+     * Get Book Info
+     * @param book book
+     * @param callback callback handler
      */
     public static void getBookInfo(Book book, final ResultCallback callback){
 
@@ -74,7 +74,5 @@ public class BookStoreApi{
             }
         });
     }
-
-
 
 }
