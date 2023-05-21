@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.zhan.myreader.base.BasePresenter;
-import com.zhan.myreader.ui.home.stock.StockFragment;
 import com.zhan.myreader.ui.home.bookcase.BookcaseFragment;
 import com.zhan.myreader.ui.home.bookstore.BookStoreFragment;
+import com.zhan.myreader.ui.home.stock.StockFragment;
 import com.zhan.myreader.ui.search.SearchBookActivity;
 
 import java.util.ArrayList;

@@ -3,28 +3,20 @@ package com.zhan.myreader.ui.home;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
-
 import com.google.android.material.tabs.TabLayout;
 import com.zhan.myreader.R;
-
-
 import com.zhan.myreader.common.APPCONST;
 import com.zhan.myreader.custom.CircleImageView;
 import com.zhan.myreader.databinding.ActivityMainBinding;
 import com.zhan.myreader.util.SystemBarTintManager;
 import com.zhan.myreader.util.TextHelper;
-
-
-
 
 public class MainActivity extends FragmentActivity {
 
