@@ -49,7 +49,6 @@ public class BookStoreApi{
             @Override
             public void onError(Exception e) {
                 callback.onError(e);
-
             }
         });
     }

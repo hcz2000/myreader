@@ -97,21 +97,13 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
        if (StringHelper.isEmpty(book.getImgUrl())){
            Glide.with(mContext).clear(holder.binding.ivBookImg);
            //获取小说详情
-           BookStoreApi.getBookInfo(book, new ResultCallback() {
-               @Override
-               public void onFinish(Object o, int code) {
+           BookStoreApi.getBookInfo(book, (Object o, int code) ->{
                    mDatas.set(position,(Book) o);
                    //防止列表快速滑动时出现书的信息加载混乱的问题
                    if (holder.binding.tvBookName.getTag() == null || (int)holder.binding.tvBookName.getTag() == position) {
                        mHandle.sendMessage(mHandle.obtainMessage(1,position,0,holder));
                    }
 
-               }
-
-               @Override
-               public void onError(Exception e) {
-
-               }
            });
        }else{
            initImgAndDec(position,holder);
