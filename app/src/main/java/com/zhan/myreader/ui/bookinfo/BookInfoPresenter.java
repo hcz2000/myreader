@@ -51,22 +51,6 @@ public class BookInfoPresenter extends  BasePresenter {
             }
     }
 
-    /*
-    private void getData(){
-        BookStoreApi.getBookInfo(mBook, new ResultCallback() {
-            @Override
-            public void onFinish(Object o, int code) {
-                mBook = (Book)o;
-                mHandle.sendMessage(mHandle.obtainMessage(1));
-            }
-
-            @Override
-            public void onError(Exception e) {
-                TextHelper.showText(e.getMessage());
-
-            }
-        });
-    }*/
 
     private void init(){
         mBookInfoActivity.getTvTitleText().setText(mBook.getName());

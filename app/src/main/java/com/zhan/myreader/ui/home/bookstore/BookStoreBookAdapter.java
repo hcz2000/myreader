@@ -33,22 +33,9 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
     private boolean isScrolling;
 
 
-    private final Handler mHandle = new Handler(message -> {
-
-        switch (message.what){
-            case  1:
-                ViewHolder holder = (ViewHolder) message.obj;
-                int pos = message.arg1;
-                initImgAndDec(pos,holder);
-                break;
-        }
-
-        return false;
-
-    });
-
 
    public BookStoreBookAdapter(Context context,  List<Book> datas) {
+        //System.out.println("Constructor-BookStoreBookAdapter");
         mInflater = LayoutInflater.from(context);
         mDatas = datas;
         mContext = context;
@@ -62,21 +49,20 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
             super(binding.getRoot());
             this.binding = binding;
         }
-
-
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //System.out.println("onCreateViewHolder-BookStoreBookAdapter");
         if (rvContent == null) rvContent = (RecyclerView) parent;
         ListviewBookStoreBookItemBinding binding = ListviewBookStoreBookItemBinding.inflate(mInflater,parent,false);
-
         return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        //System.out.println("onBindViewHolder-BookStoreBookAdapter");
         initView(position, holder);
         if (onItemClickListener != null){
             holder.itemView.setOnClickListener(view -> onItemClickListener.onClick(position,view));
@@ -94,23 +80,8 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
        holder.binding.tvBookAuthor.setText(book.getAuthor());
        holder.binding.tvBookDesc.setText("");
        holder.binding.tvBookName.setTag(position);//设置列表书的当前加载位置
-       if (StringHelper.isEmpty(book.getImgUrl())){
-           Glide.with(mContext).clear(holder.binding.ivBookImg);
-           //获取小说详情
-           BookStoreApi.getBookInfo(book, (Object o, int code) ->{
-                   mDatas.set(position,(Book) o);
-                   //防止列表快速滑动时出现书的信息加载混乱的问题
-                   if (holder.binding.tvBookName.getTag() == null || (int)holder.binding.tvBookName.getTag() == position) {
-                       mHandle.sendMessage(mHandle.obtainMessage(1,position,0,holder));
-                   }
-
-           });
-       }else{
-           initImgAndDec(position,holder);
-       }
-
-
-
+       //System.out.println("initView-BookStoreBookAdapter:"+book.getName());
+       initImgAndDec(position,holder);
     }
 
     private void initImgAndDec(final int position, final ViewHolder holder){

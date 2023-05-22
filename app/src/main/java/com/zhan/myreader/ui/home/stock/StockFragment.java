@@ -23,6 +23,7 @@ public class StockFragment extends Fragment {
     private FragmentStockBinding binding;
 
     public StockFragment() {
+        System.out.println("Constructor-StockFragment");
         mStockPresenter = new StockPresenter(this);
     }
 
@@ -44,8 +45,14 @@ public class StockFragment extends Fragment {
 
     @Override
     public void onResume() {
+        System.out.println("onResume-StockFragment");
         super.onResume();
-        mStockPresenter.resume();
+    }
+
+    @Override
+    public void onPause(){
+        System.out.println("onPause-StockFragment");
+        super.onPause();
     }
 
     public LinearLayout getNoDataView() {

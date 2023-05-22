@@ -4,13 +4,11 @@ package com.zhan.myreader.ui.home.stock;
 import static java.util.concurrent.TimeUnit.*;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 
@@ -89,9 +87,11 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
         });
 
         loaderManager = mStockFragment.getLoaderManager();
+        loaderManager.initLoader(0, null, this);
     }
 
-    private void init() {
+    private void refresh() {
+        System.out.println("refresh-StockPresenter");
         mStocks.clear();
         mStocks.addAll(mStockService.findAllStocks());
         if (mStocks == null || mStocks.size() == 0) {
@@ -104,24 +104,21 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
                 mStockFragment.getStockView().setTouchClashparent(((MainActivity) (mStockFragment.getContext())).getVpContent());
                 mStockFragment.getStockView().setAdapter(mStockAdapter);
             }else {
+                System.out.println("notifyDataSetChanged-StockPresenter");
                 mStockAdapter.notifyDataSetChanged();
             }
             mStockFragment.getNoDataView().setVisibility(View.GONE);
             mStockFragment.getStockView().setVisibility(View.VISIBLE);
-            loaderManager.initLoader(0, null, this);
         }
     }
 
     private void setThemeColor(int colorPrimary, int colorPrimaryDark) {
         mStockFragment.getContentView().setPrimaryColorsId(colorPrimary, android.R.color.white);
-        if (Build.VERSION.SDK_INT >= 21) {
-            mStockFragment.getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(mStockFragment.getContext(), colorPrimaryDark));
-        }
     }
 
     @Override
     public void resume(){
-        init();
+        refresh();
     }
 
 

@@ -54,8 +54,7 @@ public class BookStorePresenter extends BasePresenter {
      BookStorePresenter(BookStoreFragment bookStoreFragment){
          super(bookStoreFragment.getContext(),bookStoreFragment.getLifecycle());
          mBookStoreFragment = bookStoreFragment;
-
-    }
+     }
 
 
     public void init() {
@@ -72,10 +71,10 @@ public class BookStorePresenter extends BasePresenter {
      */
     private void getBookTypes(){
         mBookStoreFragment.getBinding().pbLoading.setVisibility(View.VISIBLE);
-         BookStoreApi.getBookTypeList(URLCONST.nameSpace_biquge, new ResultCallback() {
+         BookStoreApi.getBookTypeList(URLCONST.nameSpace_tianlai+"/sort.html", new ResultCallback() {
              @Override
              public void onFinish(Object o, int code) {
-                 mBookTypes = (ArrayList<BookType>)o;
+                 mBookTypes = (List<BookType>)o;
                  curType = mBookTypes.get(0);
                  mHandler.sendMessage(mHandler.obtainMessage(1));
                  getBookList();
@@ -93,7 +92,7 @@ public class BookStorePresenter extends BasePresenter {
      */
     private void getBookList(){
 
-        BookStoreApi.getBookRankList(URLCONST.nameSpace_biquge+curType.getUrl(), new ResultCallback() {
+        BookStoreApi.getBookRankList(curType.getUrl(), new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 bookList= (ArrayList<Book>)o;

@@ -21,7 +21,6 @@ public class BookcaseFragment extends Fragment {
 
     public BookcaseFragment() {
         mBookcasePresenter = new BookcasePresenter(this);
-
     }
 
 

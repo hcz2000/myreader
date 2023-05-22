@@ -69,11 +69,7 @@ public class BookcasePresenter extends BasePresenter {
             Intent intent = new Intent(mBookcaseFragment.getContext(), SearchBookActivity.class);
             mBookcaseFragment.startActivity(intent);
         });
-/*
-        mBookcaseFragment.getContentView().setOnRefreshListener(refreshLayout -> {
-            getData();
-        });
- */
+
         mBookcaseFragment.getBookView().setOnItemLongClickListener((parent, view, position, id) -> {
             if (!mBookcaseAdapter.inEditState()) {
                 mMainActivity.getTvEditAdd().setOnClickListener(v -> {
