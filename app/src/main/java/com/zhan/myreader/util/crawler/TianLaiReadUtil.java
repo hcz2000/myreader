@@ -1,6 +1,7 @@
 package com.zhan.myreader.util.crawler;
 
 import com.zhan.myreader.common.URLCONST;
+import com.zhan.myreader.entity.bookstore.BookType;
 import com.zhan.myreader.enums.BookSource;
 import com.zhan.myreader.greendao.entity.Book;
 import com.zhan.myreader.greendao.entity.Chapter;
@@ -194,6 +195,49 @@ public class TianLaiReadUtil {
                 books.add(book);
         }
         return books;
+    }
+
+    public static List<BookType> getBookTypeList(String html){
+        List<BookType> bookTypes = new ArrayList<>();
+        Document doc = Jsoup.parse(html);
+
+        Elements divs = doc.getElementsByClass("content");
+        if (divs.size() > 0){
+            Elements uls = divs.get(0).getElementsByTag("li");
+            for(Element li : uls){
+                Element a = li.child(0);
+                BookType bookType = new BookType();
+                bookType.setTypeName(a.text());
+                bookType.setUrl(a.attr("href"));
+                if (StringHelper.isNotEmpty(bookType.getTypeName())){
+                    bookTypes.add(bookType);
+                }
+            }
+
+        }
+        return bookTypes;
+    }
+
+    public static List<Book> getBookRankList(String html){
+        List<Book> books = new ArrayList<>();
+        Document doc = Jsoup.parse(html);
+        Element  typeElement=doc.getElementsByClass("active").get(0);
+        Elements divs = doc.getElementsByClass("bookbox");
+        for(Element bookElement : divs){
+            Book book = new Book();
+            Element author = bookElement.getElementsByClass("author").get(0);
+            Element bookname = bookElement.getElementsByClass("bookname").get(0);
+            book.setType(typeElement.text());
+            Element a = bookname.getElementsByTag("a").get(0);
+            book.setName(a.text());
+            book.setChapterUrl(a.attr("href"));
+            book.setAuthor(author.text());
+            book.setSource(BookSource.tianlai.toString());
+            books.add(book);
+        }
+
+        return books;
+
     }
 
 }

@@ -5,7 +5,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.zhan.myreader.R;
 import com.zhan.myreader.base.BaseActivity;
 import com.zhan.myreader.databinding.ActivityFontsBinding;

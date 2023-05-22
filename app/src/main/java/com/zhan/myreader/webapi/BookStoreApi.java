@@ -19,7 +19,7 @@ public class BookStoreApi{
      */
     public static void getBookTypeList(String url, final ResultCallback callback){
 
-        HttpUtil.httpGet_Async(url, null, "GBK", new ResultCallback() {
+        HttpUtil.httpGet_Async(url, null, "UTF-8", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 callback.onFinish(BiQuGeReadUtil.getBookTypeList((String) o),0);
@@ -40,7 +40,7 @@ public class BookStoreApi{
      */
     public static void getBookRankList(String url, final ResultCallback callback){
 
-        HttpUtil.httpGet_Async(url, null, "GBK", new ResultCallback() {
+        HttpUtil.httpGet_Async(url, null, "UTF-8", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 callback.onFinish(BiQuGeReadUtil.getBookRankList((String) o),0);
@@ -61,7 +61,7 @@ public class BookStoreApi{
      */
     public static void getBookInfo(Book book, final ResultCallback callback){
 
-        HttpUtil.httpGet_Async(book.getChapterUrl(), null, "GBK", new ResultCallback() {
+        HttpUtil.httpGet_Async(book.getChapterUrl(), null, "UTF-8", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 callback.onFinish(BiQuGeReadUtil.getBookInfo((String) o,book),0);
