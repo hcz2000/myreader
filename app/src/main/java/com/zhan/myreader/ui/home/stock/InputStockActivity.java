@@ -1,16 +1,13 @@
 package com.zhan.myreader.ui.home.stock;
 
-
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.zhan.myreader.R;
 import com.zhan.myreader.base.BaseActivity;
 import com.zhan.myreader.databinding.ActivityInputStockBinding;
-
 
 public class InputStockActivity extends BaseActivity {
 

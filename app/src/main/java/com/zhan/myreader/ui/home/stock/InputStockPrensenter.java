@@ -138,7 +138,7 @@ public class InputStockPrensenter extends BasePresenter {
                           mInputStockActivity.getPbLoading().setVisibility(View.GONE);
                     });
                 }
-       }
+            }
 
             public void onError(Exception e) {
                 e.printStackTrace();
