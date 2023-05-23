@@ -27,10 +27,22 @@ public class StockFragment extends Fragment {
         mStockPresenter = new StockPresenter(this);
     }
 
+    @Override
+    public void onCreate(Bundle savedInstance){
+        System.out.println("onCreate-StockFragment");
+        super.onCreate(savedInstance);
+    }
+
+    @Override
+    public void onStart(){
+        System.out.println("onStart-StockFragment");
+        super.onStart();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        System.out.println("onCreateView-StockFragment");
         // Inflate the layout for this fragment
         binding = FragmentStockBinding.inflate(inflater,container,false);
         mStockPresenter.enable();
@@ -59,6 +71,11 @@ public class StockFragment extends Fragment {
     public void onStop(){
         System.out.println("onStop-StockFragment");
         super.onStop();
+    }
+
+    public void onDestroy(){
+        System.out.println("onDestroy-StockFragment");
+        super.onDestroy();
     }
 
     public LinearLayout getNoDataView() {

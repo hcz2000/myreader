@@ -98,7 +98,7 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
     private void refreshData() {
         mStocks.clear();
         mStocks.addAll(mStockService.findAllStocks());
-        if (mStocks == null || mStocks.size() == 0) {
+        if ( mStocks.size() == 0) {
             mStockFragment.getStockView().setVisibility(View.GONE);
             mStockFragment.getNoDataView().setVisibility(View.VISIBLE);
         } else {
@@ -132,7 +132,7 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
 
     @Override
     public void onLoadFinished(@NonNull Loader loader, Object data) {
-        //System.out.println("StockPresenter--onLoadFinished");
+        System.out.println("onLoadFinished-StockPresenter");
         List<Stock> refreshedStocks=(List<Stock>)data;
         for(Stock refreshStock: refreshedStocks){
             System.out.println(refreshStock.getName()+":"+refreshStock.getPrice());
