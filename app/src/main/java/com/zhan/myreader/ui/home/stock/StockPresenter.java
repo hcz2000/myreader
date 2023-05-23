@@ -52,6 +52,7 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
     @Override
     public void start() {
         System.out.println("start-StockPresenter");
+        mStockAdapter = new StockDragAdapter(mStockFragment.getContext(), R.layout.gridview_stock_item, mStocks, false);
         mMainActivity = ((MainActivity) (mStockFragment.getContext()));
         mStockFragment.getContentView().setEnableRefresh(false);
         mStockFragment.getContentView().setEnableHeaderTranslationContent(false);
@@ -86,7 +87,6 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
             return true;
         });
 
-        mStockAdapter = new StockDragAdapter(mStockFragment.getContext(), R.layout.gridview_stock_item, mStocks, false);
         mStockFragment.getStockView().setDragModel(-1);
         mStockFragment.getStockView().setTouchClashparent(((MainActivity) (mStockFragment.getContext())).getVpContent());
         mStockFragment.getStockView().setAdapter(mStockAdapter);
