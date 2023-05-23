@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.zhan.myreader.R;
 import com.zhan.myreader.greendao.entity.Stock;
 import com.zhan.myreader.base.BasePresenter;
 import com.zhan.myreader.callback.ResultCallback;
@@ -28,9 +29,9 @@ import org.jsoup.select.Elements;
 
 public class InputStockPrensenter extends BasePresenter {
 
-    private InputStockActivity mInputStockActivity;
+    private final InputStockActivity mInputStockActivity;
     private String stockCode;//搜索关键字
-    private StockService mStockService;
+    private final StockService mStockService;
 
     InputStockPrensenter(InputStockActivity inputStockActivity) {
         super(inputStockActivity,inputStockActivity.getLifecycle());
@@ -77,8 +78,8 @@ public class InputStockPrensenter extends BasePresenter {
             mInputStockActivity.getEtStockCode().setText("");
             mInputStockActivity.getEtStockQuantity().setText("");
             mInputStockActivity.getEtStockCost().setText("");
-            mInputStockActivity.getEtStockUpperThreshold().setText("0.00");
-            mInputStockActivity.getEtStockLowerThreshold().setText("0.00");
+            mInputStockActivity.getEtStockUpperThreshold().setText(R.string.stock_default_upper_threshold);
+            mInputStockActivity.getEtStockLowerThreshold().setText(R.string.stock_default_lower_threshold);
             mInputStockActivity.getLlStock().setVisibility(View.VISIBLE);
             mInputStockActivity.getTvSuccess().setVisibility(View.GONE);
             mInputStockActivity.getTvInsert().setVisibility(View.VISIBLE);
@@ -141,12 +142,9 @@ public class InputStockPrensenter extends BasePresenter {
 
             public void onError(Exception e) {
                 e.printStackTrace();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                runOnUiThread(()-> {
                         Toast.makeText(mInputStockActivity.getApplicationContext(), "股票代码不存在", Toast.LENGTH_LONG).show();
                         mInputStockActivity.getPbLoading().setVisibility(View.GONE);
-                    }
                 });
             }
 

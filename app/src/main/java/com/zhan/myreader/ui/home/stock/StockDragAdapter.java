@@ -25,11 +25,11 @@ import com.zhan.myreader.ui.home.BrowserActivity;
  */
 
 public class StockDragAdapter extends DragAdapter {
-    private int mResourceId;
-    private List<Stock> list;
-    private Context mContext;
+    private final int mResourceId;
+    private final List<Stock> list;
+    private final Context mContext;
     private boolean mEditState;
-    private StockService mStockService;
+    private final StockService mStockService;
 
 
     public StockDragAdapter(Context context, int textViewResourceId, List<Stock> objects, boolean editState) {
@@ -110,7 +110,7 @@ public class StockDragAdapter extends DragAdapter {
             viewHolder.tvStockProfit.setTextColor(Color.rgb(0, 100, 0));
         }
 
-        System.out.println("Price/Lastprice:"+stock.getPrice()+"-"+stock.getLastPrice());
+        System.out.println("Position/Price/Lastprice:"+position+"-"+stock.getPrice()+"-"+stock.getLastPrice());
         if(stock.getPrice()==stock.getLastPrice()){
             viewHolder.tvStockPrice.setBackgroundColor(Color.rgb(0, 0, 128));
         }else if(stock.getPrice()>stock.getLastPrice()){
@@ -118,23 +118,12 @@ public class StockDragAdapter extends DragAdapter {
         }else{
             viewHolder.tvStockPrice.setBackgroundColor(Color.rgb(0, 128, 0));
         }
-        viewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        viewHolder.ivDelete.setOnClickListener((View v)-> {
                 DialogCreator.createCommonDialog(mContext, "删除纪录", "确定删除《" + stock.getName() + "》吗？",
-                        true, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                        true, (DialogInterface dialogInterface, int i) -> {
                                 remove(stock);
                                 dialogInterface.dismiss();
-                            }
-                        }, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        });
-            }
+                        }, (DialogInterface dialogInterface, int i) -> dialogInterface.dismiss());
         });
 
 
@@ -147,13 +136,10 @@ public class StockDragAdapter extends DragAdapter {
             viewHolder.ivDelete.setVisibility(View.GONE);
             viewHolder.tvStockPrice.setVisibility(View.VISIBLE);
             viewHolder.tvStockProfit.setVisibility(View.VISIBLE);
-            viewHolder.tvStockName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            viewHolder.tvStockName.setOnClickListener((View v)-> {
                     Intent intent = new Intent(mContext, UpdateStockActivity.class);
                     intent.putExtra(APPCONST.STOCK, stock);
                     mContext.startActivity(intent);
-                }
             });
 
             viewHolder.tvStockPrice.setOnClickListener( view -> {

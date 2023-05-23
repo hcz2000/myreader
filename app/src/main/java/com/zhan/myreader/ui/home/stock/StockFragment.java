@@ -19,7 +19,7 @@ import com.zhan.myreader.databinding.FragmentStockBinding;
  */
 public class StockFragment extends Fragment {
 
-    private StockPresenter mStockPresenter;
+    private final StockPresenter mStockPresenter;
     private FragmentStockBinding binding;
 
     public StockFragment() {
@@ -39,6 +39,7 @@ public class StockFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        System.out.println("onDestroyView-StockFragment");
         super.onDestroyView();
         binding = null;
     }
@@ -53,6 +54,11 @@ public class StockFragment extends Fragment {
     public void onPause(){
         System.out.println("onPause-StockFragment");
         super.onPause();
+    }
+
+    public void onStop(){
+        System.out.println("onStop-StockFragment");
+        super.onStop();
     }
 
     public LinearLayout getNoDataView() {

@@ -21,9 +21,9 @@ import static androidx.fragment.app.FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CU
 
 public class MainPrensenter extends BasePresenter {
 
-    private MainActivity mMainActivity;
-    private ArrayList<Fragment> mFragments = new ArrayList<>();
-    private String[] tabTitle = {"金融","书架","新闻"};
+    private final MainActivity mMainActivity;
+    private final ArrayList<Fragment> mFragments = new ArrayList<>();
+    private final String[] tabTitle = {"金融","书架","书城"};
 
     public MainPrensenter(MainActivity mainActivity){
         super(mainActivity,mainActivity.getLifecycle());
@@ -53,7 +53,6 @@ public class MainPrensenter extends BasePresenter {
 
             @Override
             public Fragment getItem(int position) {
-
                 return mFragments.get(position);
             }
 

@@ -31,35 +31,35 @@ import java.util.concurrent.ScheduledExecutorService;
 
 public class StockPresenter extends BasePresenter implements LoaderManager.LoaderCallbacks {
 
-    private StockFragment mStockFragment;
-    private List<Stock> mStocks = new ArrayList<>();
+    private final StockFragment mStockFragment;
+    private final List<Stock> mStocks;
     private StockDragAdapter mStockAdapter;
-    private StockService mStockService;
+    private final StockService mStockService;
     private MainActivity mMainActivity;
     private LoaderManager loaderManager;
 
-    private ScheduledExecutorService scheduledService= Executors.newScheduledThreadPool(1);
+    private final ScheduledExecutorService scheduledService= Executors.newScheduledThreadPool(1);
 
 
     StockPresenter(StockFragment stockFragment) {
         super(stockFragment.getContext(),stockFragment.getLifecycle());
         mStockFragment = stockFragment;
         mStockService = new StockService();
+        mStocks = new ArrayList<>();
+        mStocks.addAll(mStockService.findAllStocks());
     }
 
     @Override
     public void start() {
+        System.out.println("start-StockPresenter");
         mMainActivity = ((MainActivity) (mStockFragment.getContext()));
         mStockFragment.getContentView().setEnableRefresh(false);
         mStockFragment.getContentView().setEnableHeaderTranslationContent(false);
         mStockFragment.getContentView().setEnableLoadMore(false);
 
-        mStockFragment.getNoDataView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        mStockFragment.getNoDataView().setOnClickListener((View view)->{
                 Intent intent = new Intent(mStockFragment.getContext(), InputStockActivity.class);
                 mStockFragment.startActivity(intent);
-            }
         });
 
         mStockFragment.getStockView().setOnItemLongClickListener((parent, view, position, id) -> {
@@ -86,30 +86,27 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
             return true;
         });
 
+        mStockAdapter = new StockDragAdapter(mStockFragment.getContext(), R.layout.gridview_stock_item, mStocks, false);
+        mStockFragment.getStockView().setDragModel(-1);
+        mStockFragment.getStockView().setTouchClashparent(((MainActivity) (mStockFragment.getContext())).getVpContent());
+        mStockFragment.getStockView().setAdapter(mStockAdapter);
+
         loaderManager = mStockFragment.getLoaderManager();
         loaderManager.initLoader(0, null, this);
     }
 
-    private void refresh() {
-        System.out.println("refresh-StockPresenter");
+    private void refreshData() {
         mStocks.clear();
         mStocks.addAll(mStockService.findAllStocks());
         if (mStocks == null || mStocks.size() == 0) {
             mStockFragment.getStockView().setVisibility(View.GONE);
             mStockFragment.getNoDataView().setVisibility(View.VISIBLE);
         } else {
-            if(mStockAdapter == null) {
-                mStockAdapter = new StockDragAdapter(mStockFragment.getContext(), R.layout.gridview_stock_item, mStocks, false);
-                mStockFragment.getStockView().setDragModel(-1);
-                mStockFragment.getStockView().setTouchClashparent(((MainActivity) (mStockFragment.getContext())).getVpContent());
-                mStockFragment.getStockView().setAdapter(mStockAdapter);
-            }else {
-                System.out.println("notifyDataSetChanged-StockPresenter");
-                mStockAdapter.notifyDataSetChanged();
-            }
             mStockFragment.getNoDataView().setVisibility(View.GONE);
             mStockFragment.getStockView().setVisibility(View.VISIBLE);
         }
+        System.out.println("refreshData-StockPresenter");
+        mStockAdapter.notifyDataSetChanged();
     }
 
     private void setThemeColor(int colorPrimary, int colorPrimaryDark) {
@@ -118,7 +115,7 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
 
     @Override
     public void resume(){
-        refresh();
+        refreshData();
     }
 
 
@@ -144,7 +141,6 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
                     stock.setLastPrice(stock.getPrice());
                     stock.setPrice(refreshStock.getPrice());
                     mStockService.updateStock(stock);
-                    //mStockService.addOrUpdateStock(stock);
                 }
             }
         }
@@ -156,7 +152,7 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
 
     @Override
     public void onLoaderReset(@NonNull Loader loader) {
-        loaderManager.restartLoader(0,null,this);;
+        loaderManager.restartLoader(0,null,this);
     }
 
 }
