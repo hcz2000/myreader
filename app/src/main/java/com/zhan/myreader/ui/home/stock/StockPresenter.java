@@ -135,7 +135,7 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
         System.out.println("onLoadFinished-StockPresenter");
         List<Stock> refreshedStocks=(List<Stock>)data;
         for(Stock refreshStock: refreshedStocks){
-            System.out.println(refreshStock.getName()+":"+refreshStock.getPrice());
+            //System.out.println(refreshStock.getName()+":"+refreshStock.getPrice());
             for(Stock stock: mStocks){
                 if(refreshStock.getId().equals(stock.getId())){
                     stock.setLastPrice(stock.getPrice());

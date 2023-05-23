@@ -110,7 +110,7 @@ public class StockDragAdapter extends DragAdapter {
             viewHolder.tvStockProfit.setTextColor(Color.rgb(0, 100, 0));
         }
 
-        System.out.println("Position/Price/Lastprice:"+position+"-"+stock.getPrice()+"-"+stock.getLastPrice());
+        //System.out.println("StockDragAdapter-Position/Price/Lastprice:"+position+"-"+stock.getPrice()+"-"+stock.getLastPrice());
         if(stock.getPrice()==stock.getLastPrice()){
             viewHolder.tvStockPrice.setBackgroundColor(Color.rgb(0, 0, 128));
         }else if(stock.getPrice()>stock.getLastPrice()){
