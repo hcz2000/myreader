@@ -14,7 +14,7 @@ import com.zhan.myreader.base.BasePresenter;
 import com.zhan.myreader.callback.ResultCallback;
 import com.zhan.myreader.common.APPCONST;
 import com.zhan.myreader.common.URLCONST;
-import com.zhan.myreader.entity.bookstore.BookType;
+import com.zhan.myreader.entity.bookstore.BookCatalog;
 import com.zhan.myreader.greendao.entity.Book;
 import com.zhan.myreader.ui.bookinfo.BookInfoActivity;
 import com.zhan.myreader.util.TextHelper;
@@ -31,9 +31,9 @@ public class BookStorePresenter extends BasePresenter {
 
     final private BookStoreFragment mBookStoreFragment;
     private LinearLayoutManager mLinearLayoutManager;
-    private List<BookType> mBookTypes;
+    private List<BookCatalog> mBookCatalogs;
     private List<Book> bookList;
-    private BookType curType;
+    private BookCatalog curType;
 
 
     @SuppressLint("HandlerLeak")
@@ -42,10 +42,10 @@ public class BookStorePresenter extends BasePresenter {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    initTypeList();
+                    setupCatalogView();
                     break;
                 case 2:
-                    initBookList();
+                    setupBookListView();
                     break;
            }
         }
@@ -62,20 +62,20 @@ public class BookStorePresenter extends BasePresenter {
          mBookStoreFragment.getSrlBookList().setEnableLoadMore(false);
          //小说列表下拉刷新事件
          mBookStoreFragment.getSrlBookList().setOnRefreshListener(refreshLayout->getBookList());
-         getBookTypes();
+         getBookCatalogs();
     }
 
 
     /**
      * 获取页面数据
      */
-    private void getBookTypes(){
+    private void getBookCatalogs(){
         mBookStoreFragment.getBinding().pbLoading.setVisibility(View.VISIBLE);
          BookStoreApi.getBookTypeList(URLCONST.nameSpace_tianlai+"/sort.html", new ResultCallback() {
              @Override
              public void onFinish(Object o, int code) {
-                 mBookTypes = (List<BookType>)o;
-                 curType = mBookTypes.get(0);
+                 mBookCatalogs = (List<BookCatalog>)o;
+                 curType = mBookCatalogs.get(0);
                  mHandler.sendMessage(mHandler.obtainMessage(1));
                  getBookList();
              }
@@ -110,18 +110,18 @@ public class BookStorePresenter extends BasePresenter {
     /**
      * 初始化类别列表
      */
-    private void initTypeList(){
+    private void setupCatalogView(){
         mBookStoreFragment.getBinding().pbLoading.setVisibility(View.GONE);
         //设置布局管理器
         mLinearLayoutManager = new LinearLayoutManager(mBookStoreFragment.getActivity());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBookStoreFragment.getRvTypeList().setLayoutManager(mLinearLayoutManager);
-        BookStoreBookTypeAdapter mBookStoreBookTypeAdapter = new BookStoreBookTypeAdapter(mBookStoreFragment.getActivity(), mBookTypes);
+        BookStoreBookTypeAdapter mBookStoreBookTypeAdapter = new BookStoreBookTypeAdapter(mBookStoreFragment.getActivity(), mBookCatalogs);
         mBookStoreFragment.getRvTypeList().setAdapter(mBookStoreBookTypeAdapter);
 
         //点击事件
         mBookStoreBookTypeAdapter.setOnItemClickListener((pos, view) -> {
-            curType = mBookTypes.get(pos);
+            curType = mBookCatalogs.get(pos);
             mBookStoreFragment.getBinding().pbLoading.setVisibility(View.VISIBLE);
             getBookList();
         });
@@ -132,7 +132,7 @@ public class BookStorePresenter extends BasePresenter {
     /**
      * 初始化小说列表
      */
-    private void initBookList(){
+    private void setupBookListView(){
         mBookStoreFragment.getBinding().pbLoading.setVisibility(View.GONE);
         //设置布局管理器
         mLinearLayoutManager = new LinearLayoutManager(mBookStoreFragment.getActivity());

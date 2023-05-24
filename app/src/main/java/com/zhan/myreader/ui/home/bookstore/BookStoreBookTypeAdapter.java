@@ -8,15 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.zhan.myreader.R;
 import com.zhan.myreader.databinding.ListviewBookTypeItemBinding;
-import com.zhan.myreader.entity.bookstore.BookType;
+import com.zhan.myreader.entity.bookstore.BookCatalog;
 import java.util.List;
 
 public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBookTypeAdapter.ViewHolder> {
 
-    private LayoutInflater mInflater;
-    private List<BookType> mDatas;
+    private final LayoutInflater mInflater;
+    private final List<BookCatalog> mDatas;
 
-    private Context mContext;
+    private final Context mContext;
     private RecyclerView rvContent;
 
     private OnItemClickListener onItemClickListener;
@@ -24,7 +24,7 @@ public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBook
     private int selectPos = 0;
 
 
-   BookStoreBookTypeAdapter(Context context,  List<BookType> datas) {
+   BookStoreBookTypeAdapter(Context context,  List<BookCatalog> datas) {
         mInflater = LayoutInflater.from(context);
         mDatas = datas;
 
@@ -80,7 +80,7 @@ public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBook
     }
 
     private void initView(final int position, final ViewHolder holder) {
-       BookType bookType = mDatas.get(position);
+       BookCatalog bookType = mDatas.get(position);
        holder.binding.tvTypeName.setText(bookType.getTypeName());
 
 

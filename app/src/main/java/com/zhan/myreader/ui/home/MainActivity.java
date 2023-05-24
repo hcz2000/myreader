@@ -19,12 +19,12 @@ import com.zhan.myreader.util.SystemBarTintManager;
 import com.zhan.myreader.util.TextHelper;
 
 public class MainActivity extends FragmentActivity {
-
     private MainPrensenter mMainPrensenter;
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("onCreate-MainActivity");
         super.onCreate(savedInstanceState);
         if (!isTaskRoot()) {
             finish();
@@ -35,9 +35,7 @@ public class MainActivity extends FragmentActivity {
         setStatusBar(R.color.sys_line);
         mMainPrensenter = new MainPrensenter(this);
         mMainPrensenter.enable();
-
     }
-
 
 
     @Override
@@ -50,8 +48,41 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    @Override
+    public void onStart(){
+        System.out.println("onStart-MainActivity");
+        super.onStart();
+    }
 
+    @Override
+    public void onRestart(){
+        System.out.println("onRestart-MainActivity");
+        super.onRestart();
+    }
 
+    @Override
+    public void onPause(){
+        System.out.println("onPause-MainActivity");
+        super.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        System.out.println("onResume-MainActivity");
+        super.onResume();
+    }
+
+    @Override
+    public void onStop(){
+        System.out.println("onStop-MainActivity");
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy(){
+        System.out.println("onDestroy-MainActivity");
+        super.onDestroy();
+    }
 
     public CircleImageView getCivAvatar() {
         return binding.civAvatar;

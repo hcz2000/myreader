@@ -2,10 +2,10 @@ package com.zhan.myreader.entity.bookstore;
 
 /**
  * @author zhan
- * @description: 书城小说分类
- * @date :2020/4/13 11:46
+ * 书城小说分类
+ * 2020/4/13 11:46
  */
-public class BookType {
+public class BookCatalog {
 
 
     private String typeName;//分类名称
