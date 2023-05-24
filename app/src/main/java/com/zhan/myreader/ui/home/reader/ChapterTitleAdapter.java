@@ -16,7 +16,6 @@ import com.zhan.myreader.base.application.SysManager;
 import com.zhan.myreader.entity.Setting;
 import com.zhan.myreader.greendao.entity.Chapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

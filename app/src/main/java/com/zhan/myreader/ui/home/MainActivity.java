@@ -117,8 +117,6 @@ public class MainActivity extends FragmentActivity {
         return binding.rlEditTitile;
     }
 
-
-
     @TargetApi(19)
     protected void setTranslucentStatus(boolean on) {
         Window win = getWindow();
