@@ -14,6 +14,7 @@ import com.zhan.myreader.ui.search.SearchBookActivity;
 import java.util.ArrayList;
 
 import static androidx.fragment.app.FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
+import static androidx.fragment.app.FragmentPagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT;
 
 /**
  * Created by zhan on 2017/7/25.
