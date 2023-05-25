@@ -91,7 +91,7 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
         mStockFragment.getStockView().setTouchClashparent(((MainActivity) (mStockFragment.getContext())).getVpContent());
         mStockFragment.getStockView().setAdapter(mStockAdapter);
 
-        loaderManager = mStockFragment.getLoaderManager();
+        loaderManager = LoaderManager.getInstance(mStockFragment);
         loaderManager.initLoader(0, null, this);
     }
 
@@ -117,12 +117,6 @@ public class StockPresenter extends BasePresenter implements LoaderManager.Loade
     public void resume(){
         refreshData();
     }
-
-
-    public List<Stock> getStocks(){
-        return mStocks;
-    }
-
 
     @NonNull
     @Override
