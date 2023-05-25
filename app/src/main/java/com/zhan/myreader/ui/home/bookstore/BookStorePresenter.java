@@ -33,8 +33,7 @@ public class BookStorePresenter extends BasePresenter {
     private LinearLayoutManager mLinearLayoutManager;
     private List<BookCatalog> mBookCatalogs;
     private List<Book> bookList;
-    private BookCatalog curType;
-
+    private BookCatalog selectedCatalog;
 
     @SuppressLint("HandlerLeak")
     private final Handler mHandler = new Handler() {
@@ -75,8 +74,8 @@ public class BookStorePresenter extends BasePresenter {
              @Override
              public void onFinish(Object o, int code) {
                  mBookCatalogs = (List<BookCatalog>)o;
-                 curType = mBookCatalogs.get(0);
                  mHandler.sendMessage(mHandler.obtainMessage(1));
+                 selectedCatalog=mBookCatalogs.get(0);
                  getBookList();
              }
 
@@ -92,7 +91,7 @@ public class BookStorePresenter extends BasePresenter {
      */
     private void getBookList(){
 
-        BookStoreApi.getBookRankList(curType.getUrl(), new ResultCallback() {
+        BookStoreApi.getBookRankList(selectedCatalog.getUrl(), new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 bookList= (ArrayList<Book>)o;
@@ -116,13 +115,13 @@ public class BookStorePresenter extends BasePresenter {
         mLinearLayoutManager = new LinearLayoutManager(mBookStoreFragment.getActivity());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBookStoreFragment.getRvTypeList().setLayoutManager(mLinearLayoutManager);
-        BookStoreBookTypeAdapter mBookStoreBookTypeAdapter = new BookStoreBookTypeAdapter(mBookStoreFragment.getActivity(), mBookCatalogs);
+        BookStoreCatalogAdapter mBookStoreBookTypeAdapter = new BookStoreCatalogAdapter(mBookStoreFragment.getActivity(), mBookCatalogs);
         mBookStoreFragment.getRvTypeList().setAdapter(mBookStoreBookTypeAdapter);
 
         //点击事件
         mBookStoreBookTypeAdapter.setOnItemClickListener((pos, view) -> {
-            curType = mBookCatalogs.get(pos);
             mBookStoreFragment.getBinding().pbLoading.setVisibility(View.VISIBLE);
+            selectedCatalog=mBookCatalogs.get(pos);
             getBookList();
         });
    }

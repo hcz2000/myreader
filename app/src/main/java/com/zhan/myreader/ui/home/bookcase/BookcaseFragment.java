@@ -27,6 +27,7 @@ public class BookcaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        System.out.println("onCreateView-BookcaseFragment");
         // Inflate the layout for this fragment
         binding = FragmentBookcaseBinding.inflate(inflater,container,false);
         mBookcasePresenter.enable();
@@ -35,9 +36,25 @@ public class BookcaseFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        System.out.println("onDestroyView-BookcaseFragment");
         super.onDestroyView();
         binding = null;
+    }
 
+    @Override
+    public void onPause() {
+        System.out.println("onPause-BookcaseFragment");
+        super.onPause();
+    }
+    @Override
+    public void onResume() {
+        System.out.println("onResume-BookcaseFragment");
+        super.onResume();
+    }
+    @Override
+    public void onStop() {
+        System.out.println("onStop-BookcaseFragment");
+        super.onStop();
     }
 
     public LinearLayout getNoDataView() {

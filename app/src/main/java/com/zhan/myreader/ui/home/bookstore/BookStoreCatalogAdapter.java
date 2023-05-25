@@ -11,26 +11,21 @@ import com.zhan.myreader.databinding.ListviewBookTypeItemBinding;
 import com.zhan.myreader.entity.bookstore.BookCatalog;
 import java.util.List;
 
-public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBookTypeAdapter.ViewHolder> {
+public class BookStoreCatalogAdapter extends RecyclerView.Adapter<BookStoreCatalogAdapter.ViewHolder> {
 
     private final LayoutInflater mInflater;
     private final List<BookCatalog> mDatas;
-
     private final Context mContext;
     private RecyclerView rvContent;
-
     private OnItemClickListener onItemClickListener;
-
     private int selectPos = 0;
 
 
-   BookStoreBookTypeAdapter(Context context,  List<BookCatalog> datas) {
+   BookStoreCatalogAdapter(Context context, List<BookCatalog> datas) {
         mInflater = LayoutInflater.from(context);
         mDatas = datas;
-
         mContext = context;
-
-    }
+   }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -40,9 +35,7 @@ public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBook
             super(binding.getRoot());
             this.binding = binding;
         }
-
-
-    }
+   }
 
     @NonNull
     @Override
@@ -80,10 +73,8 @@ public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBook
     }
 
     private void initView(final int position, final ViewHolder holder) {
-       BookCatalog bookType = mDatas.get(position);
-       holder.binding.tvTypeName.setText(bookType.getTypeName());
-
-
+       BookCatalog catalog = mDatas.get(position);
+       holder.binding.tvTypeName.setText(catalog.getTypeName());
     }
 
 
@@ -92,9 +83,7 @@ public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBook
     }
 
     public interface OnItemClickListener{
-
         void onClick(int pos,View view);
-
     }
 
 
