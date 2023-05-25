@@ -16,7 +16,7 @@ public class StockLoader extends AsyncTaskLoader<List<Stock>>{
     private StockService mStockService;
     private List<Stock> mStocks = new ArrayList<>();
 
-    StockLoader(Context context) {
+    public StockLoader(Context context) {
         super(context);
         mStockService = new StockService();
     }
