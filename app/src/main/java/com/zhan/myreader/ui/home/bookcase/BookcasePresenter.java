@@ -21,6 +21,7 @@ import com.zhan.myreader.ui.search.SearchBookActivity;
 import com.zhan.myreader.util.VibratorUtil;
 import com.zhan.myreader.webapi.BookApi;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by zhan on 2017/7/25.
@@ -33,7 +34,6 @@ public class BookcasePresenter extends BasePresenter {
     private BookcaseDragAdapter mBookcaseAdapter;
     private final BookService mBookService;
     private MainActivity mMainActivity;
-//    private ChapterService mChapterService;
 
     @SuppressLint("HandlerLeak")
     private final Handler mHandler = new Handler() {
@@ -90,7 +90,7 @@ public class BookcasePresenter extends BasePresenter {
                 mBookcaseAdapter.notifyDataSetChanged();
                 mMainActivity.getRlCommonTitle().setVisibility(View.GONE);
                 mMainActivity.getRlEditTitile().setVisibility(View.VISIBLE);
-                VibratorUtil.Vibrate(mBookcaseFragment.getActivity(),200);
+                VibratorUtil.Vibrate(Objects.requireNonNull(mBookcaseFragment.getActivity()),200);
             }
             return true;
         });
@@ -109,7 +109,7 @@ public class BookcasePresenter extends BasePresenter {
             if(mBookcaseAdapter == null) {
                 mBookcaseAdapter = new BookcaseDragAdapter(mBookcaseFragment.getContext(), R.layout.gridview_book_item, mBooks, false);
                 mBookcaseFragment.getBookView().setDragModel(-1);
-                mBookcaseFragment.getBookView().setTouchClashparent(((MainActivity) (mBookcaseFragment.getContext())).getVpContent());
+                mBookcaseFragment.getBookView().setTouchClashparent(((MainActivity) (Objects.requireNonNull(mBookcaseFragment.getContext()))).getVpContent());
                 mBookcaseFragment.getBookView().setAdapter(mBookcaseAdapter);
             }else {
                 mBookcaseAdapter.notifyDataSetChanged();
@@ -163,7 +163,8 @@ public class BookcasePresenter extends BasePresenter {
     private void setThemeColor(int colorPrimary, int colorPrimaryDark) {
 //        mToolbar.setBackgroundResource(colorPrimary);
         mBookcaseFragment.getContentView().setPrimaryColorsId(colorPrimary, android.R.color.white);
-        mBookcaseFragment.getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(mBookcaseFragment.getContext(), colorPrimaryDark));
+        Objects.requireNonNull(mBookcaseFragment.getActivity()).getWindow()
+            .setStatusBarColor(ContextCompat.getColor(Objects.requireNonNull(mBookcaseFragment.getContext()), colorPrimaryDark));
     }
 
     @Override

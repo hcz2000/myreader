@@ -5,7 +5,7 @@ package com.zhan.myreader.entity.bookstore;
  * 书城小说分类
  * 2020/4/13 11:46
  */
-public class BookCatalog {
+public class Catalog {
 
 
     private String typeName;//分类名称

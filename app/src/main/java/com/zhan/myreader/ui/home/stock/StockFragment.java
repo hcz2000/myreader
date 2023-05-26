@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -23,7 +24,6 @@ public class StockFragment extends Fragment {
     private FragmentStockBinding binding;
 
     public StockFragment() {
-        System.out.println("Constructor-StockFragment");
         mStockPresenter = new StockPresenter(this);
     }
 
@@ -40,7 +40,7 @@ public class StockFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         System.out.println("onCreateView-StockFragment");
         // Inflate the layout for this fragment

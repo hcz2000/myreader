@@ -14,7 +14,7 @@ import com.zhan.myreader.base.BasePresenter;
 import com.zhan.myreader.callback.ResultCallback;
 import com.zhan.myreader.common.APPCONST;
 import com.zhan.myreader.common.URLCONST;
-import com.zhan.myreader.entity.bookstore.BookCatalog;
+import com.zhan.myreader.entity.bookstore.Catalog;
 import com.zhan.myreader.greendao.entity.Book;
 import com.zhan.myreader.ui.bookinfo.BookInfoActivity;
 import com.zhan.myreader.util.TextHelper;
@@ -31,9 +31,9 @@ public class BookStorePresenter extends BasePresenter {
 
     final private BookStoreFragment mBookStoreFragment;
     private LinearLayoutManager mLinearLayoutManager;
-    private List<BookCatalog> mBookCatalogs;
+    private List<Catalog> mCatalogs;
     private List<Book> bookList;
-    private BookCatalog selectedCatalog;
+    private Catalog selectedCatalog;
 
     @SuppressLint("HandlerLeak")
     private final Handler mHandler = new Handler() {
@@ -73,9 +73,9 @@ public class BookStorePresenter extends BasePresenter {
          BookStoreApi.getBookTypeList(URLCONST.nameSpace_tianlai+"/sort.html", new ResultCallback() {
              @Override
              public void onFinish(Object o, int code) {
-                 mBookCatalogs = (List<BookCatalog>)o;
+                 mCatalogs = (List<Catalog>)o;
                  mHandler.sendMessage(mHandler.obtainMessage(1));
-                 selectedCatalog=mBookCatalogs.get(0);
+                 selectedCatalog= mCatalogs.get(0);
                  getBookList();
              }
 
@@ -115,13 +115,13 @@ public class BookStorePresenter extends BasePresenter {
         mLinearLayoutManager = new LinearLayoutManager(mBookStoreFragment.getActivity());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBookStoreFragment.getRvTypeList().setLayoutManager(mLinearLayoutManager);
-        BookStoreCatalogAdapter mBookStoreBookTypeAdapter = new BookStoreCatalogAdapter(mBookStoreFragment.getActivity(), mBookCatalogs);
+        BookStoreCatalogAdapter mBookStoreBookTypeAdapter = new BookStoreCatalogAdapter(mBookStoreFragment.getActivity(), mCatalogs);
         mBookStoreFragment.getRvTypeList().setAdapter(mBookStoreBookTypeAdapter);
 
         //点击事件
         mBookStoreBookTypeAdapter.setOnItemClickListener((pos, view) -> {
             mBookStoreFragment.getBinding().pbLoading.setVisibility(View.VISIBLE);
-            selectedCatalog=mBookCatalogs.get(pos);
+            selectedCatalog= mCatalogs.get(pos);
             getBookList();
         });
    }

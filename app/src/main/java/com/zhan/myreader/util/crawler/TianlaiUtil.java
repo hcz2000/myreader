@@ -1,7 +1,7 @@
 package com.zhan.myreader.util.crawler;
 
 import com.zhan.myreader.common.URLCONST;
-import com.zhan.myreader.entity.bookstore.BookCatalog;
+import com.zhan.myreader.entity.bookstore.Catalog;
 import com.zhan.myreader.enums.BookSource;
 import com.zhan.myreader.greendao.entity.Book;
 import com.zhan.myreader.greendao.entity.Chapter;
@@ -196,8 +196,8 @@ public class TianlaiUtil {
         return books;
     }
 
-    public static List<BookCatalog> getBookTypeList(String html) {
-        List<BookCatalog> bookTypes = new ArrayList<>();
+    public static List<Catalog> getBookTypeList(String html) {
+        List<Catalog> bookTypes = new ArrayList<>();
         Document doc = Jsoup.parse(html);
 
         Elements divs = doc.getElementsByClass("content");
@@ -205,7 +205,7 @@ public class TianlaiUtil {
             Elements uls = divs.get(0).getElementsByTag("li");
             for (Element li : uls) {
                 Element a = li.child(0);
-                BookCatalog bookType = new BookCatalog();
+                Catalog bookType = new Catalog();
                 bookType.setTypeName(a.text());
                 bookType.setUrl(URLCONST.nameSpace_tianlai + a.attr("href"));
                 if (StringHelper.isNotEmpty(bookType.getTypeName())) {
