@@ -6,7 +6,10 @@ import com.zhan.myreader.enums.BookSource;
 import com.zhan.myreader.greendao.entity.Book;
 import com.zhan.myreader.greendao.entity.Chapter;
 import com.zhan.myreader.util.HttpUtil;
+import com.zhan.myreader.util.StringHelper;
 import com.zhan.myreader.util.crawler.TianlaiUtil;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -168,22 +171,40 @@ public class BookApi {
 		return content.toString();
 	}
 
+	public static void search(String key, final ResultCallback callback){
+		if(StringHelper.isNumeric(key)){
+			String bookUrl=URLCONST.bookprefix_tianlai+"/"+key.substring(0,key.length()-3)+"/"+key+"/";
+			System.out.println(bookUrl);
+			HttpUtil.httpGet_Async(bookUrl, null, "utf-8", new ResultCallback() {
+				@Override
+				public void onFinish(Object html, int code) {
+					ArrayList<Book> result=new ArrayList();
+					Book book=TianlaiUtil.getBookFromHtml(html.toString());
+					if(book!=null)
+						result.add(book);
+					callback.onFinish(result, code);
+				}
 
-    public static void search(String key, final ResultCallback callback){
-    	Map<String,Object> params = new HashMap<>();
-		params.put("keyword", key);
-		HttpUtil.httpGet_Async(URLCONST.method_buxiu_search, params, "utf-8", new ResultCallback() {
-            @Override
-            public void onFinish(Object html, int code) {
-            	callback.onFinish(TianlaiUtil.getBooksFromSearchHtml((String)html),code);
-            }
+				@Override
+				public void onError(Exception e) {
+					callback.onError(e);
+				}
+			});
+		}else {
+			Map<String, Object> params = new HashMap<>();
+			params.put("keyword", key);
+			HttpUtil.httpGet_Async(URLCONST.method_buxiu_search, params, "utf-8", new ResultCallback() {
+				@Override
+				public void onFinish(Object html, int code) {
+					callback.onFinish(TianlaiUtil.getBooksFromSearchHtml((String) html), code);
+				}
 
-            @Override
-            public void onError(Exception e) {
-                callback.onError(e);
-            }
-        });
-    }
-
+				@Override
+				public void onError(Exception e) {
+					callback.onError(e);
+				}
+			});
+		}
+	}
 
 }

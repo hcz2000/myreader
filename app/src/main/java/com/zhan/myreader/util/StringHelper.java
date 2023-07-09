@@ -167,7 +167,13 @@ public class StringHelper {
         else return text;
     }
 
-
-
+    public static boolean isNumeric(String text){
+        Pattern pattern=Pattern.compile("[0-9]+");
+        Matcher isNum=pattern.matcher(text);
+        if(isNum.matches()){
+            return true;
+        }
+        return false;
+    }
 
 }

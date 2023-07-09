@@ -239,4 +239,33 @@ public class TianlaiUtil {
         return books;
     }
 
+    /**
+     * 从书的主页得到书信息
+     *
+     * @param html html content
+     * @return book catalog
+     */
+    public static Book getBookFromHtml(String html) {
+        Document doc = Jsoup.parse(html);
+        Elements divs = doc.getElementsByClass("block");
+        if(divs.size()==0)
+            return null;
+        else {
+            Book book = new Book();
+            Element element=divs.first();
+            Element imgDiv = element.child(0);
+            book.setImgUrl(imgDiv.child(0).attr("src"));
+            Element txtDiv = element.child(1);
+            book.setName(txtDiv.child(1).child(0).text());
+            book.setChapterUrl(URLCONST.nameSpace_tianlai + txtDiv.child(1).child(0).attr("href"));
+            book.setAuthor(txtDiv.child(3).text());
+            book.setNewestChapterUrl(txtDiv.child(7).child(0).attr("href"));
+            book.setNewestChapterTitle(txtDiv.child(7).child(0).text());
+            Element desc = doc.getElementsByClass("intro_info").first();
+            book.setDesc(desc.text());
+            book.setSource(BookSource.tianlai.toString());
+            return book;
+        }
+    }
+
 }
