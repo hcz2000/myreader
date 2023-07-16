@@ -146,7 +146,6 @@ public class HttpUtil {
             mClient = builder.build();
         }
         return mClient;
-
     }
 
 
@@ -160,6 +159,7 @@ public class HttpUtil {
                Response response = client.newCall(request).execute();
                callback.onFinish(response.body().byteStream());
            }catch(Exception e){
+               Log.d("HttpUtil", "call callback onError()");
                e.printStackTrace();
                callback.onError(e);
            }
@@ -167,7 +167,6 @@ public class HttpUtil {
     }
 
     public static String httpGet_Sync(final String address) {
-
         try{
                 OkHttpClient client = getOkHttpClient();
                 Request request = new Request.Builder()

@@ -8,7 +8,6 @@ import com.zhan.myreader.greendao.entity.Chapter;
 import com.zhan.myreader.util.HttpUtil;
 import com.zhan.myreader.util.StringHelper;
 import com.zhan.myreader.util.crawler.TianlaiUtil;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

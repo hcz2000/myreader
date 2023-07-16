@@ -18,6 +18,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.LoaderManager;
 import android.content.Loader;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -169,18 +171,26 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             BrightUtil.setBrightness(mReadActivity, mSetting.getBrightProgress());
         }
         mBook = (Book) mReadActivity.getIntent().getSerializableExtra(APPCONST.BOOK);
-
         if (StringHelper.isEmpty(mBook.getSource())){
             mBook.setSource(BookSource.tianlai.toString());
             mBookService.updateEntity(mBook);
         }
+        //HCZ 20230715
+        if (!StringHelper.isEmpty(mBook.getId())){
+            mChapters = (List<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
+            mInvertedOrderChapters.clear();
+            mInvertedOrderChapters.addAll(mChapters);
+            Collections.reverse(mInvertedOrderChapters);
+        }
         settingOnClickValidFrom = BaseActivity.width / 4;
         settingOnClickValidTo = BaseActivity.width / 4 * 3;
-        mReadActivity.getSrlContent().setEnableLoadMore(false);
+        mReadActivity.getSrlContent().setEnableLoadMore(true);
         mReadActivity.getSrlContent().setEnableRefresh(false);
         mReadActivity.getSrlContent().setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
+                Log.d("ReadPresenter","Loading More...");
+                Toast.makeText(mReadActivity,"刷新章节列表",Toast.LENGTH_SHORT);
                 settingChange = true;
                 refreshData();
             }
@@ -257,7 +267,9 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             }
         });
         loaderManager =mReadActivity.getLoaderManager();
-        refreshData();
+        //HCZ 20230715
+        //refreshData();
+        setupViews();
     }
 
     /**
@@ -633,16 +645,24 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      * 章节数据网络同步
      */
     private void refreshData() {
+        //HCZ 20230715, 临时浏览书籍不支持动态刷新
+        if(StringHelper.isEmpty(mBook.getId()))
+            return;
         BookApi.getBookChapters(mBook, new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 final List<Chapter> chapters = (List<Chapter>) o;
+                int oldTotal=mBook.getChapterTotalNum();
                 int newTotal=chapters.get(chapters.size()-1).getNumber()+1;
                 mBook.setChapterTotalNum(newTotal);
+                //HCZ 20230715
+                /*
                 if (!StringHelper.isEmpty(mBook.getId())) {
                     mChapters = (List<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
                     mBookService.updateEntity(mBook);
-                }
+                }*/
+                if (oldTotal!=newTotal)
+                    mBookService.updateEntity(mBook);
                 updateCatalog(chapters);
                 mInvertedOrderChapters.clear();
                 mInvertedOrderChapters.addAll(mChapters);
@@ -652,9 +672,10 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     mReadActivity.getPbLoading().setVisibility(View.GONE);
                     settingChange = false;
                 } else {
-                    if (mBook.getHistoryChapterNum() >= mChapters.size())
+                    if (mBook.getHistoryChapterNum() >= mChapters.size()) {
                         mBook.setHistoryChapterNum(mChapters.size() - 1);
-
+                        mBookService.updateEntity(mBook);
+                    }
                     Chapter lastChapter=mChapters.get(mBook.getHistoryChapterNum());
 
                     if(lastChapter.getContent()==null || lastChapter.getContent().equals("")){
