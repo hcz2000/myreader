@@ -154,8 +154,9 @@ public class BookcaseDragAdapter extends DragAdapter {
                 public void onClick(View v) {
                     Intent intent = new Intent( mContext, ReadActivity.class);
                     intent.putExtra(APPCONST.BOOK, book);
-                    book.setNoReadNum(0);
-                    mBookService.updateEntity(book);
+                    //HCZ 20230715
+                    //book.setNoReadNum(0);
+                    //mBookService.updateEntity(book);
                     mContext.startActivity(intent);
                 }
             });
