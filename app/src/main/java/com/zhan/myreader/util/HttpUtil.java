@@ -159,7 +159,7 @@ public class HttpUtil {
                Response response = client.newCall(request).execute();
                callback.onFinish(response.body().byteStream());
            }catch(Exception e){
-               Log.d("HttpUtil", "call callback onError()");
+               Log.d("HttpUtil", "Exception occured in calling "+address);
                e.printStackTrace();
                callback.onError(e);
            }

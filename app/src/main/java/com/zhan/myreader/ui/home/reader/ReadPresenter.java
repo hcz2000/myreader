@@ -268,7 +268,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         });
         loaderManager =mReadActivity.getLoaderManager();
         //HCZ 20230715
-        //refreshData();
+        if(mChapters.isEmpty())
+            refreshData();
         setupViews();
     }
 
