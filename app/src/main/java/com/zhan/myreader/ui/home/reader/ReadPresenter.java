@@ -668,6 +668,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 mInvertedOrderChapters.clear();
                 mInvertedOrderChapters.addAll(mChapters);
                 Collections.reverse(mInvertedOrderChapters);
+                //HCZ 20230715
+                mReadContentAdapter.notifyDataSetChanged();
                 if (mChapters.size() == 0) {
                     TextHelper.showLongText("该书查询不到任何章节");
                     mReadActivity.getPbLoading().setVisibility(View.GONE);
