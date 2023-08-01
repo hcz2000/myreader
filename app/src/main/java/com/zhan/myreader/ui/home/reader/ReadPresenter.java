@@ -668,33 +668,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 mInvertedOrderChapters.clear();
                 mInvertedOrderChapters.addAll(mChapters);
                 Collections.reverse(mInvertedOrderChapters);
-                if (mChapters.size() == 0) {
-                    TextHelper.showLongText("该书查询不到任何章节");
-                    mReadActivity.getPbLoading().setVisibility(View.GONE);
-                    settingChange = false;
-                } else {
-                    if (mBook.getHistoryChapterNum() >= mChapters.size()) {
-                        mBook.setHistoryChapterNum(mChapters.size() - 1);
-                        mBookService.updateEntity(mBook);
-                    }
-                    Chapter lastChapter=mChapters.get(mBook.getHistoryChapterNum());
 
-                    if(lastChapter.getContent()==null || lastChapter.getContent().equals("")){
-                        getChapterContent(lastChapter, new ResultCallback() {
-                            @Override
-                            public void onFinish(Object o, int code) {
-                                lastChapter.setContent((String) o);
-                                mChapterService.saveOrUpdateChapter(lastChapter);
-                                mHandler.sendMessage(mHandler.obtainMessage(1));
-                            }
-                            @Override
-                            public void onError(Exception e) {
-                                mHandler.sendMessage(mHandler.obtainMessage(1));
-                            }
-                        });
-                    }else
-                        mHandler.sendMessage(mHandler.obtainMessage(1));
-                }
             }
 
             @Override
@@ -703,6 +677,34 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 mHandler.sendMessage(mHandler.obtainMessage(1));
             }
         });
+
+        if (mChapters.size() == 0) {
+            TextHelper.showLongText("该书查询不到任何章节");
+            mReadActivity.getPbLoading().setVisibility(View.GONE);
+            settingChange = false;
+        } else {
+            if (mBook.getHistoryChapterNum() >= mChapters.size()) {
+                mBook.setHistoryChapterNum(mChapters.size() - 1);
+                mBookService.updateEntity(mBook);
+            }
+            Chapter lastChapter=mChapters.get(mBook.getHistoryChapterNum());
+
+            if(lastChapter.getContent()==null || lastChapter.getContent().equals("")){
+                getChapterContent(lastChapter, new ResultCallback() {
+                    @Override
+                    public void onFinish(Object o, int code) {
+                        lastChapter.setContent((String) o);
+                        mChapterService.saveOrUpdateChapter(lastChapter);
+                        mHandler.sendMessage(mHandler.obtainMessage(1));
+                    }
+                    @Override
+                    public void onError(Exception e) {
+                        mHandler.sendMessage(mHandler.obtainMessage(1));
+                    }
+                });
+            }else
+                mHandler.sendMessage(mHandler.obtainMessage(1));
+        }
     }
 
     /**
