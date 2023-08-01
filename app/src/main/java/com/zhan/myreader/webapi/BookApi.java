@@ -1,5 +1,7 @@
 package com.zhan.myreader.webapi;
 
+import android.util.Log;
+
 import com.zhan.myreader.callback.ResultCallback;
 import com.zhan.myreader.common.URLCONST;
 import com.zhan.myreader.enums.BookSource;
@@ -70,11 +72,11 @@ public class BookApi {
 						chapter.setNumber(chapter.getNumber()+startPos);
 					}
    	            }
-   	            callback.onFinish(list,0);
+				callback.onFinish(list,0);
    	            if(!indexUrl.equals(book.getChapterUrl().split("\\|")[0])) {
    	            	String newChapterUrl=book.getChapterUrl().split("\\|")[0]+"|"+(startPos+list.size());
    	            	book.setChapterUrl(newChapterUrl);
-   	            	getBookChapters(book,callback);
+					getBookChapters(book,callback);
    	            }
 			}
 
