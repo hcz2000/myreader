@@ -228,11 +228,13 @@ public class TianlaiUtil {
             Element bookname = bookElement.getElementsByClass("bookname").get(0);
             Element descElement = bookElement.getElementsByClass("intro_line").get(0);
             Element a = bookname.getElementsByTag("a").get(0);
+            Element image=bookElement.getElementsByTag("img").get(0);
             book.setType(typeElement.text());
             book.setName(a.text());
             book.setChapterUrl(URLCONST.nameSpace_tianlai + a.attr("href"));
             book.setAuthor(author.text());
             book.setDesc(descElement.text());
+            book.setImgUrl(image.attr("src"));
             book.setSource(BookSource.tianlai.toString());
             books.add(book);
         }

@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.zhan.myreader.R;
 
 import com.zhan.myreader.callback.ResultCallback;
+import com.zhan.myreader.common.URLCONST;
 import com.zhan.myreader.databinding.ListviewBookStoreBookItemBinding;
 import com.zhan.myreader.greendao.entity.Book;
 import com.zhan.myreader.util.StringHelper;
@@ -93,7 +94,7 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
 
         //图片
         Glide.with(mContext)
-                .load(book.getImgUrl())
+                .load(URLCONST.nameSpace_tianlai+book.getImgUrl())
                 .error(R.mipmap.no_image)
                 .placeholder(R.mipmap.no_image)
                 .into(holder.binding.ivBookImg);
