@@ -63,20 +63,14 @@ public class BookApi {
    			startPos=Integer.parseInt(urls[1]);
    		else
    			startPos=0;
+		Log.d("BookApi","url:"+book.getChapterUrl()+" startPos:"+startPos);
 		HttpUtil.httpGet_Async(indexUrl, null, "utf-8",	new ResultCallback() {
 			@Override
 			public void onFinish(Object html, int code) {
-				List<Chapter> list= TianlaiUtil.getChaptersFromHtml((String) html,book);
-   	            if(startPos>0) {
-					for(Chapter chapter: list) {
-						chapter.setNumber(chapter.getNumber()+startPos);
-					}
-   	            }
-				callback.onFinish(list,0);
+				List<Chapter> list= TianlaiUtil.getChaptersFromHtml((String) html,book,startPos);
+   	            callback.onFinish(list,0);
    	            if(!indexUrl.equals(book.getChapterUrl().split("\\|")[0])) {
-   	            	String newChapterUrl=book.getChapterUrl().split("\\|")[0]+"|"+(startPos+list.size());
-   	            	book.setChapterUrl(newChapterUrl);
-					getBookChapters(book,callback);
+   	            	getBookChapters(book,callback);
    	            }
 			}
 

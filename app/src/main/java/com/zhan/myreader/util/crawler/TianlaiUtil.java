@@ -100,40 +100,15 @@ public class TianlaiUtil {
      * @param html html content
      * @return chapter list
      */
-    public static List<Chapter> getChaptersFromHtml(String html, Book book) {
+    public static List<Chapter> getChaptersFromHtml(String html, Book book,int startPos) {
         ArrayList<Chapter> chapters = new ArrayList<>();
         Document doc = Jsoup.parse(html);
-        if (BookSource.biquge.toString().equals(book.getSource())) {
-            Element divList = doc.getElementById("list");
-            Element dl = divList.getElementsByTag("dl").get(0);
-
-            String lastTile = null;
-            int i = 0;
-            for (Element dd : dl.getElementsByTag("dd")) {
-                Elements as = dd.getElementsByTag("a");
-                if (as.size() > 0) {
-                    Element a = as.get(0);
-                    String title = a.html();
-                    if (!StringHelper.isEmpty(lastTile) && title.equals(lastTile)) {
-                        continue;
-                    }
-                    Chapter chapter = new Chapter();
-                    chapter.setNumber(i++);
-                    chapter.setTitle(title);
-                    String url = a.attr("href");
-                    url = book.getChapterUrl() + url;
-                    chapter.setUrl(url);
-                    chapters.add(chapter);
-                    lastTile = title;
-                }
-
-            }
-        } else {
+        if (BookSource.tianlai.toString().equals(book.getSource())) {
             Element ul = doc.getElementsByClass("chapter").last();
 
             String lastTile = null;
 
-            int i = 0;
+            int i = startPos;
             for (Element dd : ul.getElementsByTag("li")) {
                 Elements as = dd.getElementsByTag("a");
                 if (as.size() > 0) {
@@ -159,7 +134,7 @@ public class TianlaiUtil {
             if (a != null) {
                 String url = a.attr("href");
                 if (!url.startsWith("javascript"))
-                    book.setChapterUrl(URLCONST.nameSpace_tianlai + url);
+                    book.setChapterUrl(URLCONST.nameSpace_tianlai + url +"|"+i);
             }
         }
         return chapters;
