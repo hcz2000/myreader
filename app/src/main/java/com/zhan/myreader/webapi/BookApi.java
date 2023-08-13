@@ -81,6 +81,33 @@ public class BookApi {
 		});
      }
 
+	public static List<Chapter> getBookChapters(Book book) {
+		List<Chapter> list = new ArrayList<Chapter>();
+		String[] urls = book.getChapterUrl().split("\\|");
+		String indexUrl = urls[0];
+		int startPos;
+		if (urls.length > 1)
+			startPos = Integer.parseInt(urls[1]);
+		else
+			startPos = 0;
+		for(;;) {
+			String pageHtml = HttpUtil.httpGet_Sync(indexUrl);
+			if (pageHtml == null)
+				break;
+			else {
+				List<Chapter> volume=TianlaiUtil.getChaptersFromHtml((String) pageHtml, book, startPos);
+				list.addAll(volume);
+				startPos+=volume.size();
+				String newUrl=book.getChapterUrl().split("\\|")[0];
+				if(indexUrl.equals(newUrl))
+					break;
+				else
+					indexUrl=newUrl;
+			}
+		}
+		return list;
+	}
+
 
     public static void getChapterContent(Chapter chapter, final ResultCallback callback){
 		String url=chapter.getUrl();
