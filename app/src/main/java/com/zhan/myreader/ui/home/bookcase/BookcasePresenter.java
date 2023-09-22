@@ -1,39 +1,52 @@
 package com.zhan.myreader.ui.home.bookcase;
 
 import android.annotation.SuppressLint;
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhan.myreader.R;
 import com.zhan.myreader.base.BasePresenter;
+import com.zhan.myreader.base.application.MyApplication;
 import com.zhan.myreader.callback.ResultCallback;
 import com.zhan.myreader.custom.DragSortGridView;
 import com.zhan.myreader.greendao.entity.Book;
+import com.zhan.myreader.greendao.entity.Chapter;
 import com.zhan.myreader.greendao.service.BookService;
 import com.zhan.myreader.ui.home.MainActivity;
+import com.zhan.myreader.ui.home.reader.BookLoader;
 import com.zhan.myreader.ui.search.SearchBookActivity;
+import com.zhan.myreader.util.TextHelper;
 import com.zhan.myreader.util.VibratorUtil;
 import com.zhan.myreader.webapi.BookApi;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * Created by zhan on 2017/7/25.
  */
 
-public class BookcasePresenter extends BasePresenter {
+public class BookcasePresenter extends BasePresenter implements LoaderManager.LoaderCallbacks{
 
     private final BookcaseFragment mBookcaseFragment;
     private final ArrayList<Book> mBooks = new ArrayList<>();//书目数组
     private BookcaseDragAdapter mBookcaseAdapter;
     private final BookService mBookService;
     private MainActivity mMainActivity;
+    private LoaderManager loaderManager;
+
 
     @SuppressLint("HandlerLeak")
     private final Handler mHandler = new Handler() {
@@ -55,6 +68,7 @@ public class BookcasePresenter extends BasePresenter {
         super(bookcaseFragment.getContext(),bookcaseFragment.getLifecycle());
         mBookcaseFragment = bookcaseFragment;
         mBookService = new BookService();
+        loaderManager =mMainActivity.getLoaderManager();
     }
 
     @Override
@@ -149,6 +163,11 @@ public class BookcasePresenter extends BasePresenter {
                         book.setNoReadNum(0);
                         mHandler.sendMessage(mHandler.obtainMessage(2));
                     }
+                    if(book.getChapterTotalNum()==0){
+                        Bundle args=new Bundle();
+                        args.putString("bookId",book.getId());
+                        loaderManager.initLoader(Integer.parseInt(book.getId()), args, this)
+                    }
                     mBookService.updateEntity(book);
                 }
 
@@ -171,4 +190,20 @@ public class BookcasePresenter extends BasePresenter {
     public void resume(){
         getData();
     }
+
+
+    @Override
+    public Loader onCreateLoader(int id, @Nullable Bundle args) {
+
+        return new CatalogLoader(mMainActivity.getBaseContext(),mBook);
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader loader, Object data) {
+        Log.d("BookcasePresenter","Download completed");
+        mBookcaseAdapter.notifyDataSetChanged();
+        TextHelper.showText(((Book)data).getName()+" catalog downloaded");
+        loaderManager.destroyLoader(loader.getId());
+    }
+
 }
