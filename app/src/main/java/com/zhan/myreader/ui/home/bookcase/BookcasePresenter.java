@@ -77,7 +77,6 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
         mBookcaseFragment.getContentView().setEnableHeaderTranslationContent(false);
         mBookcaseFragment.getContentView().setEnableLoadMore(false);
         mBookcaseFragment.getContentView().setOnRefreshListener((refreshLayout)->initNoReadNum());
-
         mBookcaseFragment.getNoDataView().setOnClickListener(view->{
             Intent intent = new Intent(mBookcaseFragment.getContext(), SearchBookActivity.class);
             mBookcaseFragment.startActivity(intent);
@@ -141,22 +140,23 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
         mBooks.clear();
         mBooks.addAll(mBookService.getAllBooks());
         for (int i = 0; i < mBooks.size(); i++) {
-            if (mBooks.get(i).getSortCode() != i + 1) {
-                mBooks.get(i).setSortCode(i + 1);
-                mBookService.updateEntity(mBooks.get(i));
+            Book book=mBooks.get(i);
+            if(book.getChapterTotalNum()==0) {
+                Bundle args=new Bundle();
+                args.putString("BookId",book.getId());
+                int loaderid=book.getId().hashCode();
+                if(loaderManager.getLoader(loaderid)==null)
+                    loaderManager.initLoader(loaderid, args, this);
+            }
+            if (book.getSortCode() != i + 1) {
+                book.setSortCode(i + 1);
+                mBookService.updateEntity(book);
             }
         }
     }
 
     private void initNoReadNum() {
         for (final Book book : mBooks) {
-            if(book.getChapterTotalNum()==0) {
-                Bundle args=new Bundle();
-                args.putString("BookId",book.getId());
-                int loaderid=Integer.parseInt(book.getId());
-                if(loaderManager.getLoader(loaderid)==null)
-                    loaderManager.initLoader(loaderid, args, this);
-            }
             BookApi.getNewChapterCount(book, new ResultCallback() {
                 @Override
                 public void onFinish(Object obj, int code) {

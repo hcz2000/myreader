@@ -37,12 +37,14 @@ public class CatalogLoader extends AsyncTaskLoader<Book>{
 
     @Override
     public Book loadInBackground() {
+        Log.d("Catalogloader","Loading in background");
         List<Chapter> chapters = BookApi.getBookChapters(mBook);
         int newTotal=chapters.get(chapters.size()-1).getNumber()+1;
         mBook.setChapterTotalNum(newTotal);
         mBook.setNoReadNum(chapters.size());
         mBookService.updateEntity(mBook);
         mChapterService.addChapters(chapters);
+        Log.d("Catalogloader","Loaded");
         return mBook;
     }
     @Override
