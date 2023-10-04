@@ -118,7 +118,9 @@ public class TianlaiUtil {
                         continue;
                     }
                     Chapter chapter = new Chapter();
+                    chapter.setBookId(book.getId());
                     chapter.setNumber(i++);
+                    chapter.setId(book.getId()+'-'+chapter.getNumber());
                     chapter.setTitle(title);
                     String url = a.attr("href");
                     url = URLCONST.nameSpace_tianlai + url;

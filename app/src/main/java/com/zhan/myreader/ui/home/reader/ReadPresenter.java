@@ -700,8 +700,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     mChapterService.updateEntity(oldChapter);
                 }
             }else{
-                newChapters.get(i).setId(StringHelper.getStringRandom(25));
-                newChapters.get(i).setBookId(mBook.getId());
+                //newChapters.get(i).setId(StringHelper.getStringRandom(25));
+                //newChapters.get(i).setBookId(mBook.getId());
                 chaptersToInsert.add(newChapters.get(i));
                 Log.d("ReadPresenter","New chapter found:"+newChapters.get(i).getNumber()+"-"+newChapters.get(i).getTitle());
             }
