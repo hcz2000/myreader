@@ -120,7 +120,7 @@ public class TianlaiUtil {
                     Chapter chapter = new Chapter();
                     chapter.setBookId(book.getId());
                     chapter.setNumber(i++);
-                    chapter.setId(book.getId()+'-'+chapter.getNumber());
+                    chapter.setId(book.getId()+"-"+chapter.getNumber()+"-"+StringHelper.getStringRandom(5));
                     chapter.setTitle(title);
                     String url = a.attr("href");
                     url = URLCONST.nameSpace_tianlai + url;
