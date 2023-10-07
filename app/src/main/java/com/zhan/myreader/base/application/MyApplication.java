@@ -31,7 +31,7 @@ import javax.net.ssl.X509TrustManager;
 
 public class MyApplication extends Application {
     //private static int THREADS = Runtime.getRuntime().availableProcessors()/2+1;
-    private static int THREADS = 2;
+    private static int BACKGROUND_THREADS = 2;
     private static int LOADER_THREADS = 1;
     private static Handler handler = new Handler();
     private static MyApplication application;
@@ -58,7 +58,7 @@ public class MyApplication extends Application {
         super.onCreate();
         application = this;
         HttpUtil.trustAllHosts();//信任所有证书
-        mFixedThreadPool = Executors.newFixedThreadPool( THREADS);//初始化线程池
+        mFixedThreadPool = Executors.newFixedThreadPool( BACKGROUND_THREADS);//初始化线程池
         mLoaderThreadPool = Executors.newFixedThreadPool(LOADER_THREADS);
     }
 
@@ -102,7 +102,7 @@ public class MyApplication extends Application {
             mFixedThreadPool.execute(runnable);
         } catch (Exception e) {
             e.printStackTrace();
-            mFixedThreadPool = Executors.newFixedThreadPool(THREADS);//初始化线程池
+            mFixedThreadPool = Executors.newFixedThreadPool(BACKGROUND_THREADS);//初始化线程池
             mFixedThreadPool.execute(runnable);
         }
     }

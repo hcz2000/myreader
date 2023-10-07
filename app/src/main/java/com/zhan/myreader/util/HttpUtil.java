@@ -150,13 +150,15 @@ public class HttpUtil {
 
 
     public static void httpGet_Async(final String address, final HttpCallback callback) {
+       Log.d("HttpUtil",address);
        MyApplication.getApplication().newThread(() -> {
            try{
-             OkHttpClient client = getOkHttpClient();
+               OkHttpClient client = getOkHttpClient();
                Request request = new Request.Builder()
                        .url(address)
                        .build();
                Response response = client.newCall(request).execute();
+               Log.d("HttpUtil",address+" Ok");
                callback.onFinish(response.body().byteStream());
            }catch(Exception e){
                Log.d("HttpUtil", "Exception occured in calling "+address);
@@ -168,61 +170,20 @@ public class HttpUtil {
 
     public static String httpGet_Sync(final String address) {
         try{
-            Log.d("Catalogloader",address);
-                OkHttpClient client = getOkHttpClient();
-                Request request = new Request.Builder()
+            Log.d("HttpUtil",address);
+            OkHttpClient client = getOkHttpClient();
+            Request request = new Request.Builder()
                         .url(address)
                         .build();
-                Response response = client.newCall(request).execute();
-                return response.body().string();
+            Response response = client.newCall(request).execute();
+            Log.d("HttpUtil",address+" Ok");
+            return response.body().string();
         }catch(Exception e){
-                e.printStackTrace();
+            Log.d("HttpUtil", "Exception occured in calling "+address);
+            e.printStackTrace();
         }
         return null;
     }
-
-
-    /**
-     * post请求
-     * @param address
-     * @param output
-     * @param callback
-     */
-    public static void httpPost_Async(final String address, final String output, final HttpCallback callback) {
-        new Thread(new Runnable() {
-            HttpURLConnection connection = null;
-
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(address);
-                    connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("POST");
-                    connection.setConnectTimeout(60 * 1000);
-                    connection.setReadTimeout(60 * 1000);
-                    connection.setDoInput(true);
-                    connection.setDoOutput(true);
-                    if (output != null) {
-                        DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-                        out.writeBytes(output);
-                    }
-                    InputStream in = connection.getInputStream();
-                    if (callback != null) {
-                        callback.onFinish(in);
-                    }
-                } catch (Exception e) {
-                    if (callback != null) {
-                        callback.onError(e);
-                    }
-                } finally {
-                    if (connection != null) {
-                        connection.disconnect();
-                    }
-                }
-            }
-        }).start();
-    }
-
 
 
     /**
@@ -231,7 +192,6 @@ public class HttpUtil {
      * @param callback
      */
     public static void httpGet_Async(String url, final String charsetName, final ResultCallback callback){
-        Log.d("HttpUtil", "Url: "+url);
         httpGet_Async(url, new HttpCallback() {
             @Override
             public void onFinish(InputStream in) {
@@ -244,7 +204,6 @@ public class HttpUtil {
                         line = reader.readLine();
                     }
                     if (callback != null) {
-                        Log.d("HttpUtil", "read finish：" + response.toString());
                         callback.onFinish(response.toString(),0);
                     }
                 } catch (Exception e) {
@@ -262,42 +221,6 @@ public class HttpUtil {
         });
     }
 
-    /**
-     * http请求 (post)
-     * @param url
-     * @param output
-     * @param callback
-     */
-    public static void httpPost_Async(String url, String output, final ResultCallback callback) {
-        Log.d("HttpUtil", url + "&" + output);
-        httpPost_Async(url, output, new HttpCallback() {
-            @Override
-            public void onFinish(InputStream in) {
-                try {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-                    StringBuilder response = new StringBuilder();
-                    String line = reader.readLine();
-                    while (line != null) {
-                        response.append(line);
-                        line = reader.readLine();
-                    }
-                    if (callback != null) {
-                        Log.d("HttpUtil", "read finish：" + response);
-                        callback.onFinish(response.toString(),0);
-                    }
-                } catch (Exception e) {
-                    callback.onError(e);
-                }
-            }
-
-            @Override
-            public void onError(Exception e) {
-                if (callback != null) {
-                    callback.onError(e);
-                }
-            }
-        });
-    }
 
     public static void httpGet_Async(String url, Map<String, Object> params, String charsetName, final ResultCallback callback) {
         HttpUtil.httpGet_Async(HttpUtil.makeURL(url, params), charsetName, new ResultCallback() {
@@ -314,3 +237,5 @@ public class HttpUtil {
     }
 
 }
+
+
