@@ -168,6 +168,7 @@ public class HttpUtil {
 
     public static String httpGet_Sync(final String address) {
         try{
+            Log.d("Catalogloader",address);
                 OkHttpClient client = getOkHttpClient();
                 Request request = new Request.Builder()
                         .url(address)

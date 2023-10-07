@@ -18,7 +18,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhan.myreader.R;
 import com.zhan.myreader.base.BasePresenter;
-import com.zhan.myreader.base.application.MyApplication;
 import com.zhan.myreader.callback.ResultCallback;
 import com.zhan.myreader.custom.DragSortGridView;
 import com.zhan.myreader.greendao.entity.Book;
@@ -68,17 +67,16 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
         super(bookcaseFragment.getContext(),bookcaseFragment.getLifecycle());
         mBookcaseFragment = bookcaseFragment;
         mBookService = new BookService();
-        loaderManager =mMainActivity.getLoaderManager();
     }
 
     @Override
     public void start() {
         mMainActivity = ((MainActivity) (mBookcaseFragment.getContext()));
+        loaderManager=mMainActivity.getLoaderManager();
         mBookcaseFragment.getContentView().setEnableRefresh(false);
         mBookcaseFragment.getContentView().setEnableHeaderTranslationContent(false);
         mBookcaseFragment.getContentView().setEnableLoadMore(false);
         mBookcaseFragment.getContentView().setOnRefreshListener((refreshLayout)->initNoReadNum());
-
         mBookcaseFragment.getNoDataView().setOnClickListener(view->{
             Intent intent = new Intent(mBookcaseFragment.getContext(), SearchBookActivity.class);
             mBookcaseFragment.startActivity(intent);
@@ -142,9 +140,17 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
         mBooks.clear();
         mBooks.addAll(mBookService.getAllBooks());
         for (int i = 0; i < mBooks.size(); i++) {
-            if (mBooks.get(i).getSortCode() != i + 1) {
-                mBooks.get(i).setSortCode(i + 1);
-                mBookService.updateEntity(mBooks.get(i));
+            Book book=mBooks.get(i);
+            if(book.getChapterTotalNum()==0) {
+                Bundle args=new Bundle();
+                args.putString("BookId",book.getId());
+                int loaderid=book.getId().hashCode();
+                if(loaderManager.getLoader(loaderid)==null)
+                    loaderManager.initLoader(loaderid, args, this);
+            }
+            if (book.getSortCode() != i + 1) {
+                book.setSortCode(i + 1);
+                mBookService.updateEntity(book);
             }
         }
     }
@@ -163,11 +169,6 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
                         book.setNoReadNum(0);
                         mHandler.sendMessage(mHandler.obtainMessage(2));
                     }
-                    if(book.getChapterTotalNum()==0){
-                        Bundle args=new Bundle();
-                        args.putString("bookId",book.getId());
-                        loaderManager.initLoader(Integer.parseInt(book.getId()), args, this)
-                    }
                     mBookService.updateEntity(book);
                 }
 
@@ -180,7 +181,6 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
     }
 
     private void setThemeColor(int colorPrimary, int colorPrimaryDark) {
-//        mToolbar.setBackgroundResource(colorPrimary);
         mBookcaseFragment.getContentView().setPrimaryColorsId(colorPrimary, android.R.color.white);
         Objects.requireNonNull(mBookcaseFragment.getActivity()).getWindow()
             .setStatusBarColor(ContextCompat.getColor(Objects.requireNonNull(mBookcaseFragment.getContext()), colorPrimaryDark));
@@ -191,19 +191,25 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
         getData();
     }
 
-
     @Override
     public Loader onCreateLoader(int id, @Nullable Bundle args) {
-
-        return new CatalogLoader(mMainActivity.getBaseContext(),mBook);
+        String bookid=args.getString("BookId");
+        for(Book book : mBooks){
+            if(book.getId().equals(bookid))
+                return new CatalogLoader(mMainActivity.getBaseContext(),book);
+        }
+        return null;
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader loader, Object data) {
-        Log.d("BookcasePresenter","Download completed");
-        mBookcaseAdapter.notifyDataSetChanged();
-        TextHelper.showText(((Book)data).getName()+" catalog downloaded");
-        loaderManager.destroyLoader(loader.getId());
+        Log.d("ReadPresenter","Download completed");
+        TextHelper.showText(((Book)data).getName() +" catalog downloaded");
     }
 
+    @Override
+    public void onLoaderReset(@NonNull Loader loader) {
+        Log.d("ReadPresenter","Loader reseting");
+        //loaderManager.restartLoader(loader.getId(),null,this);;
+    }
 }
