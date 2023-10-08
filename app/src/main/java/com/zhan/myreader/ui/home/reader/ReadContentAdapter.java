@@ -145,7 +145,6 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
     }
 
     private void initView(final int position, final ViewHolder viewHolder) {
-        Log.d("HttpUtil","initView "+ position);
         final Chapter chapter = getItem(position);
 
         viewHolder.tvContent.setTypeface(mTypeFace);
@@ -170,7 +169,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
         }
         curTextView = viewHolder.tvContent;
         preLoading(position);
-        reverseLoading(position);
+        //reverseLoading(position);
     }
 
     public void notifyDataSetChangedBySetting() {
@@ -257,7 +256,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
     private void preLoading(int position) {
         if (position + 1 < getItemCount()) {
             Chapter chapter = getItem(position + 1);
-            Log.d("HttpUtil","preLoading "+ position+": "+chapter.getUrl());
+            Log.d("HttpUtil","preLoading "+ (position+1)+": "+chapter.getUrl());
             if (StringHelper.isEmpty(chapter.getContent())) {
                 getChapterContent(chapter, null);
             }
@@ -272,7 +271,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
     private void reverseLoading(int position) {
         if (position > 0) {
             Chapter chapter = getItem(position - 1);
-            Log.d("HttpUtil","reverseLoading "+ position+": "+ chapter.getUrl());
+            Log.d("HttpUtil","reverseLoading "+ (position-1)+": "+ chapter.getUrl());
             if (StringHelper.isEmpty(chapter.getContent())) {
                 getChapterContent(chapter, null);
             }

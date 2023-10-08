@@ -196,7 +196,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             } else {
                 item = mChapters.size() - 1 - i;
             }
-            /*
             if (StringHelper.isEmpty(mChapters.get(item).getContent())) {
                 mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
                 BookApi.getChapterContent(mChapters.get(item),
@@ -210,8 +209,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 if (item > mBook.getHistoryChapterNum()) {
                     lingerToPosition(item);
                 }
-            }*/
-            mHandler.sendMessage(mHandler.obtainMessage(4, item, 0));
+            }
         });
         mReadActivity.getRvContent().addOnScrollListener(new RecyclerView.OnScrollListener() {
 
