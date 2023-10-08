@@ -196,6 +196,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             } else {
                 item = mChapters.size() - 1 - i;
             }
+            /*
             if (StringHelper.isEmpty(mChapters.get(item).getContent())) {
                 mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
                 BookApi.getChapterContent(mChapters.get(item),
@@ -209,7 +210,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 if (item > mBook.getHistoryChapterNum()) {
                     lingerToPosition(item);
                 }
-            }
+            }*/
+            mHandler.sendMessage(mHandler.obtainMessage(4, item, 0));
         });
         mReadActivity.getRvContent().addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -379,20 +381,27 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         @Override
                         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                             mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
-                            final int chapterNum = (mChapters.size() - 1) * i / 100;
-                            getChapterContent(mChapters.get(chapterNum), new ResultCallback() {
-                                @Override
-                                public void onFinish(Object o, int code) {
-                                    mChapters.get(chapterNum).setContent((String) o);
-                                    mChapterService.saveOrUpdateChapter(mChapters.get(chapterNum));
-                                    mHandler.sendMessage(mHandler.obtainMessage(4, chapterNum, 0));
-                                }
+                            final int newChapterNum = (mChapters.size() - 1) * i / 100;
+                            final Chapter newChapter=mChapters.get(newChapterNum);
+                            /*
+                            if (StringHelper.isEmpty(newChapter.getContent())){
+                                BookApi.getChapterContent(newChapter,new ResultCallback() {
+                                    @Override
+                                    public void onFinish(Object o, int code) {
+                                        newChapter.setContent((String) o);
+                                        mChapterService.saveOrUpdateChapter(newChapter);
+                                        mHandler.sendMessage(mHandler.obtainMessage(4, newChapterNum, 0));
+                                    }
 
-                                @Override
-                                public void onError(Exception e) {
-                                    mHandler.sendMessage(mHandler.obtainMessage(1));
-                                }
-                            });
+                                    @Override
+                                    public void onError(Exception e) {
+                                        mHandler.sendMessage(mHandler.obtainMessage(1));
+                                    }
+                                });
+                            }else{
+                                mHandler.sendMessage(mHandler.obtainMessage(4, newChapterNum, 0));
+                            }*/
+                            mHandler.sendMessage(mHandler.obtainMessage(4, newChapterNum, 0));
                         }
 
                         @Override
@@ -742,37 +751,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 downloadProgressView.setText(this.downloadProgress);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * 获取章节内容
-     *
-     * @param chapter
-     * @param resultCallback
-     */
-    private void getChapterContent(final Chapter chapter, ResultCallback resultCallback) {
-        if (StringHelper.isEmpty(chapter.getBookId())) chapter.setId(mBook.getId());
-        if (!StringHelper.isEmpty(chapter.getContent())) {
-            if (resultCallback != null) {
-                resultCallback.onFinish(chapter.getContent(), 0);
-            }
-        } else {
-            if (resultCallback != null) {
-                BookApi.getChapterContent(chapter, resultCallback);
-            } else {
-                BookApi.getChapterContent(chapter, new ResultCallback() {
-                    @Override
-                    public void onFinish(final Object o, int code) {
-                        chapter.setContent((String) o);
-                        mChapterService.saveOrUpdateChapter(chapter);
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                    }
-                });
-            }
         }
     }
 

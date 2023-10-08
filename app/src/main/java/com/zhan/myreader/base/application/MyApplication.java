@@ -31,7 +31,7 @@ import javax.net.ssl.X509TrustManager;
 
 public class MyApplication extends Application {
     //private static int THREADS = Runtime.getRuntime().availableProcessors()/2+1;
-    private static int BACKGROUND_THREADS = 2;
+    private static int BACKGROUND_THREADS = 1;
     private static int LOADER_THREADS = 1;
     private static Handler handler = new Handler();
     private static MyApplication application;

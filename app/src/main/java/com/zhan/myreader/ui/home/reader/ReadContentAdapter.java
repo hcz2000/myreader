@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -36,6 +37,7 @@ import com.zhan.myreader.util.StringHelper;
 import com.zhan.myreader.webapi.BookApi;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +48,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
 
     private LayoutInflater mInflater;
     private List<Chapter> mDatas;
+    private List<String> mRequestCache;
     private OnClickItemListener mOnClickItemListener;
     private View.OnTouchListener mOnTouchListener;
     private ChapterService mChapterService;
@@ -81,6 +84,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
         mSetting = SysManager.getSetting();
         mBook = book;
         mContext = context;
+        mRequestCache =new ArrayList<>();
         initFont();
     }
 
@@ -140,8 +144,9 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
 
     }
 
-    private void initView(final int postion, final ViewHolder viewHolder) {
-        final Chapter chapter = getItem(postion);
+    private void initView(final int position, final ViewHolder viewHolder) {
+        Log.d("HttpUtil","initView "+ position);
+        final Chapter chapter = getItem(position);
 
         viewHolder.tvContent.setTypeface(mTypeFace);
         viewHolder.tvTitle.setTypeface(mTypeFace);
@@ -158,13 +163,14 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
         viewHolder.tvContent.setTextSize(mSetting.getReadWordSize());
         viewHolder.tvErrorTips.setOnClickListener(view -> getChapterContent(chapter, viewHolder));
         if (StringHelper.isEmpty(chapter.getContent())) {
+            Log.d("HttpUtil","initView "+ position+": "+ chapter.getUrl());
             getChapterContent(chapter, viewHolder);
         } else {
             viewHolder.tvContent.setText(getLanguageContext(chapter.getContent()));
         }
         curTextView = viewHolder.tvContent;
-        preLoading(postion);
-        reverseLoading(postion);
+        preLoading(position);
+        reverseLoading(position);
     }
 
     public void notifyDataSetChangedBySetting() {
@@ -195,6 +201,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
         if (viewHolder != null) {
             viewHolder.tvErrorTips.setVisibility(View.GONE);
         }
+
         Chapter cacheChapter = mChapterService.findChapterByBookIdAndTitle(chapter.getBookId(), chapter.getTitle());
 
         if (cacheChapter != null && !StringHelper.isEmpty(cacheChapter.getContent())) {
@@ -209,6 +216,15 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
                 viewHolder.tvErrorTips.setVisibility(View.GONE);
             }
         } else {
+            synchronized (this.mRequestCache){
+                for(String item: mRequestCache){
+                    if(item.equals(chapter.getId()))
+                        return;
+                }
+                mRequestCache.add(chapter.getId());
+                if(mRequestCache.size()>10)
+                    mRequestCache.remove(0);
+            }
             BookApi.getChapterContent(chapter, new ResultCallback() {
                 @Override
                 public void onFinish(final Object o, int code) {
@@ -241,6 +257,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
     private void preLoading(int position) {
         if (position + 1 < getItemCount()) {
             Chapter chapter = getItem(position + 1);
+            Log.d("HttpUtil","preLoading "+ position+": "+chapter.getUrl());
             if (StringHelper.isEmpty(chapter.getContent())) {
                 getChapterContent(chapter, null);
             }
@@ -255,6 +272,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
     private void reverseLoading(int position) {
         if (position > 0) {
             Chapter chapter = getItem(position - 1);
+            Log.d("HttpUtil","reverseLoading "+ position+": "+ chapter.getUrl());
             if (StringHelper.isEmpty(chapter.getContent())) {
                 getChapterContent(chapter, null);
             }
