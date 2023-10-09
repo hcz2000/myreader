@@ -107,10 +107,14 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     break;
                 case 4:
                     int position = msg.arg1;
+                    ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(position,0);
+/*
                     mReadActivity.getRvContent().scrollToPosition(position);
                     if (mBook.getHistoryChapterNum() < position) {
                         lingerToPosition(position);
                     }
+
+ */
                     mReadActivity.getPbLoading().setVisibility(View.GONE);
                     break;
                 case 5://NOT USED?
@@ -205,10 +209,11 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         mHandler.sendMessage(mHandler.obtainMessage(4, item, 0));
                     });
             } else {
-                mReadActivity.getRvContent().scrollToPosition(item);
+                ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(item,0);
+                /*
                 if (item > mBook.getHistoryChapterNum()) {
                     lingerToPosition(item);
-                }
+                }*/
             }
         });
         mReadActivity.getRvContent().addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -354,8 +359,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         public void onClick(View view) {//下一章
                             int curPosition = mContentLayoutManager.findLastVisibleItemPosition();
                             if (curPosition < mChapters.size() - 1) {
-                                mReadActivity.getRvContent().scrollToPosition(curPosition + 1);
-                                lingerToPosition(curPosition + 1);
+                                ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(curPosition + 1,0);
+                                //lingerToPosition(curPosition + 1);
                             }
                         }
                     }, new View.OnClickListener() {
@@ -399,7 +404,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                             }else{
                                 mHandler.sendMessage(mHandler.obtainMessage(4, newChapterNum, 0));
                             }*/
-                            mHandler.sendMessage(mHandler.obtainMessage(4, newChapterNum, 0));
+                            ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(newChapterNum + 1,0);
                         }
 
                         @Override
