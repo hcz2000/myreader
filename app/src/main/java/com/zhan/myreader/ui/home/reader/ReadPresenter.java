@@ -108,13 +108,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 case 4:
                     int position = msg.arg1;
                     ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(position,0);
-/*
-                    mReadActivity.getRvContent().scrollToPosition(position);
-                    if (mBook.getHistoryChapterNum() < position) {
-                        lingerToPosition(position);
-                    }
-
- */
                     mReadActivity.getPbLoading().setVisibility(View.GONE);
                     break;
                 case 5://NOT USED?
@@ -210,10 +203,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     });
             } else {
                 ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(item,0);
-                /*
-                if (item > mBook.getHistoryChapterNum()) {
-                    lingerToPosition(item);
-                }*/
             }
         });
         mReadActivity.getRvContent().addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -360,7 +349,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                             int curPosition = mContentLayoutManager.findLastVisibleItemPosition();
                             if (curPosition < mChapters.size() - 1) {
                                 ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(curPosition + 1,0);
-                                //lingerToPosition(curPosition + 1);
                             }
                         }
                     }, new View.OnClickListener() {
@@ -385,25 +373,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                             mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
                             final int newChapterNum = (mChapters.size() - 1) * i / 100;
-                            final Chapter newChapter=mChapters.get(newChapterNum);
-                            /*
-                            if (StringHelper.isEmpty(newChapter.getContent())){
-                                BookApi.getChapterContent(newChapter,new ResultCallback() {
-                                    @Override
-                                    public void onFinish(Object o, int code) {
-                                        newChapter.setContent((String) o);
-                                        mChapterService.saveOrUpdateChapter(newChapter);
-                                        mHandler.sendMessage(mHandler.obtainMessage(4, newChapterNum, 0));
-                                    }
-
-                                    @Override
-                                    public void onError(Exception e) {
-                                        mHandler.sendMessage(mHandler.obtainMessage(1));
-                                    }
-                                });
-                            }else{
-                                mHandler.sendMessage(mHandler.obtainMessage(4, newChapterNum, 0));
-                            }*/
                             ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(newChapterNum + 1,0);
                         }
 
@@ -498,24 +467,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         }
                     });
         }
-    }
-
-    /**
-     * 延迟跳转章节(防止跳到章节尾部)
-     */
-    private void lingerToPosition(final int position) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5);
-                    mHandler.sendMessage(mHandler.obtainMessage(4, position, 0));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
     }
 
     /**
@@ -848,9 +799,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 
     @Override
     public void destroy(){
-        //if(bookLoader!=null){
-            //bookLoader.stopLoading();
-        //}
         MyApplication.getApplication().shutdownThreadPool();
     }
 
