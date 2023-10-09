@@ -98,29 +98,24 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 case 1:
                     setupViews();
                     break;
-                case 2://NOT USED?
-                    /*hcz
-                    mReadActivity.getPbLoading().setVisibility(View.GONE);
-                    mReadActivity.getSrlContent().finishLoadMore();*/
+                case 2://NOT USED
                     break;
-                case 3://NOT USED?
+                case 3://NOT USED
                     break;
-                case 4:
-                    int position = msg.arg1;
-                    ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(position,0);
-                    mReadActivity.getPbLoading().setVisibility(View.GONE);
+                case 4://NOT USED
                     break;
-                case 5://NOT USED?
+                case 5://NOT USED
                     break;
-                case 6:
+                case 6://linger move to offset of special chapter
                     int lastPosition=mBook.getLastReadPosition();
                     mBook.setLastReadPosition(0);//下一步将触发OnScrollListener记录lastReadPosition
+                    Log.d("ReadPresenter","lastPosition:"+lastPosition);
                     mReadActivity.getRvContent().scrollBy(0, lastPosition);
                     if (!StringHelper.isEmpty(mBook.getId())) {
                         mBookService.updateEntity(mBook);
                     }
                     break;
-                case 7:
+                case 7://Auto Scroll
                     if (mContentLayoutManager != null) {
                         mReadActivity.getRvContent().scrollBy(0, 2);
                     }
@@ -193,17 +188,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             } else {
                 item = mChapters.size() - 1 - i;
             }
-            if (StringHelper.isEmpty(mChapters.get(item).getContent())) {
-                mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
-                BookApi.getChapterContent(mChapters.get(item),
-                    (Object o, int code)-> {
-                        mChapters.get(item).setContent((String) o);
-                        mChapterService.saveOrUpdateChapter(mChapters.get(item));
-                        mHandler.sendMessage(mHandler.obtainMessage(4, item, 0));
-                    });
-            } else {
-                ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(item,0);
-            }
+            ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(item,0);
+            mBook.setLastReadPosition(0);
         });
         mReadActivity.getRvContent().addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -212,7 +198,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 super.onScrolled(recyclerView, dx, dy);
                 //页面初始化的时候不要执行
                 if (!isFirstInit) {
-                    MyApplication.getApplication().newThread(()->saveLastPosition(dy));
+                    //MyApplication.getApplication().newThread(()->saveLastPosition(dy));
+                    saveLastPosition(dy);
                 } else {
                     isFirstInit = false;
                 }
@@ -265,14 +252,9 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      */
     private void saveLastPosition(int dy) {
         if (mContentLayoutManager == null) return;
-        if (mContentLayoutManager.findFirstVisibleItemPosition() != mContentLayoutManager.findLastVisibleItemPosition()
-                || dy == 0) {
-            mBook.setLastReadPosition(0);
-        } else {
-            mBook.setLastReadPosition(mBook.getLastReadPosition() + dy);
-        }
-
-        mBook.setHistoryChapterNum(mContentLayoutManager.findLastVisibleItemPosition());
+        mBook.setLastReadPosition(mBook.getLastReadPosition() + dy);
+        Log.d("ReadPresenter","lastReadPos:"+mBook.getLastReadPosition()+" dy:"+dy+" firstVisiblePos:"+mContentLayoutManager.findFirstVisibleItemPosition()+" lastVisiblePos:"+mContentLayoutManager.findLastVisibleItemPosition());
+        mBook.setHistoryChapterNum(mContentLayoutManager.findFirstVisibleItemPosition());
         if (!StringHelper.isEmpty(mBook.getId())) {
             mBookService.updateEntity(mBook);
         }
@@ -338,9 +320,11 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     }, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {//上一章
-                            int curPosition = mContentLayoutManager.findLastVisibleItemPosition();
+                            //int curPosition = mContentLayoutManager.findLastVisibleItemPosition();
+                            int curPosition = mContentLayoutManager.findFirstVisibleItemPosition();
                             if (curPosition > 0) {
                                 mReadActivity.getRvContent().scrollToPosition(curPosition - 1);
+                                mBook.setLastReadPosition(0);
                             }
                         }
                     }, new View.OnClickListener() {
@@ -349,6 +333,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                             int curPosition = mContentLayoutManager.findLastVisibleItemPosition();
                             if (curPosition < mChapters.size() - 1) {
                                 ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(curPosition + 1,0);
+                                mBook.setLastReadPosition(0);
                             }
                         }
                     }, new View.OnClickListener() {
@@ -373,7 +358,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                             mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
                             final int newChapterNum = (mChapters.size() - 1) * i / 100;
-                            ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(newChapterNum + 1,0);
+                            ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(newChapterNum,0);
+                            mBook.setLastReadPosition(0);
                         }
 
                         @Override
@@ -395,7 +381,6 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         }
                     });
         }
-
     }
 
     /**
@@ -470,7 +455,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     }
 
     /**
-     * 延迟跳转章节位置
+     * 延迟跳转至章节内指定偏移量
      */
     private void lingerToLastPosition() {
         new Thread(new Runnable() {
@@ -535,7 +520,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             mReadContentAdapter.notifyDataSetChangedBySetting();
         }
         if (!settingChange) {
-            mReadActivity.getRvContent().scrollToPosition(mBook.getHistoryChapterNum());
+            ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(mBook.getHistoryChapterNum(),0);
             lingerToLastPosition();
         } else {
             settingChange = false;
