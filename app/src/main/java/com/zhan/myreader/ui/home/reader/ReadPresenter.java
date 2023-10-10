@@ -593,11 +593,11 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             @Override
             public void onFinish(Object o, int code) {
                 final List<Chapter> chapters = (List<Chapter>) o;
-                int oldTotal=mBook.getChapterTotalNum();
+                int oldTotal=mBook.getTotalChapterNum();
                 int newTotal=chapters.get(chapters.size()-1).getNumber()+1;
 
                 if (oldTotal!=newTotal) {
-                    mBook.setChapterTotalNum(newTotal);
+                    mBook.setTotalChapterNum(newTotal);
                     mBookService.updateEntity(mBook);
                 }
                 updateCatalog(chapters);

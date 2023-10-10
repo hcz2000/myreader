@@ -42,29 +42,26 @@ public class Book implements Serializable {
     @Nullable
     private String historyChapterId;//上次关闭时的章节ID
     @Nullable
-    private int histtoryChapterNum;//上次关闭时的章节数
+    private int historyChapterNum;//上次关闭时的章节数
 
     private int sortCode;//排序编码
 
-    private int noReadNum;//未读章数量
+    private int unReadNum;//未读章数量
 
-    private int chapterTotalNum;//总章节数
+    private int totalChapterNum;//总章节数
 
     private int lastReadPosition;//上次阅读到的章节的位置
 
     @Nullable
     private String source;
 
-
-
-
-    @Generated(hash = 1392889320)
+    @Generated(hash = 546761706)
     public Book(String id, String name, String chapterUrl, String imgUrl,
             String desc, String author, String type, String updateDate,
             String newestChapterId, String newestChapterTitle,
-            String newestChapterUrl, String historyChapterId,
-            int histtoryChapterNum, int sortCode, int noReadNum,
-            int chapterTotalNum, int lastReadPosition, String source) {
+            String newestChapterUrl, String historyChapterId, int historyChapterNum,
+            int sortCode, int unReadNum, int totalChapterNum, int lastReadPosition,
+            String source) {
         this.id = id;
         this.name = name;
         this.chapterUrl = chapterUrl;
@@ -77,16 +74,17 @@ public class Book implements Serializable {
         this.newestChapterTitle = newestChapterTitle;
         this.newestChapterUrl = newestChapterUrl;
         this.historyChapterId = historyChapterId;
-        this.histtoryChapterNum = histtoryChapterNum;
+        this.historyChapterNum = historyChapterNum;
         this.sortCode = sortCode;
-        this.noReadNum = noReadNum;
-        this.chapterTotalNum = chapterTotalNum;
+        this.unReadNum = unReadNum;
+        this.totalChapterNum = totalChapterNum;
         this.lastReadPosition = lastReadPosition;
         this.source = source;
     }
     @Generated(hash = 1839243756)
     public Book() {
     }
+
     public String getId() {
         return this.id;
     }
@@ -160,10 +158,10 @@ public class Book implements Serializable {
         this.historyChapterId = historyChapterId;
     }
     public int getHistoryChapterNum() {
-        return this.histtoryChapterNum;
+        return this.historyChapterNum;
     }
-    public void setHistoryChapterNum(int histtoryChapterNum) {
-        this.histtoryChapterNum = histtoryChapterNum;
+    public void setHistoryChapterNum(int historyChapterNum) {
+        this.historyChapterNum = historyChapterNum;
     }
     public int getSortCode() {
         return this.sortCode;
@@ -171,17 +169,17 @@ public class Book implements Serializable {
     public void setSortCode(int sortCode) {
         this.sortCode = sortCode;
     }
-    public int getNoReadNum() {
-        return this.noReadNum;
+    public int getUnReadNum() {
+        return this.unReadNum;
     }
-    public void setNoReadNum(int noReadNum) {
-        this.noReadNum = noReadNum;
+    public void setUnReadNum(int noReadNum) {
+        this.unReadNum = noReadNum;
     }
-    public int getChapterTotalNum() {
-        return this.chapterTotalNum;
+    public int getTotalChapterNum() {
+        return this.totalChapterNum;
     }
-    public void setChapterTotalNum(int chapterTotalNum) {
-        this.chapterTotalNum = chapterTotalNum;
+    public void setTotalChapterNum(int totalChapterNum) {
+        this.totalChapterNum = totalChapterNum;
     }
     public int getLastReadPosition() {
         return this.lastReadPosition;
@@ -195,12 +193,4 @@ public class Book implements Serializable {
     public void setSource(String source) {
         this.source = source;
     }
-    public int getHisttoryChapterNum() {
-        return this.histtoryChapterNum;
-    }
-    public void setHisttoryChapterNum(int histtoryChapterNum) {
-        this.histtoryChapterNum = histtoryChapterNum;
-    }
-
-
 }

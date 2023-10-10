@@ -7,7 +7,6 @@ import com.zhan.myreader.greendao.GreenDaoManager;
 import com.zhan.myreader.greendao.entity.SearchHistory;
 import com.zhan.myreader.greendao.gen.SearchHistoryDao;
 import com.zhan.myreader.util.DateHelper;
-import com.zhan.myreader.util.StringHelper;
 
 import java.util.ArrayList;
 import java.util.Date;

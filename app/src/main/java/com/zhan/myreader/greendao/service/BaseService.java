@@ -3,7 +3,6 @@ package com.zhan.myreader.greendao.service;
 import android.database.Cursor;
 
 import com.zhan.myreader.greendao.GreenDaoManager;
-import com.zhan.myreader.greendao.gen.DaoMaster;
 import com.zhan.myreader.greendao.gen.DaoSession;
 
 

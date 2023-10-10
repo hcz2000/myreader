@@ -75,7 +75,7 @@ public class TianlaiUtil {
      * @return max chapter no
      */
     public static int getMaxChapterNoFromHtml(String html, Book book) {
-        int maxChapterNo = book.getChapterTotalNum();
+        int maxChapterNo = book.getTotalChapterNum();
         Document doc = Jsoup.parse(html);
         if (BookSource.tianlai.toString().equals(book.getSource())) {
             Element div = doc.getElementsByClass("listpage").first();

@@ -42,8 +42,8 @@ public class BookService extends BaseService {
                 book.setHistoryChapterId(cursor.getString(11));
                 book.setHistoryChapterNum(cursor.getInt(12));
                 book.setSortCode(cursor.getInt(13));
-                book.setNoReadNum(cursor.getInt(14));
-                book.setChapterTotalNum(cursor.getInt(15));
+                book.setUnReadNum(cursor.getInt(14));
+                book.setTotalChapterNum(cursor.getInt(15));
                 book.setLastReadPosition(cursor.getInt(16));
                 book.setSource(cursor.getString(17));
                 books.add(book);

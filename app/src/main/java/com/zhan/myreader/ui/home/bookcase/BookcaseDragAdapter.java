@@ -139,12 +139,12 @@ public class BookcaseDragAdapter extends DragAdapter {
             viewHolder.ivBookImg.setOnClickListener(null);
         } else {
             viewHolder.ivDelete.setVisibility(View.GONE);
-            if (book.getNoReadNum() != 0) {
+            if (book.getUnReadNum() != 0) {
                 viewHolder.tvNoReadNum.setVisibility(View.VISIBLE);
-                if (book.getNoReadNum() > 99) {
+                if (book.getUnReadNum() > 99) {
                     viewHolder.tvNoReadNum.setText("+");
                 } else {
-                    viewHolder.tvNoReadNum.setText(String.valueOf(book.getNoReadNum()));
+                    viewHolder.tvNoReadNum.setText(String.valueOf(book.getUnReadNum()));
                 }
             } else {
                 viewHolder.tvNoReadNum.setVisibility(View.GONE);

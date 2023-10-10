@@ -4,17 +4,13 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
 
-import com.zhan.myreader.base.application.MyApplication;
 import com.zhan.myreader.greendao.entity.Book;
 import com.zhan.myreader.greendao.entity.Chapter;
 import com.zhan.myreader.greendao.service.ChapterService;
 import com.zhan.myreader.greendao.service.BookService;
 import com.zhan.myreader.webapi.BookApi;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 public class CatalogLoader extends AsyncTaskLoader<Book>{
     private BookService mBookService;
@@ -37,14 +33,14 @@ public class CatalogLoader extends AsyncTaskLoader<Book>{
 
     @Override
     public Book loadInBackground() {
-        Log.d("Catalogloader","Loading in background");
+        Log.d("Catalogloader","catalog loading in background:"+mBook.getName());
         List<Chapter> chapters = BookApi.getBookChapters(mBook);
         int newTotal=chapters.get(chapters.size()-1).getNumber()+1;
-        mBook.setChapterTotalNum(newTotal);
-        mBook.setNoReadNum(chapters.size());
+        mBook.setTotalChapterNum(newTotal);
+        mBook.setUnReadNum(0);
         mBookService.updateEntity(mBook);
         mChapterService.addChapters(chapters);
-        Log.d("Catalogloader","Loaded");
+        Log.d("Catalogloader",mBook.getName()+" catalog Loaded");
         return mBook;
     }
     @Override
