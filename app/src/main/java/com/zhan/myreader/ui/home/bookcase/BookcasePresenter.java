@@ -206,6 +206,7 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
         Book book= (Book)data;
         Log.d("BookcasePresenter",book.getName() +" catalog downloaded");
         TextHelper.showText(book.getName() +" catalog downloaded");
+        loaderManager.destroyLoader(loader.getId());
     }
 
     @Override
