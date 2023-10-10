@@ -374,7 +374,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         @Override
                         public void onClick(Dialog dialog, View view, TextView tvDownloadProgress) {
                             if (StringHelper.isEmpty(mBook.getId())){
-                                addBookToCaseAndDownload(tvDownloadProgress);
+                                addToBookcaseAndDownload(tvDownloadProgress);
                             }else {
                                 downloadBook(tvDownloadProgress);
                             }
@@ -387,7 +387,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
      * 添加到书架并缓存整本
      * @param tvDownloadProgress
      */
-    private void addBookToCaseAndDownload(final TextView tvDownloadProgress){
+    private void addToBookcaseAndDownload(final TextView tvDownloadProgress){
         DialogCreator.createCommonDialog(mReadActivity, mReadActivity.getString(R.string.tip), mReadActivity.getString(R.string.download_no_add_tips), true, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
