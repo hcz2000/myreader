@@ -162,6 +162,31 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             mChapters.addAll(mChapterService.findBookAllChapterByBookId(mBook.getId()));
             mInvertedOrderChapters.addAll(mChapters);
             Collections.reverse(mInvertedOrderChapters);
+        }else{
+            BookApi.getPreviewChapters(mBook,new ResultCallback() {
+                @Override
+                public void onFinish(Object o, int code) {
+                    final List<Chapter> chapters = (List<Chapter>) o;
+                    int newTotal=chapters.get(chapters.size()-1).getNumber()+1;
+                    mBook.setTotalChapterNum(newTotal);
+                    mChapters.addAll(chapters);
+                    if (mChapters.size() == 0) {
+                        TextHelper.showLongText("该书查询不到任何章节");
+                        mReadActivity.getPbLoading().setVisibility(View.GONE);
+                        settingChange = false;
+                    } else {
+                        mInvertedOrderChapters.addAll(mChapters);
+                        Collections.reverse(mInvertedOrderChapters);
+                        mHandler.sendMessage(mHandler.obtainMessage(1));
+                    }
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    TextHelper.showLongText("获取章节目录出错");
+                }
+            });
+
         }
         settingOnClickValidFrom = BaseActivity.width / 4;
         settingOnClickValidTo = BaseActivity.width / 4 * 3;
@@ -240,8 +265,10 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         });
         loaderManager =mReadActivity.getLoaderManager();
         //HCZ 20230715
-        if(mChapters.isEmpty())
+        if(mChapters.isEmpty()) {
+            Log.d("ReadPresenter",mBook.getName()+mBook.getId());
             refreshData();
+        }
         setupViews();
     }
 

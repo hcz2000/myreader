@@ -81,6 +81,22 @@ public class BookApi {
 		});
      }
 
+	public static void getPreviewChapters(Book book, final ResultCallback callback){
+		String indexUrl=book.getChapterUrl().split("\\|")[0];
+
+		HttpUtil.httpGet_Async(indexUrl, null, "utf-8",	new ResultCallback() {
+			@Override
+			public void onFinish(Object html, int code) {
+				List<Chapter> list= TianlaiUtil.getChaptersFromHtml((String) html,book,0);
+				callback.onFinish(list,0);
+			}
+			@Override
+			public void onError(Exception e) {
+				callback.onError(e);
+			}
+		});
+	}
+
 	public static List<Chapter> getBookChapters(Book book) {
 		List<Chapter> list = new ArrayList<Chapter>();
 		String[] urls = book.getChapterUrl().split("\\|");
