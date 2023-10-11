@@ -215,7 +215,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
                     }
                     viewHolder.tvErrorTips.setVisibility(View.GONE);
                 }
-                return
+                return;
             }
         }
 
