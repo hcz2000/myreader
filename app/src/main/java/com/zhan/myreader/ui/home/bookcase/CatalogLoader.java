@@ -8,6 +8,7 @@ import com.zhan.myreader.greendao.entity.Book;
 import com.zhan.myreader.greendao.entity.Chapter;
 import com.zhan.myreader.greendao.service.ChapterService;
 import com.zhan.myreader.greendao.service.BookService;
+import com.zhan.myreader.util.StringHelper;
 import com.zhan.myreader.webapi.BookApi;
 
 import java.util.List;
@@ -39,6 +40,10 @@ public class CatalogLoader extends AsyncTaskLoader<Book>{
         mBook.setTotalChapterNum(newTotal);
         mBook.setUnReadNum(0);
         mBookService.updateEntity(mBook);
+        for(Chapter chapter: chapters){
+            chapter.setId(StringHelper.getStringRandom(25));
+            chapter.setBookId(mBook.getId());
+        }
         mChapterService.addChapters(chapters);
         Log.d("Catalogloader",mBook.getName()+" catalog Loaded");
         return mBook;
