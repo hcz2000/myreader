@@ -203,7 +203,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 Log.d("ReadPresenter","Loaded！");
             }
         });
-        mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
+        //mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
         mReadActivity.getLvChapterList().setOnItemClickListener((adapterView, view, i, l) -> {
             //关闭侧滑菜单
             mReadActivity.getDlReadActivity().closeDrawer(GravityCompat.START);
@@ -383,7 +383,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     }, new SeekBar.OnSeekBarChangeListener() {//阅读进度
                         @Override
                         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                            mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
+                            //mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
                             final int newChapterNum = (mChapters.size() - 1) * i / 100;
                             ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(newChapterNum,0);
                             mBook.setLastReadPosition(0);
