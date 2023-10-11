@@ -48,7 +48,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
 
     private LayoutInflater mInflater;
     private List<Chapter> mDatas;
-    private List<String> mRequestCache;
+    private List<Integer> mRequestCache;
     private OnClickItemListener mOnClickItemListener;
     private View.OnTouchListener mOnTouchListener;
     private ChapterService mChapterService;
@@ -201,54 +201,59 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
             viewHolder.tvErrorTips.setVisibility(View.GONE);
         }
 
-        Chapter cacheChapter = mChapterService.findChapterByBookIdAndTitle(chapter.getBookId(), chapter.getTitle());
+        if(!StringHelper.isEmpty(mBook.getId())){
+            Chapter dbCachedChapter = mChapterService.findChapterByBookIdAndTitle(chapter.getBookId(), chapter.getTitle());
 
-        if (cacheChapter != null && !StringHelper.isEmpty(cacheChapter.getContent())) {
-            chapter.setContent(cacheChapter.getContent());
-            chapter.setId(cacheChapter.getId());
-            if (viewHolder != null) {
-                if (mSetting.getLanguage() == Language.traditional) {
-                    viewHolder.tvContent.setText(ZHConverter.convert(chapter.getTitle(), ZHConverter.TRADITIONAL));
-                } else {
-                    viewHolder.tvContent.setText(chapter.getContent());
-                }
-                viewHolder.tvErrorTips.setVisibility(View.GONE);
-            }
-        } else {
-            synchronized (this.mRequestCache){
-                for(String item: mRequestCache){
-                    if(item.equals(chapter.getId()))
-                        return;
-                }
-                mRequestCache.add(chapter.getId());
-                if(mRequestCache.size()>10)
-                    mRequestCache.remove(0);
-            }
-            BookApi.getChapterContent(chapter, new ResultCallback() {
-                @Override
-                public void onFinish(final Object o, int code) {
-                    chapter.setContent((String) o);
-                    mChapterService.saveOrUpdateChapter(chapter);
-                    if (viewHolder != null) {
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                viewHolder.tvContent.setText(getLanguageContext((String) o));
-                                viewHolder.tvErrorTips.setVisibility(View.GONE);
-                            }
-                        });
+            if (dbCachedChapter != null && !StringHelper.isEmpty(dbCachedChapter.getContent())) {
+                chapter.setContent(dbCachedChapter.getContent());
+                chapter.setId(dbCachedChapter.getId());
+                if (viewHolder != null) {
+                    if (mSetting.getLanguage() == Language.traditional) {
+                        viewHolder.tvContent.setText(ZHConverter.convert(chapter.getTitle(), ZHConverter.TRADITIONAL));
+                    } else {
+                        viewHolder.tvContent.setText(chapter.getContent());
                     }
+                    viewHolder.tvErrorTips.setVisibility(View.GONE);
                 }
-                @Override
-                public void onError(Exception e) {
-                    if (viewHolder != null) {
-                        mHandler.sendMessage(mHandler.obtainMessage(1, viewHolder));
-                    }
-                }
-            });
+                return
+            }
         }
 
-    }
+        synchronized (mRequestCache){
+            for(Integer item: mRequestCache){
+                if(item.intValue()==chapter.getNumber())
+                    return;
+            }
+            mRequestCache.add(new Integer(chapter.getNumber()));
+            if(mRequestCache.size()>10)
+                mRequestCache.remove(0);
+        }
+        BookApi.getChapterContent(chapter, new ResultCallback() {
+            @Override
+            public void onFinish(final Object o, int code) {
+                chapter.setContent((String) o);
+                mChapterService.saveOrUpdateChapter(chapter);
+                if (viewHolder != null) {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            viewHolder.tvContent.setText(getLanguageContext((String) o));
+                            viewHolder.tvErrorTips.setVisibility(View.GONE);
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onError(Exception e) {
+                synchronized(mRequestCache){
+                    mRequestCache.remove(new Integer(chapter.getNumber()));
+                }
+                if (viewHolder != null) {
+                    mHandler.sendMessage(mHandler.obtainMessage(1, viewHolder));
+                }
+            }
+       });
+}
 
     /**
      * 预加载下一章
