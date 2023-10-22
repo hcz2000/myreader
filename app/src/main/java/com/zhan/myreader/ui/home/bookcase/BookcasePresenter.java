@@ -26,6 +26,7 @@ import com.zhan.myreader.util.TextHelper;
 import com.zhan.myreader.util.VibratorUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -35,7 +36,7 @@ import java.util.Objects;
 public class BookcasePresenter extends BasePresenter implements LoaderManager.LoaderCallbacks, DataChangedListener {
 
     private final BookcaseFragment mBookcaseFragment;
-    private final ArrayList<Book> mBooks = new ArrayList<>();//书目数组
+    private final List<Book> mBooks ;//书目数组
     private BookcaseDragAdapter mBookcaseAdapter;
     private final BookCase mBookCase;
     private MainActivity mMainActivity;
@@ -59,10 +60,13 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
         super(bookcaseFragment.getContext(),bookcaseFragment.getLifecycle());
         mBookcaseFragment = bookcaseFragment;
         mBookCase = BookCase.getInstance();
+        mBookCase.registerListener(this);
+        mBooks=mBookCase.getBooks();
     }
 
     @Override
     public void start() {
+        Log.d("BookcasePresenter","start");
         mMainActivity = ((MainActivity) (mBookcaseFragment.getContext()));
         loaderManager=mMainActivity.getLoaderManager();
         mBookcaseFragment.getContentView().setEnableRefresh(false);
@@ -87,18 +91,23 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
                     mMainActivity.getRlEditTitile().setVisibility(View.GONE);
                     mBookcaseFragment.getBookView().setDragModel(-1);
                     mBookcaseAdapter.setEditState(false);
-                    mBookcaseAdapter.notifyDataSetChanged();
+                    //mBookcaseAdapter.notifyDataSetChanged();
                 });
                 mBookcaseFragment.getContentView().setEnableRefresh(false);
                 mBookcaseAdapter.setEditState(true);
                 mBookcaseFragment.getBookView().setDragModel(DragSortGridView.DRAG_BY_LONG_CLICK);
-                mBookcaseAdapter.notifyDataSetChanged();
+                //mBookcaseAdapter.notifyDataSetChanged();
                 mMainActivity.getRlCommonTitle().setVisibility(View.GONE);
                 mMainActivity.getRlEditTitile().setVisibility(View.VISIBLE);
                 VibratorUtil.Vibrate(Objects.requireNonNull(mBookcaseFragment.getActivity()),200);
             }
             return true;
         });
+
+        mBookcaseAdapter = new BookcaseDragAdapter(mBookcaseFragment.getContext(), R.layout.gridview_book_item, mBookCase, false);
+        mBookcaseFragment.getBookView().setDragModel(-1);
+        mBookcaseFragment.getBookView().setTouchClashparent(((MainActivity) (Objects.requireNonNull(mBookcaseFragment.getContext()))).getVpContent());
+        mBookcaseFragment.getBookView().setAdapter(mBookcaseAdapter);
         /*
         mBookcaseFragment.getContentView().setOnRefreshListener(refreshLayout -> {
             System.out.println("Refresh");
@@ -106,8 +115,6 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
     }
 
     private void initView() {
-        mBooks.clear();
-        mBooks.addAll(mBookCase.getBooks());
         for (int i = 0; i < mBooks.size(); i++) {
             Book book=mBooks.get(i);
             Log.d("BookcasePresenter","totalChapterNum("+book.getName()+"):"+book.getTotalChapterNum());
@@ -118,15 +125,12 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
                 if(loaderManager.getLoader(loaderid)==null)
                     loaderManager.initLoader(loaderid, args, this);
             }
-            if (book.getSortCode() != i + 1) {
-                book.setSortCode(i + 1);
-                mBookCase.sync(book);
-            }
         }
         if (mBooks == null || mBooks.size() == 0) {
             mBookcaseFragment.getBookView().setVisibility(View.GONE);
             mBookcaseFragment.getNoDataView().setVisibility(View.VISIBLE);
         } else {
+            /*
             if(mBookcaseAdapter == null) {
                 mBookcaseAdapter = new BookcaseDragAdapter(mBookcaseFragment.getContext(), R.layout.gridview_book_item, mBooks, false);
                 mBookcaseFragment.getBookView().setDragModel(-1);
@@ -134,7 +138,8 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
                 mBookcaseFragment.getBookView().setAdapter(mBookcaseAdapter);
             }else {
                 mBookcaseAdapter.notifyDataSetChanged();
-            }
+            }*/
+            //mBookcaseAdapter.notifyDataSetChanged();
             mBookcaseFragment.getNoDataView().setVisibility(View.GONE);
             mBookcaseFragment.getBookView().setVisibility(View.VISIBLE);
         }
@@ -153,6 +158,7 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
 
     @Override
     public void resume(){
+        Log.d("BookcasePresenter","resume");
         refreshData();
     }
 
@@ -174,6 +180,7 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
         Log.d("BookcasePresenter",book.getName() +" catalog downloaded");
         TextHelper.showText(book.getName() +" catalog downloaded");
         loaderManager.destroyLoader(loader.getId());
+        mBookcaseAdapter.notifyDataSetChanged();
     }
 
     @Override

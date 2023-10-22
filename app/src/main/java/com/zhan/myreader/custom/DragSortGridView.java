@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -128,7 +129,6 @@ public class DragSortGridView extends FrameLayout {
                 distanceY = lastLocation[1] - e2.getRawY();
                 lastLocation[0] = e2.getRawX();
                 lastLocation[1] = e2.getRawY();
-                // ////////
 
                 mCopyView.setX(mCopyView.getX() - distanceX);
                 mCopyView.setY(mCopyView.getY() - distanceY);
@@ -166,10 +166,7 @@ public class DragSortGridView extends FrameLayout {
                                     // 根据点击的位置生成该位置上的view镜像
                                     int position = eventToPosition(e);
                                     if (position >= headDragPosition && position < mChildCount - footDragPosition) {
-                                        // copyView(currentDragPosition = position);
                                         Message msg = handler.obtainMessage(0x123, position, 0);
-                                        // showpress本身大概需要170毫秒
-//                            handler.sendMessageDelayed(msg, dragLongPressTime - 170);
                                         handler.sendMessage(msg);
                                         hasSendDragMsg = true;
                                     }
@@ -336,7 +333,6 @@ public class DragSortGridView extends FrameLayout {
                 }
                 // 内容太多时,移动到边缘会自动滚动
                 if (canScroll) {
-
                     int touchArea = decodeTouchArea(ev);
                     if (touchArea != mTouchArea) {
                         onTouchAreaChange(touchArea);
@@ -353,8 +349,6 @@ public class DragSortGridView extends FrameLayout {
                     }
                 }
                 mDragFrame.removeAllViews();
-                // mDragFrame.scrollTo(0, 0);
-                // isNotifyByDragSort = true;
                 if (hasPositionChange) {
                     hasPositionChange = false;
                     adapter.notifyDataSetChanged();
@@ -437,9 +431,6 @@ public class DragSortGridView extends FrameLayout {
         int[] l2 = new int[2];
         hideView.getLocationOnScreen(l1);
         mDragFrame.getLocationOnScreen(l2);
-
-        // mCopyView.setX(hideView.getLeft());
-        // mCopyView.setY(hideView.getTop() - mCurrentY);
         mCopyView.setX(l1[0] - l2[0]);
         mCopyView.setY(l1[1] - l2[1]);
         if (onDragSelectListener == null) {
@@ -462,6 +453,7 @@ public class DragSortGridView extends FrameLayout {
         int fromYValue = ((int[]) view.getTag(TAG_KEY))[1];
         int toXValue = to % mNumColumns - from % mNumColumns + fromXValue;
         int toYValue = to / mNumColumns - from / mNumColumns + fromYValue;
+        //Log.d("DragSortGridView","View "+from+" From:"+fromXValue+"/"+fromYValue+" To:"+toXValue+"/"+toYValue);
         Animation animation = new TranslateAnimation(1, fromXValue, 1, toXValue, 1, fromYValue, 1, toYValue);
         animation.setDuration(ANIM_DURING);
         animation.setFillAfter(true);

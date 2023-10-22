@@ -32,6 +32,7 @@ import com.zhan.myreader.base.BasePresenter;
 import com.zhan.myreader.callback.ResultCallback;
 import com.zhan.myreader.common.APPCONST;
 import com.zhan.myreader.creator.DialogCreator;
+import com.zhan.myreader.entity.BookCase;
 import com.zhan.myreader.ui.font.FontsActivity;
 import com.zhan.myreader.entity.Setting;
 import com.zhan.myreader.enums.BookSource;
@@ -66,7 +67,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     private List<Chapter> mChapters;
     private List<Chapter> mInvertedOrderChapters;
     private ChapterService mChapterService;
-    private BookService mBookService;
+    //private BookService mBookService;
+    private BookCase mBookCase;
     private ReadContentAdapter mReadContentAdapter;
     private ChapterTitleAdapter mChapterTitleAdapter;
     private Setting mSetting;
@@ -112,7 +114,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     Log.d("ReadPresenter","lastPosition:"+lastPosition);
                     mReadActivity.getRvContent().scrollBy(0, lastPosition);
                     if (!StringHelper.isEmpty(mBook.getId())) {
-                        mBookService.updateEntity(mBook);
+                        //mBookService.updateEntity(mBook);
+                        mBookCase.update(mBook);
                     }
                     break;
                 case 7://Auto Scroll
@@ -134,7 +137,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
     public ReadPresenter(ReadActivity readActivity) {
         super(readActivity,readActivity.getLifecycle());
         mReadActivity = readActivity;
-        mBookService = new BookService();
+        //mBookService = new BookService();
+        mBookCase = BookCase.getInstance();
         mChapterService = new ChapterService();
         mSetting = SysManager.getSetting();
         mChapters=new ArrayList<>();
@@ -155,7 +159,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         mBook = (Book) mReadActivity.getIntent().getSerializableExtra(APPCONST.BOOK);
         if (StringHelper.isEmpty(mBook.getSource())){
             mBook.setSource(BookSource.tianlai.toString());
-            mBookService.updateEntity(mBook);
+            //mBookService.updateEntity(mBook);
+            mBookCase.update(mBook);
         }
         //HCZ 20230715
         if (!StringHelper.isEmpty(mBook.getId())){
@@ -283,7 +288,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         Log.d("ReadPresenter","lastReadPos:"+mBook.getLastReadPosition()+" dy:"+dy+" firstVisiblePos:"+mContentLayoutManager.findFirstVisibleItemPosition()+" lastVisiblePos:"+mContentLayoutManager.findLastVisibleItemPosition());
         mBook.setHistoryChapterNum(mContentLayoutManager.findFirstVisibleItemPosition());
         if (!StringHelper.isEmpty(mBook.getId())) {
-            mBookService.updateEntity(mBook);
+            //mBookService.updateEntity(mBook);
+            mBookCase.update(mBook);
         }
     }
 
@@ -418,7 +424,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         DialogCreator.createCommonDialog(mReadActivity, mReadActivity.getString(R.string.tip), mReadActivity.getString(R.string.download_no_add_tips), true, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mBookService.addBook(mBook);
+                //mBookService.addBook(mBook);
+                mBookCase.add(mBook);
                 downloadBook(tvDownloadProgress);
             }
         }, new DialogInterface.OnClickListener() {
@@ -625,7 +632,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
 
                 if (oldTotal!=newTotal) {
                     mBook.setTotalChapterNum(newTotal);
-                    mBookService.updateEntity(mBook);
+                    //mBookService.updateEntity(mBook);
+                    mBookCase.update(mBook);
                 }
                 updateCatalog(chapters);
                 mInvertedOrderChapters.clear();
@@ -639,7 +647,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 } else {
                     if (mBook.getHistoryChapterNum() >= mChapters.size()) {
                         mBook.setHistoryChapterNum(mChapters.size() - 1);
-                        mBookService.updateEntity(mBook);
+                        //mBookService.updateEntity(mBook);
+                        mBookCase.update(mBook);
                     }
                     mHandler.sendMessage(mHandler.obtainMessage(1));
                 }

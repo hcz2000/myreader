@@ -3,25 +3,23 @@ package com.zhan.myreader.ui.home.bookcase;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
 import com.bumptech.glide.Glide;
 import com.zhan.myreader.R;
 import com.zhan.myreader.common.APPCONST;
 import com.zhan.myreader.common.URLCONST;
 import com.zhan.myreader.creator.DialogCreator;
 import com.zhan.myreader.custom.DragAdapter;
+import com.zhan.myreader.entity.BookCase;
 import com.zhan.myreader.greendao.entity.Book;
-import com.zhan.myreader.greendao.service.BookService;
 import com.zhan.myreader.ui.home.reader.ReadActivity;
 import com.zhan.myreader.util.StringHelper;
-
-import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -30,55 +28,41 @@ import java.util.ArrayList;
 
 public class BookcaseDragAdapter extends DragAdapter {
     private int mResourceId;
-    private ArrayList<Book> list;
     private Context mContext;
     private boolean mEditState;
-    private BookService mBookService;
+    private BookCase mBookCase;
 
-
-    public BookcaseDragAdapter(Context context, int textViewResourceId, ArrayList<Book> objects, boolean editState) {
+    public BookcaseDragAdapter(Context context, int textViewResourceId, BookCase bookcase, boolean editState) {
         mContext = context;
         mResourceId = textViewResourceId;
-        list = objects;
         mEditState = editState;
-        mBookService = new BookService();
+        mBookCase = bookcase;
     }
 
     @Override
     public void onDataModelMove(int from, int to) {
+        List<Book> list=mBookCase.getBooks();
         Book b = list.remove(from);
         list.add(to, b);
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setSortCode(i);
         }
-        mBookService.updateBooks(list);
+        mBookCase.update(list);
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return mBookCase.getCount();
     }
 
     @Override
     public Book getItem(int position) {
-        return list.get(position);
+        return mBookCase.getBook(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return list.get(position).getSortCode();
-    }
-
-    public void remove(Book item) {
-        list.remove(item);
-        notifyDataSetChanged();
-        mBookService.deleteBook(item);
-    }
-
-    public void add(Book item) {
-        list.add(item);
-        notifyDataSetChanged();
-        mBookService.addBook(item);
+        return getItem(position).getSortCode();
     }
 
     @Override
@@ -119,9 +103,9 @@ public class BookcaseDragAdapter extends DragAdapter {
                         true, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                remove(book);
+                                mBookCase.remove(book);
+                                notifyDataSetChanged();
                                 dialogInterface.dismiss();
-
                             }
                         }, new DialogInterface.OnClickListener() {
                             @Override
@@ -154,9 +138,6 @@ public class BookcaseDragAdapter extends DragAdapter {
                 public void onClick(View v) {
                     Intent intent = new Intent( mContext, ReadActivity.class);
                     intent.putExtra(APPCONST.BOOK, book);
-                    //HCZ 20230715
-                    //book.setNoReadNum(0);
-                    //mBookService.updateEntity(book);
                     mContext.startActivity(intent);
                 }
             });

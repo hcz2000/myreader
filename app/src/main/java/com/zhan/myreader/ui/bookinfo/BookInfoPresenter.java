@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.zhan.myreader.base.BasePresenter;
 import com.zhan.myreader.common.APPCONST;
 import com.zhan.myreader.common.URLCONST;
+import com.zhan.myreader.entity.BookCase;
 import com.zhan.myreader.ui.home.reader.ReadActivity;
 import com.zhan.myreader.enums.BookSource;
 import com.zhan.myreader.greendao.entity.Book;
@@ -24,7 +25,8 @@ public class BookInfoPresenter extends  BasePresenter {
 
     private BookInfoActivity mBookInfoActivity;
     private Book mBook;
-    private BookService mBookService;
+    //private BookService mBookService;
+    private BookCase mBookCase;
 
     private Handler mHandle = new Handler(message -> {
         switch (message.what){
@@ -38,7 +40,8 @@ public class BookInfoPresenter extends  BasePresenter {
     public BookInfoPresenter(BookInfoActivity bookInfoActivity){
         super(bookInfoActivity,bookInfoActivity.getLifecycle());
         mBookInfoActivity  = bookInfoActivity;
-        mBookService = new BookService();
+        //mBookService = new BookService();
+        mBookCase=BookCase.getInstance();
     }
 
      @Override
@@ -58,19 +61,23 @@ public class BookInfoPresenter extends  BasePresenter {
         mBookInfoActivity.getTvBookDesc().setText(mBook.getDesc());
         mBookInfoActivity.getTvBookType().setText(mBook.getType());
         mBookInfoActivity.getTvBookName().setText(mBook.getName());
-        if (isBookCollected()){
-            mBookInfoActivity.getBtnAddBookcase().setText("不追了");
-        }else {
+        Book collectedBook = mBookCase.findBookByAuthorAndName(mBook.getName(),mBook.getAuthor());
+        if (collectedBook==null){
             mBookInfoActivity.getBtnAddBookcase().setText("加入书架");
+        }else {
+            mBook=collectedBook;
+            mBookInfoActivity.getBtnAddBookcase().setText("不追了");
         }
         mBookInfoActivity.getLlTitleBack().setOnClickListener(view -> mBookInfoActivity.finish());
         mBookInfoActivity.getBtnAddBookcase().setOnClickListener(view -> {
             if (StringHelper.isEmpty(mBook.getId())){
-                mBookService.addBook(mBook);
+                //mBookService.addBook(mBook);
+                mBookCase.add(mBook);
                 TextHelper.showText("成功加入书架");
                 mBookInfoActivity.getBtnAddBookcase().setText("不追了");
             }else {
-                mBookService.deleteBookById(mBook.getId());
+                //mBookService.deleteBookById(mBook.getId());
+                mBookCase.remove(mBook);
                 TextHelper.showText("成功移除书籍");
                 mBookInfoActivity.getBtnAddBookcase().setText("加入书架");
             }
@@ -88,15 +95,4 @@ public class BookInfoPresenter extends  BasePresenter {
                 .load(URLCONST.nameSpace_tianlai+mBook.getImgUrl())
                 .into(mBookInfoActivity.getIvBookImg());
     }
-
-    private boolean isBookCollected(){
-        Book book = mBookService.findBookByAuthorAndName(mBook.getName(),mBook.getAuthor());
-        if (book == null){
-            return false;
-        }else {
-            mBook.setId(book.getId());
-            return true;
-        }
-    }
-
 }

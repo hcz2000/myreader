@@ -2,7 +2,6 @@ package com.zhan.myreader.entity;
 
 import android.util.Log;
 
-import com.zhan.myreader.callback.ResultCallback;
 import com.zhan.myreader.greendao.entity.Book;
 import com.zhan.myreader.greendao.service.BookService;
 import com.zhan.myreader.webapi.BookApi;
@@ -26,18 +25,55 @@ public class BookCase {
         return books;
     }
 
+    public Book findBookByAuthorAndName(String name,String author){
+        for(Book book : books){
+            if(author.equals(book.getAuthor()) && name.equals(book.getName()))
+                return book;
+        }
+        return null;
+    }
+
+    public Book findBookById(String bookId){
+        for(Book book : books){
+            if(bookId.equals(book.getId()))
+                return book;
+        }
+        return null;
+    }
+
     public void add(Book book){
         books.add(book);
         bookService.addBook(book);
+        //notifyDataChanged();
     }
 
     public void remove(Book book) {
-        books.remove(book);
-        bookService.deleteBook(book);
+        if(books.remove(book)){
+            bookService.deleteBook(book);
+        }
     }
 
-    public void sync(Book book){
-        bookService.updateEntity(book);
+    public void update(Book book){
+        if(findBookById(book.getId()) != null){
+            bookService.updateEntity(book);
+        }
+    }
+
+    public void update(List<Book> list){
+        List<Book> changedBooks=new ArrayList<>();
+        for(Book book: list){
+            if(findBookById(book.getId())!=null){
+                changedBooks.add(book);
+            }
+        }
+    }
+
+    public int getCount(){
+        return books.size();
+    }
+
+    public Book getBook(int position){
+        return books.get(position);
     }
 
     static public BookCase getInstance(){
@@ -50,16 +86,16 @@ public class BookCase {
         for (final Book book : books) {
             BookApi.getNewChapterCount(book, (result, code) -> {
                     int newTotal=(int)result;
-                    int unReadNum = newTotal - book.getTotalChapterNum();
-                    Log.d("BookcasePresenter","unReadNum: "+unReadNum+" --"+book.getName());
-                    if (unReadNum > 0) {
-                        book.setUnReadNum(unReadNum);
+                    int oldUnReadNum=book.getUnReadNum();
+                    int newUnReadNum = newTotal - book.getTotalChapterNum();
+                    Log.d("BookcasePresenter","unReadNum: "+newUnReadNum+" --"+book.getName());
+                    if (newUnReadNum < 0)
+                        newUnReadNum=0;
+                    if (newUnReadNum !=oldUnReadNum ) {
+                        book.setUnReadNum(newUnReadNum);
                         bookService.updateEntity(book);
-                    } else {
-                        book.setUnReadNum(0);
-                        bookService.updateEntity(book);
+                        notifyDataChanged();
                     }
-                    notifyDataChanged();
             });
         }
     }
@@ -68,9 +104,9 @@ public class BookCase {
         listeners.add(listener);
     }
 
-    private void notifyDataChanged(){
+    public void notifyDataChanged(){
         for(DataChangedListener listener: listeners){
-            listener.notify();
+            listener.notifyDataChanged();
         }
     }
 

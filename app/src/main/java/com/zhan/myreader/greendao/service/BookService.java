@@ -118,7 +118,7 @@ public class BookService extends BaseService {
      * @param book
      */
     public void deleteBook(Book book){
-       deleteEntity(book);
+        deleteEntity(book);
         mChapterService.deleteBookALLChapterById(book.getId());
     }
 

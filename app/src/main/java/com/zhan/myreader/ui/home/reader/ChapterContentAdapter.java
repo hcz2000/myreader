@@ -23,6 +23,7 @@ import com.zhan.myreader.R;
 import com.zhan.myreader.base.application.SysManager;
 import com.zhan.myreader.callback.ResultCallback;
 import com.zhan.myreader.custom.MyTextView;
+import com.zhan.myreader.entity.BookCase;
 import com.zhan.myreader.entity.Setting;
 import com.zhan.myreader.enums.Font;
 import com.zhan.myreader.enums.Language;
@@ -46,7 +47,8 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
     private int mResourceId;
     private ListView mListView;
     private ChapterService mChapterService;
-    private BookService mBookService;
+    //private BookService mBookService;
+    private BookCase mBookCase;
     private Setting mSetting;
     private Book mBook;
     private Typeface mTypeFace;
@@ -56,7 +58,8 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         super(context, resourceId, datas);
         mResourceId = resourceId;
         mChapterService = new ChapterService();
-        mBookService = new BookService();
+        //mBookService = new BookService();
+        mBookCase = BookCase.getInstance();
         mSetting = SysManager.getSetting();
         mBook = book;
         initFont();
@@ -236,7 +239,8 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
     public void saveHistory(int position) {
         if (!StringHelper.isEmpty(mBook.getId())) {
             mBook.setHistoryChapterNum(position);
-            mBookService.updateEntity(mBook);
+            //mBookService.updateEntity(mBook);
+            mBookCase.update(mBook);
         }
     }
 
