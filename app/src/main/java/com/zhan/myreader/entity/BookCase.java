@@ -44,7 +44,6 @@ public class BookCase {
     public void add(Book book){
         books.add(book);
         bookService.addBook(book);
-        //notifyDataChanged();
     }
 
     public void remove(Book book) {
@@ -54,7 +53,7 @@ public class BookCase {
     }
 
     public void update(Book book){
-        if(findBookById(book.getId()) != null){
+        if(book.getId()!=null && findBookById(book.getId()) != null){
             bookService.updateEntity(book);
         }
     }
@@ -62,10 +61,11 @@ public class BookCase {
     public void update(List<Book> list){
         List<Book> changedBooks=new ArrayList<>();
         for(Book book: list){
-            if(findBookById(book.getId())!=null){
+            if(book.getId()!=null && findBookById(book.getId())!=null){
                 changedBooks.add(book);
             }
         }
+        bookService.updateBooks(changedBooks);
     }
 
     public int getCount(){
