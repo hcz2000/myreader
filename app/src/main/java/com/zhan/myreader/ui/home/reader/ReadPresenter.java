@@ -345,48 +345,40 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
             mOperationDialog.show();
         } else {
             int progress = mContentLayoutManager.findLastVisibleItemPosition() * 100 / (mChapters.size() - 1);
-            mOperationDialog = DialogCreator.createReadSetting(mReadActivity, mSetting.isDayStyle(), progress, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {//返回
-                            mReadActivity.finish();
+            mOperationDialog = DialogCreator.createReadSetting(mReadActivity, mSetting.isDayStyle(), progress,
+                    (View view)-> {//返回
+                        mReadActivity.finish();
+                    },
+                    (View view)-> {//上一章
+                        //int curPosition = mContentLayoutManager.findLastVisibleItemPosition();
+                        int curPosition = mContentLayoutManager.findFirstVisibleItemPosition();
+                        if (curPosition > 0) {
+                            mReadActivity.getRvContent().scrollToPosition(curPosition - 1);
+                            mBook.setLastReadPosition(0);
                         }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {//上一章
-                            //int curPosition = mContentLayoutManager.findLastVisibleItemPosition();
-                            int curPosition = mContentLayoutManager.findFirstVisibleItemPosition();
-                            if (curPosition > 0) {
-                                mReadActivity.getRvContent().scrollToPosition(curPosition - 1);
-                                mBook.setLastReadPosition(0);
-                            }
+                    },
+                    (View view)->{//下一章
+                        int curPosition = mContentLayoutManager.findLastVisibleItemPosition();
+                        if (curPosition < mChapters.size() - 1) {
+                            ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(curPosition + 1,0);
+                            mBook.setLastReadPosition(0);
                         }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {//下一章
-                            int curPosition = mContentLayoutManager.findLastVisibleItemPosition();
-                            if (curPosition < mChapters.size() - 1) {
-                                ((LinearLayoutManager)mReadActivity.getRvContent().getLayoutManager()).scrollToPositionWithOffset(curPosition + 1,0);
-                                mBook.setLastReadPosition(0);
-                            }
-                        }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {//目录
-                            setupCatalogView();
-                            mReadActivity.getDlReadActivity().openDrawer(GravityCompat.START);
-                            mOperationDialog.dismiss();
-                        }
-                    }, new DialogCreator.OnClickNightAndDayListener() {
+                    },
+                    (View view)-> {//目录
+                        setupCatalogView();
+                        mReadActivity.getDlReadActivity().openDrawer(GravityCompat.START);
+                        mOperationDialog.dismiss();
+                    },
+                    new DialogCreator.OnClickNightAndDayListener() {
                         @Override
                         public void onClick(Dialog dialog, View view, boolean isDayStyle) {//日夜切换
                             changeNightAndDaySetting(isDayStyle);
                         }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {//设置
-                            showSettingDetailView();
-                        }
-                    }, new SeekBar.OnSeekBarChangeListener() {//阅读进度
+                    },
+                    (View view)->{//设置
+                        showSettingDetailView();
+                    },
+                    new SeekBar.OnSeekBarChangeListener() {//阅读进度
                         @Override
                         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                             //mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
@@ -403,7 +395,14 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         public void onStopTrackingTouch(SeekBar seekBar) {
                         }
                     }
-                    , null, new DialogCreator.OnClickDownloadAllChapterListener() {//缓存整本
+                    ,
+                    (View view)-> {//刷新章节
+                        int curPosition = mContentLayoutManager.findFirstVisibleItemPosition();
+                        Log.d("ReadPresenter","Refresh chapter "+curPosition);
+                        Toast.makeText(mReadActivity,"刷新章节"+curPosition,Toast.LENGTH_LONG);
+                    }
+                    ,
+                    new DialogCreator.OnClickDownloadAllChapterListener() {//缓存整本
                         @Override
                         public void onClick(Dialog dialog, View view, TextView tvDownloadProgress) {
                             if (StringHelper.isEmpty(mBook.getId())){

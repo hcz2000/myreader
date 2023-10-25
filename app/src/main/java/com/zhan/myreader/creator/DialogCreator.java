@@ -285,7 +285,7 @@ public class DialogCreator {
                                            final OnClickNightAndDayListener onClickNightAndDayListener,
                                            View.OnClickListener settingListener,
                                            SeekBar.OnSeekBarChangeListener onSeekBarChangeListener,
-                                           View.OnClickListener voiceOnClickListener,
+                                           View.OnClickListener refreshChapterListener,
                                            final OnClickDownloadAllChapterListener onClickDownloadAllChapterListener) {
         final Dialog dialog = new Dialog(context, R.style.jmui_default_dialog_style);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_read_setting, null);
@@ -299,7 +299,7 @@ public class DialogCreator {
         LinearLayout llSetting = (LinearLayout) view.findViewById(R.id.ll_setting);
         final ImageView ivNightAndDay = (ImageView) view.findViewById(R.id.iv_night_and_day);
         final TextView tvNightAndDay = (TextView) view.findViewById(R.id.tv_night_and_day);
-        ImageView ivVoice  = (ImageView)view.findViewById(R.id.iv_voice_read);
+        ImageView ivRefresh  = (ImageView)view.findViewById(R.id.iv_chapter_refresh);
 
         view.findViewById(R.id.rl_title_view).setOnClickListener(null);
         view.findViewById(R.id.ll_bottom_view).setOnClickListener(null);
@@ -310,12 +310,9 @@ public class DialogCreator {
             window.setStatusBarColor(dialog.getContext().getResources().getColor(R.color.sys_dialog_setting_bg));
         }
 
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                dialog.dismiss();
-                return false;
-            }
+        view.setOnTouchListener((View v, MotionEvent mEvent) ->{
+            dialog.dismiss();
+            return false;
         });
         if (!isDayStyle) {
             ivNightAndDay.setImageResource(R.mipmap.z4);
@@ -329,36 +326,30 @@ public class DialogCreator {
         llChapterList.setOnClickListener(chapterListListener);
         llSetting.setOnClickListener(settingListener);
         sbChapterProgress.setOnSeekBarChangeListener(onSeekBarChangeListener);
-        ivVoice.setOnClickListener(voiceOnClickListener);
+        ivRefresh.setOnClickListener(refreshChapterListener);
         //日夜切换
-        llNightAndDay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isDay;
-                if (tvNightAndDay.getText().toString().equals(context.getString(R.string.day))) {
-                    isDay = false;
-                    ivNightAndDay.setImageResource(R.mipmap.ao);
-                    tvNightAndDay.setText(context.getString(R.string.night));
-                } else {
-                    isDay = true;
-                    ivNightAndDay.setImageResource(R.mipmap.z4);
-                    tvNightAndDay.setText(context.getString(R.string.day));
-                }
-                if (onClickNightAndDayListener != null) {
-                    onClickNightAndDayListener.onClick(dialog, view, isDay);
-                }
+        llNightAndDay.setOnClickListener((View v)-> {
+            boolean isDay;
+            if (tvNightAndDay.getText().toString().equals(context.getString(R.string.day))) {
+                isDay = false;
+                ivNightAndDay.setImageResource(R.mipmap.ao);
+                tvNightAndDay.setText(context.getString(R.string.night));
+            } else {
+                isDay = true;
+                ivNightAndDay.setImageResource(R.mipmap.z4);
+                tvNightAndDay.setText(context.getString(R.string.day));
+            }
+            if (onClickNightAndDayListener != null) {
+                onClickNightAndDayListener.onClick(dialog, view, isDay);
             }
         });
 
         //缓存全部章节
         final TextView tvDownloadProgress = (TextView)view.findViewById(R.id.tv_download_progress);
         LinearLayout llDonwloadCache = (LinearLayout)view.findViewById(R.id.ll_download_cache);
-        llDonwloadCache.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onClickDownloadAllChapterListener != null){
-                    onClickDownloadAllChapterListener.onClick(dialog,v,tvDownloadProgress);
-                }
+        llDonwloadCache.setOnClickListener((View v)->{
+            if (onClickDownloadAllChapterListener != null){
+                onClickDownloadAllChapterListener.onClick(dialog,v,tvDownloadProgress);
             }
         });
 
@@ -392,14 +383,11 @@ public class DialogCreator {
         normalDialog.setNegativeButton("取消", negativeListener);
         // 显示
         final AlertDialog alertDialog = normalDialog.create();
-        MyApplication.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    alertDialog.show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        MyApplication.runOnUiThread(()-> {
+            try {
+                alertDialog.show();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
@@ -599,6 +587,5 @@ public class DialogCreator {
     public interface OnClickDownloadAllChapterListener {
         void onClick(Dialog dialog, View view,TextView tvDownloadProgress);
     }
-
 
 }
