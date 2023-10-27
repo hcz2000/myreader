@@ -125,11 +125,8 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         }
         viewHolder.tvTitle.setTextSize(mSetting.getReadWordSize() + 2);
         viewHolder.tvContent.setTextSize(mSetting.getReadWordSize());
-        viewHolder.tvErrorTips.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getChapterContent(chapter, viewHolder);
-            }
+        viewHolder.tvErrorTips.setOnClickListener((View v)-> {
+            getChapterContent(chapter, viewHolder);
         });
         if (StringHelper.isEmpty(chapter.getContent())) {
             getChapterContent(chapter, viewHolder);
@@ -187,12 +184,9 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
                     chapter.setContent((String) o);
                     mChapterService.saveOrUpdateChapter(chapter);
                     if (viewHolder != null) {
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                viewHolder.tvContent.setText(getLanguageContext((String) o));
-                                viewHolder.tvErrorTips.setVisibility(View.GONE);
-                            }
+                        mHandler.post(()-> {
+                            viewHolder.tvContent.setText(getLanguageContext((String) o));
+                            viewHolder.tvErrorTips.setVisibility(View.GONE);
                         });
                     }
                 }

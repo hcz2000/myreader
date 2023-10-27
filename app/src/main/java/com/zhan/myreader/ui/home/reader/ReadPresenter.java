@@ -100,7 +100,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                 case 1:
                     setupViews();
                     break;
-                case 2://NOT USED
+                case 2://Refresh adapter
+                    mReadContentAdapter.notifyDataSetChangedBySetting();
                     break;
                 case 3://NOT USED
                     break;
@@ -399,7 +400,11 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                     (View view)-> {//刷新章节
                         int curPosition = mContentLayoutManager.findFirstVisibleItemPosition();
                         Log.d("ReadPresenter","Refresh chapter "+curPosition);
-                        Toast.makeText(mReadActivity,"刷新章节"+curPosition,Toast.LENGTH_LONG);
+                        Chapter curChapter=mChapters.get(curPosition);
+                        BookApi.getChapterContent(curChapter,(Object o, int code)-> {
+                            curChapter.setContent((String)o);
+                            mHandler.sendMessage(mHandler.obtainMessage(2));
+                        });
                     }
                     ,
                     new DialogCreator.OnClickDownloadAllChapterListener() {//缓存整本
