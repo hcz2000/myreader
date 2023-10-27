@@ -404,6 +404,7 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
                         BookApi.getChapterContent(curChapter,(Object o, int code)-> {
                             curChapter.setContent((String)o);
                             mHandler.sendMessage(mHandler.obtainMessage(2));
+                            TextHelper.showText("当前章节已更新");
                         });
                     }
                     ,
