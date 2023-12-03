@@ -54,6 +54,7 @@ public class BookCase {
 
     public void update(Book book){
         if(book.getId()!=null && findBookById(book.getId()) != null){
+            Log.d("BookCase","UpdateBook "+book.getName()+":"+book.getHistoryChapterNum());
             bookService.updateEntity(book);
         }
     }
@@ -84,6 +85,7 @@ public class BookCase {
 
     public void refresh(){
         for (final Book book : books) {
+            Log.d("Bookcase",book.getName()+":"+book.getHistoryChapterNum());
             BookApi.getNewChapterCount(book, (result, code) -> {
                     int newTotal=(int)result;
                     int oldUnReadNum=book.getUnReadNum();
@@ -109,5 +111,4 @@ public class BookCase {
             listener.notifyDataChanged();
         }
     }
-
 }
