@@ -159,10 +159,8 @@ public class ReadPresenter extends BasePresenter implements LoaderManager.Loader
         if(bookToRead.getId()==null) {
             mBook = bookToRead;
         }else {
-            Log.d("BookCase","book already in case");
             mBook = mBookCase.findBookById(bookToRead.getId());
         }
-        mBook = (Book) mReadActivity.getIntent().getSerializableExtra(APPCONST.BOOK);
         if (StringHelper.isEmpty(mBook.getSource())){
             mBook.setSource(BookSource.tianlai.toString());
               mBookCase.update(mBook);

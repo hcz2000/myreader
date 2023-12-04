@@ -54,7 +54,6 @@ public class BookCase {
 
     public void update(Book book){
         if(book.getId()!=null && findBookById(book.getId()) != null){
-            Log.d("BookCase","UpdateBook "+book.getName()+":"+book.getHistoryChapterNum());
             bookService.updateEntity(book);
         }
     }
@@ -90,7 +89,7 @@ public class BookCase {
                     int newTotal=(int)result;
                     int oldUnReadNum=book.getUnReadNum();
                     int newUnReadNum = newTotal - book.getTotalChapterNum();
-                    Log.d("BookcasePresenter","unReadNum: "+newUnReadNum+" --"+book.getName());
+                    Log.d("Bookcase","unReadNum: "+newUnReadNum+" --"+book.getName());
                     if (newUnReadNum < 0)
                         newUnReadNum=0;
                     if (newUnReadNum !=oldUnReadNum ) {
@@ -111,4 +110,15 @@ public class BookCase {
             listener.notifyDataChanged();
         }
     }
+
+    public String toString(){
+        StringBuffer buf=new StringBuffer();
+        for(Book book :books){
+            buf.append(book.getName()+":"+book.getHistoryChapterNum()+"-"+book.getLastReadPosition()+"\n");
+        }
+        return buf.toString();
+    }
+
+
 }
+
