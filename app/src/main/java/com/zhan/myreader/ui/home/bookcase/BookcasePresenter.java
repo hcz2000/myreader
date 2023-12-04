@@ -66,7 +66,6 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
 
     @Override
     public void start() {
-        Log.d("BookcasePresenter","start");
         mMainActivity = ((MainActivity) (mBookcaseFragment.getContext()));
         loaderManager=mMainActivity.getLoaderManager();
         mBookcaseFragment.getContentView().setEnableRefresh(false);
@@ -91,12 +90,10 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
                     mMainActivity.getRlEditTitile().setVisibility(View.GONE);
                     mBookcaseFragment.getBookView().setDragModel(-1);
                     mBookcaseAdapter.setEditState(false);
-                    //mBookcaseAdapter.notifyDataSetChanged();
                 });
                 mBookcaseFragment.getContentView().setEnableRefresh(false);
                 mBookcaseAdapter.setEditState(true);
                 mBookcaseFragment.getBookView().setDragModel(DragSortGridView.DRAG_BY_LONG_CLICK);
-                //mBookcaseAdapter.notifyDataSetChanged();
                 mMainActivity.getRlCommonTitle().setVisibility(View.GONE);
                 mMainActivity.getRlEditTitile().setVisibility(View.VISIBLE);
                 VibratorUtil.Vibrate(Objects.requireNonNull(mBookcaseFragment.getActivity()),200);
@@ -130,16 +127,6 @@ public class BookcasePresenter extends BasePresenter implements LoaderManager.Lo
             mBookcaseFragment.getBookView().setVisibility(View.GONE);
             mBookcaseFragment.getNoDataView().setVisibility(View.VISIBLE);
         } else {
-            /*
-            if(mBookcaseAdapter == null) {
-                mBookcaseAdapter = new BookcaseDragAdapter(mBookcaseFragment.getContext(), R.layout.gridview_book_item, mBooks, false);
-                mBookcaseFragment.getBookView().setDragModel(-1);
-                mBookcaseFragment.getBookView().setTouchClashparent(((MainActivity) (Objects.requireNonNull(mBookcaseFragment.getContext()))).getVpContent());
-                mBookcaseFragment.getBookView().setAdapter(mBookcaseAdapter);
-            }else {
-                mBookcaseAdapter.notifyDataSetChanged();
-            }*/
-            //mBookcaseAdapter.notifyDataSetChanged();
             mBookcaseFragment.getNoDataView().setVisibility(View.GONE);
             mBookcaseFragment.getBookView().setVisibility(View.VISIBLE);
         }

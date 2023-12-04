@@ -19,6 +19,8 @@ import com.zhan.myreader.entity.BookCase;
 import com.zhan.myreader.greendao.entity.Book;
 import com.zhan.myreader.ui.home.reader.ReadActivity;
 import com.zhan.myreader.util.StringHelper;
+import com.zhan.myreader.util.TextHelper;
+
 import java.util.List;
 
 
@@ -136,9 +138,13 @@ public class BookcaseDragAdapter extends DragAdapter {
             viewHolder.ivBookImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent( mContext, ReadActivity.class);
-                    intent.putExtra(APPCONST.BOOK, book);
-                    mContext.startActivity(intent);
+                    if(book.getTotalChapterNum()>0){
+                        Intent intent = new Intent( mContext, ReadActivity.class);
+                        intent.putExtra(APPCONST.BOOK, book);
+                        mContext.startActivity(intent);
+                    }else
+                        TextHelper.showLongText("正在下载目录");
+
                 }
             });
         }
